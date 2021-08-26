@@ -17,33 +17,42 @@
 
 		<div class="container mt-4">
 			<header>
-				<h1>Condominos</h1>
+				<h1>Pagos</h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
 			</header>
 			<div class="card">
-				<div class="card-header">
-					Condominos
+				<div class="card-header py-3">
+					Listado de pagos realizados
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th scope="col">Fecha de corte</th>
-									<th scope="col">Fecha de vencimiento</th>
-									<th scope="col">Condominio</th>
-									<th scope="col">Saldo inicial</th>
-									<th scope="col">Pagos</th>
-									<th scope="col">Cargos</th>
-									<th scope="col">Saldo</th>
+									<th scope="col">Fecha de registro</th>
+									<th scope="col">Fecha de pago</th>
+									<th scope="col">Condomino</th>
+									<th scope="col">Importe</th>
+									<th scope="col">Forma de pago</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="pago : ${pagos}">
-									<th th:text="${pago.fechaPagado}"></th>
+								<tr>
+									<th scope="row">1</th>
 									<td>Mark</td>
 									<td>Otto</td>
 									<td>@mdo</td>
+								</tr>
+								<tr>
+									<th scope="row">2</th>
+									<td>Jacob</td>
+									<td>Thornton</td>
+									<td>@fat</td>
+								</tr>
+								<tr>
+									<th scope="row">3</th>
+									<td colspan="2">Larry the Bird</td>
+									<td>@twitter</td>
 								</tr>
 							</tbody>
 						</table>
@@ -70,7 +79,7 @@
 							</nav>		
 						</div>
 						<div class="col-md-6 text-end">
-							<a th:href="@{/condominos/nuevo}" class="btn btn-primary">Agregar</a>
+							<a th:href="@{/pagos/nuevo}" class="btn btn-primary">Agregar</a>
 						</div>
 				</div>
 			</div>

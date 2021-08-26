@@ -18,6 +18,8 @@ public class Pago implements Serializable {
 	
 	private Float importe;
 	
+	private String formaPago;
+		
 	private LocalDateTime fechaPagado;
 	
 	private LocalDateTime fechaRegistrado;
@@ -60,5 +62,13 @@ public class Pago implements Serializable {
 
 	public void setFechaRegistrado(LocalDateTime fechaRegistrado) {
 		this.fechaRegistrado = fechaRegistrado;
+	}
+
+	public String getFormaPago() {
+		return formaPago;
+	}
+
+	public void setFormaPago(String formaPago) {
+		this.formaPago = formaPago;
 	}
 }

@@ -36,53 +36,43 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<th>1</th>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>@mdo</td>
-								</tr>
-								<tr>
-									<th>2</th>
-									<td>Jacob</td>
-									<td>Thornton</td>
-									<td>@fat</td>
-								</tr>
-								<tr>
-									<th>3</th>
-									<td>Larry the Bird</td>
-									<td>@twitter</td>
+								<tr th:each="condomino: ${condominos}">
+									<th th:text="${condomino.interior}"></th>
+									<td th:text="${condomino.condomino}">Mark</td>
+									<td th:text="${condomino.telefono}">Otto</td>
+									<td th:text="${condomino.correo}">@mdo</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>		
 				</div>
 				<div class="card-footer row">
-						<div class="col-md-6">
-							<nav aria-label="Page navigation">
-								<ul class="pagination">
-									<li class="page-item">
-										<a class="page-link" href="#" aria-label="Previous">
-											<span aria-hidden="true">&laquo;</span>
-										</a>
-									</li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item">
-										<a class="page-link" href="#" aria-label="Next">
-											<span aria-hidden="true">&raquo;</span>
-										</a>
-									</li>
-								</ul>
-							</nav>		
-						</div>
-						<div class="col-md-6 text-end">
-							<a th:href="@{/condominos/nuevo}" class="btn btn-primary">Agregar</a>
-						</div>
+					<div class="col-md-6">
+						<nav aria-label="Page navigation">
+							<ul class="pagination">
+								<li class="page-item">
+									<a class="page-link" href="#" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">
+									<a class="page-link" href="#" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+							</ul>
+						</nav>		
+					</div>
+					<div class="col-md-6 text-end">
+						<a th:href="@{/condominos/nuevo}" class="btn btn-primary">Agregar</a>
+					</div>
 				</div>
 			</div>
 		</div>
+		<footer th:include="layouts/master::footer"></footer>
 	</main>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
 		integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
