@@ -25,4 +25,9 @@ public class CondominoServiceImpl implements CondominoService {
 		return condominoRepository.insert(condomino);
 	}
 
+	@Override
+	public Condomino findByInterior(String interior) {
+		return condominoRepository.findByInterior(interior);
+	}
+
 }

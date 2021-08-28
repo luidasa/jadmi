@@ -38,7 +38,7 @@
 							<tbody>
 								<tr th:each="condomino: ${condominos}">
 									<th th:text="${condomino.interior}"></th>
-									<td th:text="${condomino.condomino}">Mark</td>
+									<td th:text="${condomino.nombre}">Mark</td>
 									<td th:text="${condomino.telefono}">Otto</td>
 									<td th:text="${condomino.correo}">@mdo</td>
 								</tr>
@@ -46,7 +46,8 @@
 						</table>
 					</div>		
 				</div>
-				<div class="card-footer row">
+				<div class="card-footer">
+					<div class="row">
 					<div class="col-md-6">
 						<nav aria-label="Page navigation">
 							<ul class="pagination">
@@ -68,6 +69,7 @@
 					</div>
 					<div class="col-md-6 text-end">
 						<a th:href="@{/condominos/nuevo}" class="btn btn-primary">Agregar</a>
+					</div>
 					</div>
 				</div>
 			</div>

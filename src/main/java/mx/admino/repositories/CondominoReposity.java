@@ -8,4 +8,6 @@ import mx.admino.models.Condomino;
 @Repository
 public interface CondominoReposity extends MongoRepository<Condomino, String> {
 
+	Condomino findByInterior(String interior);
+
 }

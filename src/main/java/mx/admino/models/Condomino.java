@@ -34,6 +34,10 @@ public class Condomino implements Serializable {
 	
 	private String nombre;
 	
+	private String telefono;
+	
+	private String correo;
+	
 	private List<Pago> pagos;
 	
 	private List<Cargo> cargos;
@@ -94,5 +98,21 @@ public class Condomino implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
 	}
 }

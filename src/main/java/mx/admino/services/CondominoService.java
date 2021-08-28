@@ -11,4 +11,6 @@ public interface CondominoService {
 	Page<Condomino> findAll(Pageable pageable);
 
 	Condomino save(Condomino condomino);
+
+	Condomino findByInterior(String interior);
 }
