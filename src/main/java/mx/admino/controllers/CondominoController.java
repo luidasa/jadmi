@@ -1,14 +1,21 @@
 package mx.admino.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.Condomino;
 import mx.admino.services.CondominoService;
@@ -30,6 +37,38 @@ public class CondominoController {
 		PageImpl<Condomino> condominos = (PageImpl<Condomino>) condominoService.findAll(pageable);
 		model.addAttribute("condominos", condominos);
 		return "condominos/index";
+	}
+	
+	@GetMapping("/{id}")
+	public String getEdit(
+			@PathVariable String id,
+			Model model) {
+	
+		Condomino condomino = condominoService.findById(id);
+		model.addAttribute("condomino", condomino );
+		return "condominos/formulario";
+	}
+	
+	@PostMapping("/{id}")
+	public String postEdit(
+			@PathVariable String id,
+			@ModelAttribute @Valid Condomino condomino,
+			BindingResult binding,
+			RedirectAttributes flash,
+			Model model) {
+		String viewName = "condominos/formulario";
+		
+		if (binding.hasErrors()) {
+			System.out.print("Ocurrio un error");
+			return viewName;
+		}
+		
+		Condomino itemdb = condominoService.findById(id);
+		itemdb.merge(condomino);
+		condominoService.save(itemdb);
+		flash.addAttribute("success", "Hemos guardado la información actualizada del condomino.");
+		viewName = "redirect:/condominos";
+		return viewName;
 	}
 
 }

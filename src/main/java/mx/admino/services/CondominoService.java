@@ -13,4 +13,6 @@ public interface CondominoService {
 	Condomino save(Condomino condomino);
 
 	Condomino findByInterior(String interior);
+
+	Condomino findById(String id);
 }

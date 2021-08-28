@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es-MX" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admino - Administración de condominios</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+
+<body>
+	<main>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
+		</nav>
+
+		<div class="container mt-4">
+			<header>
+				<h1>Condominos</h1>
+				<nav th:replace="layouts/master::breadcrum"></nav>
+			</header>
+			<form th:action="@{${'/condominos/' + condomino.id}}" method="post" th:object="${condomino}">
+			<div class="card">
+				<div class="card-header">
+					Información del dueño
+				</div>
+				<div class="card-body">
+					<div class="mb-3">
+					    <label for="interior" class="form-label">Interior</label>
+					    <input type="text" class="form-control" id="interior" aria-describedby="interiorHelp" 
+					    	th:field="${condomino.interior}"
+					    	th:classappend="${#fields.hasErrors('interior')} ? is-invalid : is-valid">
+					    <div id="interiorHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('interior')}" th:errors="*{interior}">Error</div>
+					  </div>
+					  <div class="mb-3">
+					    <label for="nombre" class="form-label">Nombre</label>
+					    <input type="text" class="form-control" id="nombre" aria-describedby="nombreHelp" 
+					    	th:field="${condomino.nombre}"
+					    	th:classappend="${#fields.hasErrors('nombre')} ? is-invalid : is-valid">
+					    <div id="nombreHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre</div>
+					  </div>
+					  <div class="mb-3">
+					    <label for="telefono" class="form-label">Telefono</label>
+					    <input type="text" class="form-control" maxlength="10" minlength="10" id="telefono" aria-describedby="telefonoHelp" 
+					    	th:field="${condomino.telefono}"
+					    	th:classappend="${#fields.hasErrors('telefono')} ? is-invalid : is-valid">
+					    <div id="telefonoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Telefono</div>
+					  </div>
+					  <div class="mb-3">
+					    <label for="correo" class="form-label">Correo</label>
+					    <input type="text" class="form-control" id="correo" aria-describedby="correoHelp" 
+					    	th:field="${condomino.correo}"
+					    	th:classappend="${#fields.hasErrors('correo')} ? is-invalid : is-valid">
+					    <div id="correoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Correo</div>
+					  </div>
+				</div>
+				<div class="card-footer text-end">
+					<button class="btn btn-primary">Guardar</button>
+				</div>
+			</div>
+			</form>
+		</div>
+		<footer th:include="layouts/master::footer"></footer>
+	</main>
+
+	<div th:replace="layouts/master::scripts"></div>
+</body>
+
+</html>

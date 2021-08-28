@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -30,12 +36,22 @@ public class Condomino implements Serializable {
 	
 	private String username;
 	
+	@NotEmpty
+	@NotBlank
 	private String interior;
 	
+	@NotEmpty
+	@NotBlank
 	private String nombre;
 	
+	@NotEmpty
+	@NotBlank
+	@Digits(fraction = 0, integer = 10)
+	@DecimalMin(value = "10")
 	private String telefono;
-	
+
+	@NotEmpty
+	@Email
 	private String correo;
 	
 	private List<Pago> pagos;
@@ -114,5 +130,13 @@ public class Condomino implements Serializable {
 
 	public void setCorreo(String correo) {
 		this.correo = correo;
+	}
+
+	public void merge(Condomino condomino) {
+
+		this.setInterior(condomino.getInterior());
+		this.setNombre(condomino.getNombre());
+		this.setTelefono(condomino.getTelefono());
+		this.setCorreo(condomino.getCorreo());
 	}
 }
