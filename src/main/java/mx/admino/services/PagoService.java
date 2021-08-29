@@ -1,5 +1,7 @@
 package mx.admino.services;
 
+import javax.validation.Valid;
+
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,4 +14,5 @@ public interface PagoService {
 
 	Page<Pago> findAll(Pageable pageable);
 
+	Pago save(@Valid Pago pago);
 }

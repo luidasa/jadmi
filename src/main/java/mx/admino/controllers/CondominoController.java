@@ -1,5 +1,8 @@
 package mx.admino.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import mx.admino.models.Breadcrum;
 import mx.admino.models.Condomino;
 import mx.admino.services.CondominoService;
 
@@ -36,6 +40,7 @@ public class CondominoController {
 		Pageable pageable = PageRequest.of(page - 1, size);
 		PageImpl<Condomino> condominos = (PageImpl<Condomino>) condominoService.findAll(pageable);
 		model.addAttribute("condominos", condominos);
+		model.addAttribute("breadcrum", getBreadcrum(null));
 		return "condominos/index";
 	}
 	
@@ -46,9 +51,21 @@ public class CondominoController {
 	
 		Condomino condomino = condominoService.findById(id);
 		model.addAttribute("condomino", condomino );
+		model.addAttribute("breadcrum", getBreadcrum(condomino));
 		return "condominos/formulario";
 	}
 	
+	private List<Breadcrum> getBreadcrum(Condomino condomino) {
+
+		List<Breadcrum> x = new ArrayList<Breadcrum>();
+		x.add(new Breadcrum("Inicio", "/panel", false));
+		x.add(new Breadcrum("Condominos", "/condominos", condomino == null));
+		if (condomino != null) {
+			x.add(new Breadcrum(condomino.getInterior(), "/condominos/" + condomino.getId(), true));			
+		}
+		return x ;
+	}
+
 	@PostMapping("/{id}")
 	public String postEdit(
 			@PathVariable String id,
@@ -59,16 +76,14 @@ public class CondominoController {
 		String viewName = "condominos/formulario";
 		
 		if (binding.hasErrors()) {
-			System.out.print("Ocurrio un error");
 			return viewName;
 		}
 		
 		Condomino itemdb = condominoService.findById(id);
 		itemdb.merge(condomino);
 		condominoService.save(itemdb);
-		flash.addAttribute("success", "Hemos guardado la información actualizada del condomino.");
+		flash.addFlashAttribute("alert_success", "Hemos guardado la información actualizada del condomino.");
 		viewName = "redirect:/condominos";
 		return viewName;
 	}
-
 }

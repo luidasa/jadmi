@@ -1,10 +1,15 @@
 package mx.admino.models;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
+
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Document(collection ="pagos")
 public class Pago implements Serializable {
@@ -16,14 +21,15 @@ public class Pago implements Serializable {
 	
 	private Condomino condomino;
 	
+	@NotNull
+	@DecimalMin("0.01") 
 	private Float importe;
-	
-	private String formaPago;
-		
-	private LocalDateTime fechaPagado;
-	
-	private LocalDateTime fechaRegistrado;
 
+	@NotNull
+	@Past
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date fechaPagado;
+	
 	public String getId() {
 		return id;
 	}
@@ -48,27 +54,11 @@ public class Pago implements Serializable {
 		this.importe = importe;
 	}
 
-	public LocalDateTime getFechaPagado() {
+	public Date getFechaPagado() {
 		return fechaPagado;
 	}
 
-	public void setFechaPagado(LocalDateTime fechaPagado) {
+	public void setFechaPagado(Date fechaPagado) {
 		this.fechaPagado = fechaPagado;
-	}
-
-	public LocalDateTime getFechaRegistrado() {
-		return fechaRegistrado;
-	}
-
-	public void setFechaRegistrado(LocalDateTime fechaRegistrado) {
-		this.fechaRegistrado = fechaRegistrado;
-	}
-
-	public String getFormaPago() {
-		return formaPago;
-	}
-
-	public void setFormaPago(String formaPago) {
-		this.formaPago = formaPago;
 	}
 }

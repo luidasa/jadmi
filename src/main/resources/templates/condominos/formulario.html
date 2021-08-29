@@ -19,6 +19,7 @@
 			<header>
 				<h1>Condominos</h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
+				<div th:replace="layouts/master::alerts"></div>				
 			</header>
 			<form th:action="@{${'/condominos/' + condomino.id}}" method="post" th:object="${condomino}">
 			<div class="card">
@@ -40,22 +41,25 @@
 					    	th:classappend="${#fields.hasErrors('nombre')} ? is-invalid : is-valid">
 					    <div id="nombreHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre</div>
 					  </div>
-					  <div class="mb-3">
+					  <div class="row">
+					  <div class="mb-3 col">
 					    <label for="telefono" class="form-label">Telefono</label>
 					    <input type="text" class="form-control" maxlength="10" minlength="10" id="telefono" aria-describedby="telefonoHelp" 
 					    	th:field="${condomino.telefono}"
 					    	th:classappend="${#fields.hasErrors('telefono')} ? is-invalid : is-valid">
 					    <div id="telefonoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Telefono</div>
 					  </div>
-					  <div class="mb-3">
+					  <div class="mb-3 col">
 					    <label for="correo" class="form-label">Correo</label>
 					    <input type="text" class="form-control" id="correo" aria-describedby="correoHelp" 
 					    	th:field="${condomino.correo}"
 					    	th:classappend="${#fields.hasErrors('correo')} ? is-invalid : is-valid">
 					    <div id="correoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Correo</div>
 					  </div>
+					  </div>
 				</div>
 				<div class="card-footer text-end">
+					<a class="btn btn-secondary" th:href="@{/pagos/nuevo(cid=${condomino.id})}">Pagar</a>
 					<button class="btn btn-primary">Guardar</button>
 				</div>
 			</div>

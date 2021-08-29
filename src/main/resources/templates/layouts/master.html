@@ -51,12 +51,45 @@
       </div>
     </div>
   </nav>
-
+  
+  <div th:fragment="alerts">
+	  <div class="alert alert-primary" role="alert" th:if="${alert_primary}">
+	  	<span th:text="${alert_primary}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-secondary" role="alert" th:if="${alert_secondary}">
+	  	<span th:text="${alert_secondary}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-success" role="alert" th:if="${alert_success}">
+	  	<span th:text="${alert_success}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-danger" role="alert" th:if="${alert_danger}">
+	  	<span th:text="${alert_danger}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-warning" role="alert" th:if="${alert_warning}">
+	  	<span th:text="${alert_warning}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-info" role="alert" th:if="${alert_info}">
+	  	<span th:text="${alert_info}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-light" role="alert" th:if="${alert_light}">
+	  	<span th:text="${alert_light}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-dark" role="alert" th:if="${alert_dark}">
+	  	<span th:text="${alert_dark}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+  </div>
   <nav class="bg-light my-3 py-2" aria-label="breadcrumb" th:fragment="breadcrum">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Library</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Data</li>
+      <li class="breadcrumb-item" th:each="breadcrumItem: ${breadcrum}">
+      	<a th:href="@{${breadcrumItem.url}}" th:text="${breadcrumItem.etiqueta}" th:classappend="${breadcrumItem.activo} ? active">Home</a></li>
     </ol>
   </nav>
 

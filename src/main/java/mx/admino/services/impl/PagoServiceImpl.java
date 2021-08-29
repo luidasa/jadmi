@@ -1,5 +1,7 @@
 package mx.admino.services.impl;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
@@ -24,5 +26,10 @@ public class PagoServiceImpl implements PagoService {
 	@Override
 	public Page<Pago> findAll(Pageable pageable) {
 		return pagoRepository.findAll(pageable);
+	}
+
+	@Override
+	public Pago save(@Valid Pago pago) {
+		return pagoRepository.save(pago);
 	}
 }

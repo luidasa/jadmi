@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 
@@ -138,5 +139,11 @@ public class Condomino implements Serializable {
 		this.setNombre(condomino.getNombre());
 		this.setTelefono(condomino.getTelefono());
 		this.setCorreo(condomino.getCorreo());
+	}
+
+	public Condomino addPago(@Valid Pago pago) {
+
+		this.pagos.add(pago);
+		return this;
 	}
 }

@@ -19,8 +19,9 @@
 			<header>
 				<h1>Registro de pagos</h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
+				<div th:replace="layouts/master::alerts"></div>				
 			</header>
-			<form>
+			<form method="post" autocomplete="off" th:action="@{/pagos/nuevo}" th:object="${pago}">
 				<div class="card">
 					<div class="card-header py-3">
 						Captura los datos del pago
@@ -28,18 +29,27 @@
 					<div class="card-body">
 						  <div class="mb-3">
 						    <label for="condomino" class="form-label">Condomino</label>
-						    <input type="text" class="form-control" id="condomino" aria-describedby="condominoHelp">
+						    <select class="form-control" aria-describedby="condominoHelp" th:field="${pago.condomino}">
+						    <option value="">No identificado</option>
+						    <option th:each="item: ${condominos}" th:value="${item.id}" th:text="${item.interior}"></option>
+						    </select>
 						    <div id="condominoHelp" class="form-text">Condomino </div>
 						  </div>
-						  <div class="mb-3">
+						  <div class="row">
+						  <div class="mb-3 col">
 						    <label for="fechaRealizado" class="form-label">Fecha realizado</label>
-						    <input type="date" class="form-control" id="fechaRealizado" aria-describedby="fechaHelp">
-						    <div id="fechaHelp" class="form-text">Fecha realizado</div>
+						    <input type="date" class="form-control" id="fechaRealizado" aria-describedby="fechaHelp"
+						    	th:field="${pago.fechaPagado}"
+						    	th:classappend="${#fields.hasErrors('fechaPagado')} ? is-invalid : is-valid">
+						    <div id="fechaHelp" class="form-text" th:if="${#fields.hasErrors('fechaPagado')}" th:errors="*{fechaPagado}">Fecha realizado</div>
 						  </div>
-						  <div class="mb-3">
+						  <div class="mb-3 col">
 						    <label for="importe" class="form-label">Importe</label>
-						    <input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp">
-						    <div id="importeHelp" class="form-text">Importe</div>
+						    <input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp"
+								th:field="${pago.importe}"
+						    	th:classappend="${#fields.hasErrors('importe')} ? is-invalid : is-valid">
+						    <div id="importeHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('importe')}" th:errors="*{importe}">Importe</div>
+						  </div>
 						  </div>
 					</div>
 					<div class="card-footer text-end">
