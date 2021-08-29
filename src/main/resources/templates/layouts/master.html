@@ -86,7 +86,7 @@
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	  </div>
   </div>
-  <nav class="bg-light my-3 py-2" aria-label="breadcrumb" th:fragment="breadcrum">
+  <nav class="bg-light my-2 py-2" aria-label="breadcrumb" th:fragment="breadcrum">
     <ol class="breadcrumb">
       <li class="breadcrumb-item" th:each="breadcrumItem: ${breadcrum}">
       	<a th:href="@{${breadcrumItem.url}}" th:text="${breadcrumItem.etiqueta}" th:classappend="${breadcrumItem.activo} ? active">Home</a></li>

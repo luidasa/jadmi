@@ -17,12 +17,13 @@
 
 		<div class="container mt-4">
 			<header>
-				<h1>Condominos</h1>
+				<h1>Estados de cuenta</h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
+				<div th:replace="layouts/master::alerts"></div>				
 			</header>
 			<div class="card">
 				<div class="card-header">
-					Condominos
+					Estados de cuenta generados en el sistema
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -31,6 +32,7 @@
 								<tr>
 									<th scope="col">Fecha de corte</th>
 									<th scope="col">Fecha de vencimiento</th>
+									<th scope="col">Dueño</th>
 									<th scope="col">Condominio</th>
 									<th scope="col">Saldo inicial</th>
 									<th scope="col">Pagos</th>
@@ -39,28 +41,39 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="pago : ${pagos}">
-									<th th:text="${pago.fechaPagado}"></th>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>@mdo</td>
+								<tr th:each="factura: ${facturas}" th:if="${facturas.getTotalElements() > 0}")>
+									<td th:text="${factura.fechaCorte}"></td>
+									<td th:text="${factura.fechaVencimiento}"></td>
+									<td th:text="${factura.condomino.nombre}"></td>
+									<td th:text="${factura.condomino.interior}"></td>
+									<td th:text="${factura.saldoInicial}"></td>
+									<td th:text="${factura.pagos}"></td>
+									<td th:text="${factura.cargos}"></td>
+									<td th:text="${factura.saldoFinal}"></td>
+								</tr>
+								<tr>
+									<td colspan="8" th:if="${facturas.getTotalElements() == 0}">No existen estados de corte</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>		
 				</div>
-				<div class="card-footer row">
+				<div class="card-footer">
+					<div class="row">
 						<div class="col-md-6">
-							<nav aria-label="Page navigation">
+							<nav aria-label="Page navigation" th:if="${facturas.getTotalElements() > 0}">
 								<ul class="pagination">
 									<li class="page-item">
 										<a class="page-link" href="#" aria-label="Previous">
 											<span aria-hidden="true">&laquo;</span>
 										</a>
 									</li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
+									<li class="page-item" th:each="i : ${#numbers.sequence( 1, facturas.getTotalPages)}">
+										<a class="page-link"
+											th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"  
+											th:href="@{/facturas(page=${i}, size=10)}" 
+											th:text="${i}">1</a>
+									</li>
 									<li class="page-item">
 										<a class="page-link" href="#" aria-label="Next">
 											<span aria-hidden="true">&raquo;</span>
@@ -70,8 +83,9 @@
 							</nav>		
 						</div>
 						<div class="col-md-6 text-end">
-							<a th:href="@{/condominos/nuevo}" class="btn btn-primary">Agregar</a>
+							<a th:href="@{/facturas/generar}" class="btn btn-primary">Generar</a>
 						</div>
+					</div>
 				</div>
 			</div>
 		</div>
