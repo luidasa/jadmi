@@ -41,7 +41,7 @@
 						    <input type="date" class="form-control" id="fechaRealizado" aria-describedby="fechaHelp"
 						    	th:field="${pago.fechaPagado}"
 						    	th:classappend="${#fields.hasErrors('fechaPagado')} ? is-invalid : is-valid">
-						    <div id="fechaHelp" class="form-text" th:if="${#fields.hasErrors('fechaPagado')}" th:errors="*{fechaPagado}">Fecha realizado</div>
+						    <div id="fechaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('fechaPagado')}" th:errors="*{fechaPagado}">Fecha realizado</div>
 						  </div>
 						  <div class="mb-3 col">
 						    <label for="importe" class="form-label">Importe</label>

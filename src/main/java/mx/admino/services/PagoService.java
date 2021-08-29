@@ -15,4 +15,6 @@ public interface PagoService {
 	Page<Pago> findAll(Pageable pageable);
 
 	Pago save(@Valid Pago pago);
+
+	Page<Pago> findByCondominoId(String cid, Pageable pageable);
 }

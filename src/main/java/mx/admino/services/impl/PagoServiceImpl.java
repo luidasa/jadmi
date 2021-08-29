@@ -32,4 +32,9 @@ public class PagoServiceImpl implements PagoService {
 	public Pago save(@Valid Pago pago) {
 		return pagoRepository.save(pago);
 	}
+
+	@Override
+	public Page<Pago> findByCondominoId(String id, Pageable pageable) {
+		return pagoRepository.findByCondomino_Id(id, pageable);
+	}
 }
