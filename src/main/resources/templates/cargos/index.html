@@ -17,59 +17,58 @@
 
 		<div class="container mt-4">
 			<header>
-				<h1>Pagos</h1>
+				<h1>Cargos</h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
+				<div th:replace="layouts/master::alerts"></div>				
 			</header>
 			<div class="card">
 				<div class="card-header py-3">
-					Listado de pagos realizados
+					Listado de pagos generados
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th scope="col">Fecha de registro</th>
-									<th scope="col">Fecha de pago</th>
-									<th scope="col">Condomino</th>
+									<th scope="col">Fecha de vencimiento</th>
+									<th scope="col">Interior</th>
+									<th scope="col">Dueño</th>
+									<th scope="col">Concepto</th>
 									<th scope="col">Importe</th>
-									<th scope="col">Forma de pago</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>@mdo</td>
+								<tr th:each="cargo:${cargos}" th:if="${cargos.getTotalElements() > 0}">
+									<td th:text="${#dates.format(cargo.fechaVencimiento, 'dd/MM/yyyy')}">Mark</td>
+									<td th:text="${cargo.condomino.interior}">Otto</td>
+									<td th:text="${cargo.condomino.nombre}">@mdo</td>
+									<td th:text="${cargo.concepto}">Mark</td>
+									<td th:text="${cargo.importe}">@mdo</td>
 								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>Jacob</td>
-									<td>Thornton</td>
-									<td>@fat</td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td colspan="2">Larry the Bird</td>
-									<td>@twitter</td>
+								<tr th:if="${cargos.getTotalElements() == 0}">
+									<td colspan="5">No hay cargos registrados</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>		
 				</div>
-				<div class="card-footer row">
+				<div class="card-footer">
+					<div class="row">
 						<div class="col-md-6">
-							<nav aria-label="Page navigation">
+							<nav aria-label="Page navigation" th:if="${cargos.getTotalElements() > 0}">
 								<ul class="pagination">
 									<li class="page-item">
 										<a class="page-link" href="#" aria-label="Previous">
 											<span aria-hidden="true">&laquo;</span>
 										</a>
 									</li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
+									<li class="page-item" th:each="i : ${#numbers.sequence( 1, cargos.getTotalPages)}">
+										<a class="page-link" 
+											th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"  
+											th:href="@{/cargos(page=${i}, size=10)}" 
+											th:text="${i}">1
+										</a>
+									</li>
 									<li class="page-item">
 										<a class="page-link" href="#" aria-label="Next">
 											<span aria-hidden="true">&raquo;</span>
@@ -79,8 +78,9 @@
 							</nav>		
 						</div>
 						<div class="col-md-6 text-end">
-							<a th:href="@{/pagos/nuevo}" class="btn btn-primary">Agregar</a>
+							<a th:href="@{/cargos/nuevo}" class="btn btn-primary">Agregar</a>
 						</div>
+					</div>
 				</div>
 			</div>
 		</div>

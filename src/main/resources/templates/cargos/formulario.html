@@ -20,26 +20,51 @@
 				<h1>Registro de pagos</h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
 			</header>
-			<form>
+			<form th:action="@{/cargos/nuevo}" method="post" th:object="${cargo}">
 				<div class="card">
 					<div class="card-header py-3">
-						Captura los datos del pago
+						Captura los datos del cargo
 					</div>
 					<div class="card-body">
 						  <div class="mb-3">
 						    <label for="condomino" class="form-label">Condomino</label>
-						    <input type="text" class="form-control" id="condomino" aria-describedby="condominoHelp">
-						    <div id="condominoHelp" class="form-text">Condomino </div>
+						    <select class="form-control" aria-describedby="condominoHelp" th:field="${cargo.condomino}" required>
+						    <option value="">No identificado</option>
+						    <option th:each="item: ${condominos}" th:value="${item.id}" th:text="${item.interior}"></option>
+						    </select>
+						    <div id="condominoHelp" class="form-text invalid-feedback"
+						    	th:if="${#fields.hasErrors('condomino')}" th:errors="*{condomino}">Condomino</div>
 						  </div>
 						  <div class="mb-3">
-						    <label for="fechaRealizado" class="form-label">Fecha realizado</label>
-						    <input type="date" class="form-control" id="fechaRealizado" aria-describedby="fechaHelp">
-						    <div id="fechaHelp" class="form-text">Fecha realizado</div>
+						    <label for="concepto" class="form-label">Concepto</label>
+						    <select class="form-control" aria-describedby="condominoHelp" th:field="${cargo.concepto}" required>
+						    <option value="Mantenimiento">Mantenimiento</option>
+						    <option value="Sancion A">Sancion A</option>
+						    <option value="Sancion B">Sancion B</option>
+						    <option value="Sancion C">Sancion C</option>
+						    <option value="Aclaracion">Aclaracion</option>
+						    <option value="Interes">Interes</option>
+						    </select>
+						    <div id="condominoHelp" class="form-text invalid-feedback"
+						    	th:if="${#fields.hasErrors('concepto')}" th:errors="*{concepto}">Condomino </div>
 						  </div>
-						  <div class="mb-3">
+						  <div class="row">
+						  <div class="mb-3 col">
+						    <label for="fechaRealizado" class="form-label">Fecha Vencimiento</label>
+						    <input type="date" class="form-control" id="fechaRealizado" aria-describedby="fechaHelp" 
+						    	th:field="${cargo.fechaVencimiento}"
+						    	th:classappend="${#fields.hasErrors('fechaVencimiento')} ? is-invalid : is-valid">						    	
+						    <div id="fechaHelp" class="form-text invalid-feedback"
+						    	th:if="${#fields.hasErrors('fechaVencimiento')}" th:errors="*{fechaVencimiento}">Fecha vencimiento</div>
+						  </div>
+						  <div class="mb-3 col">
 						    <label for="importe" class="form-label">Importe</label>
-						    <input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp">
-						    <div id="importeHelp" class="form-text">Importe</div>
+						    <input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp" 
+						    	th:field="${cargo.importe}"
+						    	th:classappend="${#fields.hasErrors('importe')} ? is-invalid : is-valid">						    	
+						    <div id="importeHelp" class="form-text invalid-feedback"
+						    	th:if="${#fields.hasErrors('importe')}" th:errors="*{importe}">Importe</div>
+						  </div>
 						  </div>
 					</div>
 					<div class="card-footer text-end">

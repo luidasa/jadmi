@@ -1,10 +1,16 @@
 package mx.admino.models;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Document(collection="cargos")
 public class Cargo implements Serializable {
@@ -14,11 +20,19 @@ public class Cargo implements Serializable {
 	@Id
 	private String id;
 	
+	@NotNull
+	private Condomino condomino;
+	
+	@NotNull
 	private Float importe;
 	
+	@NotEmpty
+	@NotBlank
 	private String concepto;
 	
-	private LocalDateTime fechaVencimiento;
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date fechaVencimiento;
 
 	public String getId() {
 		return id;
@@ -44,11 +58,19 @@ public class Cargo implements Serializable {
 		this.concepto = concepto;
 	}
 
-	public LocalDateTime getFechaVencimiento() {
+	public Date getFechaVencimiento() {
 		return fechaVencimiento;
 	}
 
-	public void setFechaVencimiento(LocalDateTime fechaVencimiento) {
+	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
+	}
+
+	public Condomino getCondomino() {
+		return condomino;
+	}
+
+	public void setCondomino(Condomino condomino) {
+		this.condomino = condomino;
 	}
 }

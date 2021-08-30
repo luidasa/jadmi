@@ -63,7 +63,9 @@
 									<a class="page-link" 
 										th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"  
 										th:href="@{/condominos(page=${i}, size=10)}" 
-										th:text="${i}">1</a></li>
+										th:text="${i}">1
+									</a>
+								</li>
 								<li class="page-item">
 									<a class="page-link" 
 										th:classappend="${condominos.isLast ? 'disabled' : ''}" 
