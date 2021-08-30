@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,7 +61,8 @@ public class CargoController {
 			@RequestParam(required = false, defaultValue = "10") Integer rows,
 			@RequestParam(required = false) String cid) {
 		
-		Pageable pageable = PageRequest.of(page - 1, rows);
+		Sort ordenado = Sort.by("fechaVencimiento").descending();
+		Pageable pageable = PageRequest.of(page - 1, rows, ordenado);
 		Page<Cargo> cargos;
 		if (cid == null) {
 			cargos = cargoService.findAll(pageable);			
