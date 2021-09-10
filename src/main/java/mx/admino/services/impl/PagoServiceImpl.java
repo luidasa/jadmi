@@ -1,5 +1,8 @@
 package mx.admino.services.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +39,11 @@ public class PagoServiceImpl implements PagoService {
 	@Override
 	public Page<Pago> findByCondominoId(String id, Pageable pageable) {
 		return pagoRepository.findByCondomino_Id(id, pageable);
+	}
+
+	@Override
+	public List<Pago> findByCondomino_IdAndFechaPagadoBetween(String cid, Date fechaInicial, Date fechaFinal) {
+		
+		return pagoRepository.findByCondomino_idAndFechaPagadoBetween(cid, fechaInicial, fechaFinal);
 	}
 }

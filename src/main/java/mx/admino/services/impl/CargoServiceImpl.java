@@ -1,5 +1,8 @@
 package mx.admino.services.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,11 @@ public class CargoServiceImpl implements CargoService {
 	@Override
 	public Cargo findById(String id) {
 		return cargoRepository.findById(id).orElseThrow(() -> new CargoNotFound());
+	}
+
+	@Override
+	public List<Cargo> findByCondomino_IdAdFechaVencimientoBetween(String cid, Date fechaCorte, Date fechaVencimiento) {
+		return cargoRepository.findByCondomino_IdAndFechaVencimientoBetween(cid, fechaCorte, fechaVencimiento);
 	}
 
 }

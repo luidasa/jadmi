@@ -1,5 +1,8 @@
 package mx.admino.services;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -17,4 +20,6 @@ public interface PagoService {
 	Pago save(@Valid Pago pago);
 
 	Page<Pago> findByCondominoId(String cid, Pageable pageable);
+
+	List<Pago> findByCondomino_IdAndFechaPagadoBetween(String cid, Date fechaInicial, Date fechaFinal);
 }

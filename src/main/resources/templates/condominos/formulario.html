@@ -56,6 +56,13 @@
 					    	th:classappend="${#fields.hasErrors('correo')} ? is-invalid : is-valid">
 					    <div id="correoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Correo</div>
 					  </div>
+					  <div class="mb-3 col">
+					    <label for="saldo" class="form-label">Saldo</label>
+					    <input type="text" class="form-control" id="correo" aria-describedby="saldoHelp" 
+					    	th:field="${condomino.saldo}"
+					    	th:classappend="${#fields.hasErrors('saldo')} ? is-invalid : is-valid">
+					    <div id="correoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('saldo')}" th:errors="*{saldo}">Correo</div>
+					  </div>
 					  </div>
 				</div>
 				<div class="card-footer text-end">

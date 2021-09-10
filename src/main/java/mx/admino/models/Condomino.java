@@ -48,6 +48,8 @@ public class Condomino implements Serializable {
 	@NotEmpty
 	@Email
 	private String correo;
+		
+	private Float saldo;
 	
 	public String getId() {
 		return id;
@@ -103,5 +105,14 @@ public class Condomino implements Serializable {
 		this.setNombre(condomino.getNombre());
 		this.setTelefono(condomino.getTelefono());
 		this.setCorreo(condomino.getCorreo());
+		this.setSaldo(condomino.getSaldo());
+	}
+
+	public Float getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(Float saldo) {
+		this.saldo = saldo;
 	}
 }

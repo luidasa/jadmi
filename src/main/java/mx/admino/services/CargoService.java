@@ -1,5 +1,8 @@
 package mx.admino.services;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -16,5 +19,7 @@ public interface CargoService {
 	Cargo save(@Valid Cargo cargo);
 
 	Cargo findById(String id);
+
+	List<Cargo> findByCondomino_IdAdFechaVencimientoBetween(String cid, Date fechaCorte, Date fechaVencimiento);
 
 }

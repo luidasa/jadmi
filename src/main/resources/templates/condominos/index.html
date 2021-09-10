@@ -34,6 +34,7 @@
 									<th scope="col">Dueño</th>
 									<th scope="col">Telefono</th>
 									<th scope="col">Correo</th>
+									<th scope="col">Saldo</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -42,6 +43,7 @@
 									<td th:text="${condomino.nombre}">Mark</td>
 									<td th:text="${condomino.telefono}">Otto</td>
 									<td th:text="${condomino.correo}">@mdo</td>
+									<td th:text="${condomino.saldo}">@mdo</td>
 								</tr>
 							</tbody>
 						</table>
@@ -77,6 +79,7 @@
 						</nav>		
 					</div>
 					<div class="col-md-6 text-end">
+						<a th:href="@{/facturas}" class="btn btn-secondary">Facturas</a>
 						<a th:href="@{/condominos/nuevo}" class="btn btn-primary">Agregar</a>
 					</div>
 					</div>

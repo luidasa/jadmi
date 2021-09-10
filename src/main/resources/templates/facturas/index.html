@@ -46,10 +46,10 @@
 									<td th:text="${factura.fechaVencimiento}"></td>
 									<td th:text="${factura.condomino.nombre}"></td>
 									<td th:text="${factura.condomino.interior}"></td>
-									<td th:text="${factura.saldoInicial}"></td>
-									<td th:text="${factura.pagos}"></td>
-									<td th:text="${factura.cargos}"></td>
-									<td th:text="${factura.saldoFinal}"></td>
+									<td th:text="${factura.saldoAnterior}"></td>
+									<td th:text="${factura.importePagos}"></td>
+									<td th:text="${factura.importeCargos}"></td>
+									<td th:text="${factura.saldo}"></td>
 								</tr>
 								<tr>
 									<td colspan="8" th:if="${facturas.getTotalElements() == 0}">No existen estados de corte</td>
@@ -83,12 +83,62 @@
 							</nav>		
 						</div>
 						<div class="col-md-6 text-end">
-							<a th:href="@{/facturas/generar}" class="btn btn-primary">Generar</a>
+							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#generarModal">
+							  Generar
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="generarModal" tabindex="-1" aria-labelledby="generarModalLabel" aria-hidden="true">
+		  <form th:action="@{/facturas/generar}" method="post" th:object="${factura}">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="generarModalLabel">Generar los estados de cuenta</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			      	<div class="row">
+					  <div class="mb-3">
+					    <label for="condomino" class="form-label">Condomino</label>
+					    <select class="form-select" aria-describedby="condominoHelp" th:field="${factura.condomino}">
+					    <option value="">Todos</option>
+					    <option th:each="item: ${condominos}" th:value="${item.id}" th:text="${item.interior + ' ' + item.nombre}"></option>
+					    </select>
+					    <div id="condominoHelp" class="form-text invalid-feedback"
+					    	th:if="${#fields.hasErrors('condomino')}" th:errors="*{condomino}">Condomino</div>
+					  </div>
+					  <div class="mb-3">
+					    <label for="fechaCorte" class="form-label">Fecha Corte</label>
+					    <input type="date" class="form-control" id="fechaCorte" aria-describedby="fechaCorteHelp" required
+					    	th:field="${factura.fechaCorte}"
+					    	th:classappend="${#fields.hasErrors('fechaCorte')} ? is-invalid : is-valid">						    	
+					    <div id="fechaHelp" class="form-text invalid-feedback"
+					    	th:if="${#fields.hasErrors('fechaCorte')}" th:errors="*{fechaCorte}">Fecha corte</div>
+					  </div>      	
+					  <div class="mb-3">
+					    <label for="fechaVencimiento" class="form-label">Fecha Vencimiento</label>
+					    <input type="date" class="form-control" id="fechaVencimiento" aria-describedby="fechaHelp" required
+					    	th:field="${factura.fechaVencimiento}"
+					    	th:classappend="${#fields.hasErrors('fechaVencimiento')} ? is-invalid : is-valid">						    	
+					    <div id="fechaHelp" class="form-text invalid-feedback"
+					    	th:if="${#fields.hasErrors('fechaVencimiento')}" th:errors="*{fechaVencimiento}">Fecha vencimiento</div>
+					  </div>      	
+			      	</div>	
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+			        <button type="submit" class="btn btn-primary">Generar</button>
+			      </div>
+			    </div>
+			  </div>
+	      </form>      
+		</div>
+		
 		<footer th:include="layouts/master::footer"></footer>
 		
 	</main>
