@@ -60,8 +60,13 @@ public class FacturasController {
 			@ModelAttribute Factura factura,
 			Model model) {
 		
-		Pageable pageable = PageRequest.of(page, rows);
-		Page<Factura> facturas = facturaService.findAll(pageable);
+		Pageable pageable = PageRequest.of(page - 1, rows);
+		Page<Factura> facturas ;
+		if (cid == null) {
+			facturas = facturaService.findAll(pageable);
+		} else {
+			facturas = facturaService.findByCondomino_Id(cid, pageable);
+		}
 		model.addAttribute("breadcrum", getBreadcrum(null));
 		model.addAttribute("facturas", facturas);
 		return "facturas/index";

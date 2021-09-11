@@ -13,4 +13,6 @@ public interface FacturaService {
 
 	void generate(Date fechaCorte, Date fechaVencimiento);
 
+	Page<Factura> findByCondomino_Id(String cid, Pageable pageable);
+
 }

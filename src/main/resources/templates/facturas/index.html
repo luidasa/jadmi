@@ -32,8 +32,8 @@
 								<tr>
 									<th scope="col">Fecha de corte</th>
 									<th scope="col">Fecha de vencimiento</th>
-									<th scope="col">Dueño</th>
 									<th scope="col">Condominio</th>
+									<th scope="col">Dueño</th>
 									<th scope="col">Saldo inicial</th>
 									<th scope="col">Pagos</th>
 									<th scope="col">Cargos</th>
@@ -42,14 +42,14 @@
 							</thead>
 							<tbody>
 								<tr th:each="factura: ${facturas}" th:if="${facturas.getTotalElements() > 0}")>
-									<td th:text="${factura.fechaCorte}"></td>
-									<td th:text="${factura.fechaVencimiento}"></td>
-									<td th:text="${factura.condomino.nombre}"></td>
+									<td th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}"></td>
+									<td th:text="${#dates.format(factura.fechaVencimiento, 'dd/MM/yyyy')}"></td>
 									<td th:text="${factura.condomino.interior}"></td>
-									<td th:text="${factura.saldoAnterior}"></td>
-									<td th:text="${factura.importePagos}"></td>
-									<td th:text="${factura.importeCargos}"></td>
-									<td th:text="${factura.saldo}"></td>
+									<td th:text="${factura.condomino.nombre}"></td>
+									<td class="text-end" th:text="${#numbers.formatDecimal(factura.saldoAnterior, 1, 'COMMA', 2, 'POINT')}"></td>
+									<td class="text-end" th:text="${#numbers.formatDecimal(factura.importePagos, 1, 'COMMA', 2, 'POINT')}"></td>
+									<td class="text-end" th:text="${#numbers.formatDecimal(factura.importeCargos, 1, 'COMMA', 2, 'POINT')}"></td>
+									<td class="text-end" th:text="${#numbers.formatDecimal(factura.saldo, 1, 'COMMA', 2, 'POINT')}"></td>
 								</tr>
 								<tr>
 									<td colspan="8" th:if="${facturas.getTotalElements() == 0}">No existen estados de corte</td>

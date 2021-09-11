@@ -47,11 +47,16 @@ public class FacturaServiceImpl implements FacturaService {
 					nuevaFactura.getImporteCargos());
 			nuevaFactura.setCondomino(c);
 			nuevaFactura.setFechaVencimiento(fechaVencimiento);
-			nuevaFactura.setFechaCorte(fechaVencimiento);
+			nuevaFactura.setFechaCorte(fechaCorte);
 			c.setSaldo(nuevaFactura.getSaldo());
 			facturaRepository.save(nuevaFactura);
 			condominoService.save(c);
 		});
+	}
+
+	@Override
+	public Page<Factura> findByCondomino_Id(String cid, Pageable pageable) {
+		return facturaRepository.findByCondomino_Id(cid, pageable);
 	}
 	
 	
