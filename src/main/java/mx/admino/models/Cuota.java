@@ -3,6 +3,7 @@ package mx.admino.models;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -11,8 +12,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Document(collection ="defCargos")
-public class DefCargo implements Serializable {
+@Document(collection ="cuotas")
+public class Cuota implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,11 +34,11 @@ public class DefCargo implements Serializable {
 	private String descripcion;
 
 	@NotNull
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaInicio;
 	
 	@NotNull
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaFin;
 
 	public String getId() {
@@ -86,5 +87,16 @@ public class DefCargo implements Serializable {
 
 	public void setImporte(Float importe) {
 		this.importe = importe;
+	}
+
+	public Cuota merge(@Valid Cuota cuota) {
+		
+		this.nombre = cuota.getNombre();
+		this.descripcion = cuota.getDescripcion();
+		this.fechaInicio = cuota.getFechaInicio();
+		this.fechaFin = cuota.getFechaFin();
+		this.importe = cuota.getImporte();
+		
+		return this;
 	}	
 }
