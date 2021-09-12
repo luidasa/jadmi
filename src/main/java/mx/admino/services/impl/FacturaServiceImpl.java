@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import mx.admino.models.CargoEstatus;
 import mx.admino.models.Factura;
+import mx.admino.models.PagoEstatus;
 import mx.admino.repositories.FacturaRepository;
 import mx.admino.services.CargoService;
 import mx.admino.services.CondominoService;
@@ -49,7 +51,11 @@ public class FacturaServiceImpl implements FacturaService {
 			nuevaFactura.setFechaVencimiento(fechaVencimiento);
 			nuevaFactura.setFechaCorte(fechaCorte);
 			c.setSaldo(nuevaFactura.getSaldo());
+			nuevaFactura.getPagos().stream().forEach(pago -> pago.setEstatus(PagoEstatus.FACTURADO));
+			nuevaFactura.getCargos().stream().forEach(cargo -> cargo.setEstatus(CargoEstatus.FACTURADO));
 			facturaRepository.save(nuevaFactura);
+			pagosService.saveAll(nuevaFactura.getPagos());
+			cargoService.saveAll(nuevaFactura.getCargos());
 			condominoService.save(c);
 		});
 	}

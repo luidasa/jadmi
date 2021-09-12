@@ -22,4 +22,6 @@ public interface PagoService {
 	Page<Pago> findByCondominoId(String cid, Pageable pageable);
 
 	List<Pago> findByCondomino_IdAndFechaPagadoBetween(String cid, Date fechaInicial, Date fechaFinal);
+
+	List<Pago> saveAll(List<Pago> pagos);
 }

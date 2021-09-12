@@ -46,4 +46,9 @@ public class PagoServiceImpl implements PagoService {
 		
 		return pagoRepository.findByCondomino_idAndFechaPagadoBetween(cid, fechaInicial, fechaFinal);
 	}
+
+	@Override
+	public List<Pago> saveAll(List<Pago> pagos) {
+		return pagoRepository.saveAll(pagos);
+	}
 }
