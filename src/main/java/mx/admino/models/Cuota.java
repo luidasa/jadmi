@@ -16,6 +16,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Cuota implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	public Cuota() {
+		this.status = CuotaStatus.REGISTRADO;
+	}
 
 	@Id
 	private String id;
@@ -41,6 +45,9 @@ public class Cuota implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaFin;
 
+	@NotNull
+	private CuotaStatus status;
+	
 	public String getId() {
 		return id;
 	}
@@ -89,6 +96,14 @@ public class Cuota implements Serializable {
 		this.importe = importe;
 	}
 
+	public CuotaStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(CuotaStatus status) {
+		this.status = status;
+	}
+
 	public Cuota merge(@Valid Cuota cuota) {
 		
 		this.nombre = cuota.getNombre();
@@ -96,6 +111,7 @@ public class Cuota implements Serializable {
 		this.fechaInicio = cuota.getFechaInicio();
 		this.fechaFin = cuota.getFechaFin();
 		this.importe = cuota.getImporte();
+		this.status = cuota.getStatus();
 		
 		return this;
 	}	

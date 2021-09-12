@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.Breadcrum;
 import mx.admino.models.Cuota;
+import mx.admino.models.CuotaStatus;
 import mx.admino.services.CuotaService;
 
 @Controller
@@ -28,7 +29,7 @@ public class CuotaController {
 
 	@Autowired
 	CuotaService cuotaService;
-	
+		
 	private List<Breadcrum> getBreadcrum(Cuota cuota) {
 
 		List<Breadcrum> x = new ArrayList<Breadcrum>();
@@ -99,7 +100,7 @@ public class CuotaController {
 			BindingResult binding,
 			RedirectAttributes flash,
 			Model model) {
-		String viewName = "cuotas/formularios";
+		String viewName = "cuotas/formulario";
 		Cuota cuotaDb = cuotaService.findById(id);
 		if (binding.hasErrors()) {
 			model.addAttribute("breadcrum", getBreadcrum(cuotaDb));
@@ -111,5 +112,31 @@ public class CuotaController {
 		viewName = "redirect:/cuotas";
 		flash.addFlashAttribute("alert_success", "Se actualizo la cuota para todos los condominos");		
 		return viewName ;
+	}
+	
+	@GetMapping("/cuotas/delete/{id}") 
+	public String getDelete(
+			@PathVariable String id,
+			RedirectAttributes flash,
+			Model model) {
+		
+		cuotaService.deleteById(id);
+		flash.addFlashAttribute("alert_success", "La cuota ha sido eliminado.");
+		return "redirect:/cuotas";
+	}
+	
+	@GetMapping("/cuotas/schedule/{id}")
+	public String getSchedule(
+			@PathVariable String id,
+			RedirectAttributes flash,
+			Model model) {
+		Cuota cuota = cuotaService.findById(id);
+		if (cuota.getStatus() == CuotaStatus.REGISTRADO) {
+			cuotaService.schedule(cuota);
+			flash.addFlashAttribute("alert_success", "Se hizo el calendario de pagos para los condominos.");
+		} else {
+			flash.addFlashAttribute("alert_danger", "No se puede generar el calendario para esta cuota.");
+		}
+		return "redirect:/cuotas";
 	}
 }

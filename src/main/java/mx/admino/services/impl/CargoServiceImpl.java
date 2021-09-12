@@ -46,4 +46,9 @@ public class CargoServiceImpl implements CargoService {
 		return cargoRepository.findByCondomino_IdAndFechaVencimientoBetween(cid, fechaCorte, fechaVencimiento);
 	}
 
+	@Override
+	public void saveAll(List<Cargo> cargos) {
+		cargoRepository.saveAll(cargos);
+	}
+
 }

@@ -14,6 +14,19 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Document(collection="cargos")
 public class Cargo implements Serializable {
 
+	public Cargo() {
+		this.status = CargoStatus.PENDIENTE;
+	}
+	
+	public Cargo(@NotNull Condomino condomino, @NotNull Float importe, @NotEmpty @NotBlank String concepto,
+			@NotNull Date fechaVencimiento) {
+		this();
+		this.condomino = condomino;
+		this.importe = importe;
+		this.concepto = concepto;
+		this.fechaVencimiento = fechaVencimiento;
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -28,6 +41,9 @@ public class Cargo implements Serializable {
 	@NotEmpty
 	@NotBlank
 	private String concepto;
+	
+	@NotNull
+	private CargoStatus status;
 	
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -71,5 +87,13 @@ public class Cargo implements Serializable {
 
 	public void setCondomino(Condomino condomino) {
 		this.condomino = condomino;
+	}
+
+	public CargoStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(CargoStatus status) {
+		this.status = status;
 	}
 }

@@ -21,7 +21,7 @@
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>				
 			</header>
-			<form th:action="@{/cuotas/nuevo}" method="post" th:object="${cuota}">
+			<form th:action="@{/cuotas/{id}(id=${cuota.id != null ? cuota.id : 'nuevo'})}" method="post" th:object="${cuota}">
 				<div class="card">
 					<div class="card-header py-3">
 						Captura los datos del cuota acordada
@@ -71,7 +71,10 @@
 						  </div>
 					</div>
 					<div class="card-footer text-end">
-						  <button type="submit" class="btn btn-primary">Guardar</button>
+						<a class="btn btn-danger" th:href="@{/cuotas/delete/{id}(id=${cuota.id})}">Borrar</a>
+						<a class="btn btn-warning" th:href="@{/cuotas/cancel/{id}(id=${cuota.id})}">Cancelar</a>
+						<a class="btn btn-secondary" th:href="@{/cuotas/schedule/{id}(id=${cuota.id})}" th:if="${cuota.status == T(mx.admino.models.CuotaStatus).REGISTRADO}">Planificar</a>
+						<button type="submit" class="btn btn-primary" th:if="${cuota.status == T(mx.admino.models.CuotaStatus).REGISTRADO}">Guardar</button>
 					</div>
 				</div>
 			</form>

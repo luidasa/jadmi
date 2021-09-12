@@ -13,4 +13,8 @@ public interface CuotaService {
 
 	Cuota findById(String id);
 
+	void deleteById(String id);
+
+	void schedule(Cuota cuota);
+
 }
