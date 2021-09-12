@@ -33,6 +33,7 @@
 									<th scope="col">Fecha de pago</th>
 									<th scope="col">Interior</th>
 									<th scope="col">Dueño</th>
+									<th scope="col">Estatus</th>
 									<th scope="col">Importe</th>
 								</tr>
 							</thead>
@@ -46,11 +47,12 @@
 										<span th:if="${pago.condomino == null}">No identificado</span>
 									</td>
 									<td th:text="${pago.condomino?.nombre}">Otto</td>
+									<td th:text="${pago.estatus}">Otto</td>
 									<td class="text-end" th:text="${#numbers.formatDecimal(pago.importe, 3, 'COMMA', 2, 'POINT')}">
 									</td>
 								</tr>
 								<tr th:if="${pagos.getTotalElements() == 0}" >
-									<td colspan="4">No hay pagos registrados</td>
+									<td colspan="5">No hay pagos registrados</td>
 								</tr>
 							</tbody>
 						</table>

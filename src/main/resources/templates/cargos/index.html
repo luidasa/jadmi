@@ -34,6 +34,7 @@
 									<th scope="col">Interior</th>
 									<th scope="col">Dueño</th>
 									<th scope="col">Concepto</th>
+									<th scope="col">Estatus</th>
 									<th scope="col">Importe</th>
 								</tr>
 							</thead>
@@ -43,10 +44,11 @@
 									<td th:text="${cargo.condomino.interior}">Otto</td>
 									<td th:text="${cargo.condomino.nombre}">@mdo</td>
 									<td th:text="${cargo.concepto}">Mark</td>
+									<td th:text="${cargo.estatus}">Mark</td>
 									<td class="text-end" th:text="${#numbers.formatDecimal(cargo.importe, 3, 'COMMA', 2, 'POINT')}">@mdo</td>
 								</tr>
 								<tr th:if="${cargos.getTotalElements() == 0}">
-									<td colspan="5">No hay cargos registrados</td>
+									<td colspan="6">No hay cargos registrados</td>
 								</tr>
 							</tbody>
 						</table>
@@ -65,7 +67,7 @@
 									<li class="page-item" th:each="i : ${#numbers.sequence( 1, cargos.getTotalPages)}">
 										<a class="page-link" 
 											th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"  
-											th:href="@{/cargos(page=${i}, size=10)}" 
+											th:href="@{/cargos(cid=${param.cid}, page=${i}, size=10)}" 
 											th:text="${i}">1
 										</a>
 									</li>

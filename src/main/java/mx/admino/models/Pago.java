@@ -16,6 +16,10 @@ public class Pago implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	public Pago() {
+		this.estatus = PagoEstatus.PENDIENTE;
+	}
+	
 	@Id
 	private String id;
 	
@@ -24,6 +28,9 @@ public class Pago implements Serializable {
 	@NotNull
 	@DecimalMin("0.01") 
 	private Float importe;
+	
+	@NotNull
+	private PagoEstatus estatus;
 
 	@NotNull
 	@Past
@@ -60,5 +67,13 @@ public class Pago implements Serializable {
 
 	public void setFechaPagado(Date fechaPagado) {
 		this.fechaPagado = fechaPagado;
+	}
+
+	public PagoEstatus getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(PagoEstatus estatus) {
+		this.estatus = estatus;
 	}
 }

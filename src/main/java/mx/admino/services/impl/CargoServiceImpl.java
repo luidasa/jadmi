@@ -47,8 +47,10 @@ public class CargoServiceImpl implements CargoService {
 	}
 
 	@Override
-	public void saveAll(List<Cargo> cargos) {
-		cargoRepository.saveAll(cargos);
+	public List<Cargo> saveAll(List<Cargo> cargos) {
+		List<Cargo> x = cargoRepository.saveAll(cargos);
+		x.stream().forEach(c -> System.out.println(c));
+		return x;
 	}
 
 }

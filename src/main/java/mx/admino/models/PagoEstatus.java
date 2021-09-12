@@ -1,8 +1,9 @@
 package mx.admino.models;
 
-public enum CargoStatus {
-
+public enum PagoEstatus {
+	
 	PENDIENTE,
 	FACTURADO,
 	CANCELADO;
+
 }

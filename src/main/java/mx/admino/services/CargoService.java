@@ -22,6 +22,6 @@ public interface CargoService {
 
 	List<Cargo> findByCondomino_IdAdFechaVencimientoBetween(String cid, Date fechaCorte, Date fechaVencimiento);
 
-	void saveAll(List<Cargo> cargos);
+	List<Cargo> saveAll(List<Cargo> cargos);
 
 }

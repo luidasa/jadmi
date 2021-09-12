@@ -67,7 +67,7 @@ public class CuotaServiceImpl implements CuotaService {
 	public List<Cargo> getCargos(Cuota cuota, Condomino c) {
 		List<Cargo> cargos = new ArrayList<>();
 		
-		Date fecha = cuota.getFechaFin();
+		Date fecha = cuota.getFechaInicio();
 		while(fecha.before(cuota.getFechaFin())) {
 			cargos.add(new Cargo(c, cuota.getImporte(), cuota.getNombre(), fecha));
 			fecha = addMonths(fecha, 1);
