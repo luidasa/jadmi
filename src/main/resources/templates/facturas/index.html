@@ -42,7 +42,9 @@
 							</thead>
 							<tbody>
 								<tr th:each="factura: ${facturas}" th:if="${facturas.getTotalElements() > 0}")>
-									<td th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}"></td>
+									<td>
+										<a th:href="@{/facturas/{id}(id=${factura.id})}" th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}"></a>
+									</td>
 									<td th:text="${#dates.format(factura.fechaVencimiento, 'dd/MM/yyyy')}"></td>
 									<td th:text="${factura.condomino.interior}"></td>
 									<td th:text="${factura.condomino.nombre}"></td>
