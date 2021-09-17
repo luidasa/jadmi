@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import mx.admino.models.Breadcrum;
 import mx.admino.models.Condomino;
 import mx.admino.models.Factura;
+import mx.admino.services.CondominioService;
 import mx.admino.services.CondominoService;
 import mx.admino.services.FacturaService;
 
@@ -33,6 +34,9 @@ public class FacturasController {
 	
 	@Autowired
 	CondominoService condominoService;
+	
+	@Autowired
+	CondominioService condominioService;
 	
 	@ModelAttribute
 	private void getCondominios(Model model) {
@@ -101,6 +105,9 @@ public class FacturasController {
 	public String getFactura(
 			@PathVariable String id,
 			Model model) {
+		
+		model.addAttribute("factura", facturaService.findById(id));
+		model.addAttribute("condominio", condominioService.findFirst());
 		return "facturas/factura";
 	}
 }

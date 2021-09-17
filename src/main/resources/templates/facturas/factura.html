@@ -15,21 +15,89 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
 		</nav>
 
-		<div class="container mt-4">
-			<header>
-				<h1>Estados de cuenta</h1>
-				<nav th:replace="layouts/master::breadcrum"></nav>
-				<div th:replace="layouts/master::alerts"></div>				
-			</header>
-			<div class="card">
-				<div class="card-header">
-					Estados de cuenta generados en el sistema
-				</div>
-				<div class="card-body">
-
-
-				</div>
-				<div class="card-footer">
+		<div class="container-fluid mt-4 mb-4">
+			<div class="receipt-content">
+			    <div class="container bootstrap snippets bootdey">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="invoice-wrapper">
+								<div class="intro">
+									<strong th:text="${factura.condomino.nombre}">John McClane</strong>, 
+									<br>
+									<strong th:text="${factura.condomino.interior}">John McClane</strong>, 
+									<br>
+									Importe por pagar <strong th:text="${#numbers.formatDecimal(factura.saldo, 3, 'COMMA', 2, 'POINT')}">$312.00</strong> antes del <strong th:text="${#dates.format(factura.fechaVencimiento, 'dd/MM/yyyy')}"></strong>
+								</div>
+			
+								<div class="payment-info">
+									<div class="row">
+										<div class="col-sm-6">
+											<span>Factura numero</span>
+											<strong th:text="${factura.id}">434334343</strong>
+										</div>
+										<div class="col-sm-6 text-right">
+											<span>Fecha de corte</span>
+											<strong th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}">Jul 09, 2014 - 12:20 pm</strong>
+										</div>
+									</div>
+								</div>
+			
+								<div class="payment-details">
+									<div class="row">
+										<div class="col-sm-6">
+											<span>Condomino</span>
+											<strong th:text="${factura.condomino.nombre}">
+												Andres felipe posada
+											</strong>
+											<p>
+											</p>
+										</div>
+										<div class="col-sm-6 text-right">
+											<span>Paguese a</span>
+											<strong th:text="${condominio.nombre}">
+												Juan fernando arias
+											</strong>
+											<p>
+												<address th:utext="${condominio.domicilio}"></address>
+											</p>
+										</div>
+									</div>
+								</div>
+								
+								<table class="table table-striped line-items">
+									<thead class="headers">
+										<tr class="row">
+											<th class="col-md-9 text-center">Descripcion</th>
+											<th class="col-md-3 text-center">Importe</th>
+										</tr>
+									</thead>
+									<tbody class="items">
+										<tr class="row item">
+											<div class="col-xs-4 desc">
+												Html theme
+											</div>
+											<div class="col-xs-3 qty">
+												3
+											</div>
+											<div class="col-xs-5 amount text-right">
+												$60.00
+											</div>
+										</tr>
+									</tbody>
+									<tfoot class="total text-right">
+										<tr class="field">
+											<th class="text-right">Subtotal</th>
+											<th class="text-right">110</th>
+										</tr>
+									</tfoot>
+								</table>
+								
+								<div class="text-center">
+									<a class="btn btn-outline-default" href="#"><i class="fa fa-print"></i>Imprimir</a>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -37,6 +105,219 @@
 		<footer th:include="layouts/master::footer"></footer>
 		
 	</main>
+	
+	<style>
+.receipt-content .logo a:hover {
+  text-decoration: none;
+  color: #7793C4; 
+}
+
+.receipt-content .invoice-wrapper {
+  background: #FFF;
+  border: 1px solid #CDD3E2;
+  box-shadow: 0px 0px 1px #CCC;
+  padding: 40px 40px 60px;
+  margin-top: 40px;
+  border-radius: 4px; 
+}
+
+.receipt-content .invoice-wrapper .payment-details span {
+  color: #A9B0BB;
+  display: block; 
+}
+.receipt-content .invoice-wrapper .payment-details a {
+  display: inline-block;
+  margin-top: 5px; 
+}
+
+.receipt-content .invoice-wrapper .line-items .print a {
+  display: inline-block;
+  border: 1px solid #9CB5D6;
+  padding: 13px 13px;
+  border-radius: 5px;
+  color: #708DC0;
+  font-size: 13px;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -ms-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear; 
+}
+
+.receipt-content .invoice-wrapper .line-items .print a:hover {
+  text-decoration: none;
+  border-color: #333;
+  color: #333; 
+}
+
+.receipt-content {
+  background: #ECEEF4; 
+}
+@media (min-width: 1200px) {
+  .receipt-content .container {width: 900px; } 
+}
+
+.receipt-content .logo {
+  text-align: center;
+  margin-top: 50px; 
+}
+
+.receipt-content .logo a {
+  font-family: Myriad Pro, Lato, Helvetica Neue, Arial;
+  font-size: 36px;
+  letter-spacing: .1px;
+  color: #555;
+  font-weight: 300;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -ms-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear; 
+}
+
+.receipt-content .invoice-wrapper .intro {
+  line-height: 25px;
+  color: #444; 
+}
+
+.receipt-content .invoice-wrapper .payment-info {
+  margin-top: 25px;
+  padding-top: 15px; 
+}
+
+.receipt-content .invoice-wrapper .payment-info span {
+  color: #A9B0BB; 
+}
+
+.receipt-content .invoice-wrapper .payment-info strong {
+  display: block;
+  color: #444;
+  margin-top: 3px; 
+}
+
+@media (max-width: 767px) {
+  .receipt-content .invoice-wrapper .payment-info .text-right {
+  text-align: left;
+  margin-top: 20px; } 
+}
+.receipt-content .invoice-wrapper .payment-details {
+  border-top: 2px solid #EBECEE;
+  margin-top: 30px;
+  padding-top: 20px;
+  line-height: 22px; 
+}
+
+
+@media (max-width: 767px) {
+  .receipt-content .invoice-wrapper .payment-details .text-right {
+  text-align: left;
+  margin-top: 20px; } 
+}
+.receipt-content .invoice-wrapper .line-items {
+  margin-top: 40px; 
+}
+.receipt-content .invoice-wrapper .line-items .headers {
+  color: #A9B0BB;
+  font-size: 13px;
+  letter-spacing: .3px;
+  border-bottom: 2px solid #EBECEE;
+  padding-bottom: 4px; 
+}
+.receipt-content .invoice-wrapper .line-items .items {
+  margin-top: 8px;
+  border-bottom: 2px solid #EBECEE;
+  padding-bottom: 8px; 
+}
+.receipt-content .invoice-wrapper .line-items .items .item {
+  padding: 10px 0;
+  color: #696969;
+  font-size: 15px; 
+}
+@media (max-width: 767px) {
+  .receipt-content .invoice-wrapper .line-items .items .item {
+  font-size: 13px; } 
+}
+.receipt-content .invoice-wrapper .line-items .items .item .amount {
+  letter-spacing: 0.1px;
+  color: #84868A;
+  font-size: 16px;
+ }
+@media (max-width: 767px) {
+  .receipt-content .invoice-wrapper .line-items .items .item .amount {
+  font-size: 13px; } 
+}
+
+.receipt-content .invoice-wrapper .line-items .total {
+  margin-top: 30px; 
+}
+
+.receipt-content .invoice-wrapper .line-items .total .extra-notes {
+  float: left;
+  width: 40%;
+  text-align: left;
+  font-size: 13px;
+  color: #7A7A7A;
+  line-height: 20px; 
+}
+
+@media (max-width: 767px) {
+  .receipt-content .invoice-wrapper .line-items .total .extra-notes {
+  width: 100%;
+  margin-bottom: 30px;
+  float: none; } 
+}
+
+.receipt-content .invoice-wrapper .line-items .total .extra-notes strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #454545; 
+}
+
+.receipt-content .invoice-wrapper .line-items .total .field {
+  margin-bottom: 7px;
+  font-size: 14px;
+  color: #555; 
+}
+
+.receipt-content .invoice-wrapper .line-items .total .field.grand-total {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 500; 
+}
+
+.receipt-content .invoice-wrapper .line-items .total .field.grand-total span {
+  color: #20A720;
+  font-size: 16px; 
+}
+
+.receipt-content .invoice-wrapper .line-items .total .field span {
+  display: inline-block;
+  margin-left: 20px;
+  min-width: 85px;
+  color: #84868A;
+  font-size: 15px; 
+}
+
+.receipt-content .invoice-wrapper .line-items .print {
+  margin-top: 50px;
+  text-align: center; 
+}
+
+
+
+.receipt-content .invoice-wrapper .line-items .print a i {
+  margin-right: 3px;
+  font-size: 14px; 
+}
+
+.receipt-content .footer {
+  margin-top: 40px;
+  margin-bottom: 110px;
+  text-align: center;
+  font-size: 12px;
+  color: #969CAD; 
+}                    	
+	</style>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
 		integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
 		crossorigin="anonymous"></script>

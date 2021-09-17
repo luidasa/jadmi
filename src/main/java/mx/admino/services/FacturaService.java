@@ -15,4 +15,6 @@ public interface FacturaService {
 
 	Page<Factura> findByCondomino_Id(String cid, Pageable pageable);
 
+	Factura findById(String id);
+
 }

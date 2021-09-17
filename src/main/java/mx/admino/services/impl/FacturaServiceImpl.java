@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import mx.admino.exceptions.FacturaNotFound;
 import mx.admino.models.CargoEstatus;
 import mx.admino.models.Factura;
 import mx.admino.models.PagoEstatus;
@@ -63,6 +64,11 @@ public class FacturaServiceImpl implements FacturaService {
 	@Override
 	public Page<Factura> findByCondomino_Id(String cid, Pageable pageable) {
 		return facturaRepository.findByCondomino_Id(cid, pageable);
+	}
+
+	@Override
+	public Factura findById(String id) {
+		return facturaRepository.findById(id).orElseThrow(() -> new FacturaNotFound());
 	}
 	
 	

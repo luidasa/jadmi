@@ -8,6 +8,6 @@ public class PanelController {
 
 	@GetMapping("/panel")
 	public String getIndex() {
-		return "panel";
+		return "panel/index";
 	}
 }
