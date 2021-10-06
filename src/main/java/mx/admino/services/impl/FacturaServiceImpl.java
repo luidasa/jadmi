@@ -39,7 +39,7 @@ public class FacturaServiceImpl implements FacturaService {
 	
 	@Override
 	public void generate(Date fechaCorte, Date fechaVencimiento) {
-	
+		
 		condominoService.findAll().stream().forEach(c -> {
 			Factura nuevaFactura = new Factura();
 			nuevaFactura.setSaldoAnterior(c.getSaldo());

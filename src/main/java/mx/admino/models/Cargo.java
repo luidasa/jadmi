@@ -99,8 +99,11 @@ public class Cargo implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Cargo [id=" + id + ", condomino=" + condomino.getInterior() + ", importe=" + importe + ", concepto=" + concepto
-				+ ", status=" + estatus + ", fechaVencimiento=" + fechaVencimiento + "]";
+		return "Cargo [condomino=" + condomino.getInterior() + 
+				", importe=" + importe + 
+				", concepto=" + concepto + 
+				", status=" + estatus + 
+				", fechaVencimiento=" + fechaVencimiento + "]";
 	}
 	
 }

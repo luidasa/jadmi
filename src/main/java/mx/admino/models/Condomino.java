@@ -99,8 +99,16 @@ public class Condomino implements Serializable {
 		this.correo = correo;
 	}
 
-	public void merge(Condomino condomino) {
+	public Float getSaldo() {
+		return saldo;
+	}
 
+	public void setSaldo(Float saldo) {
+		this.saldo = saldo;
+	}
+
+	public void merge(Condomino condomino) {
+		
 		this.setInterior(condomino.getInterior());
 		this.setNombre(condomino.getNombre());
 		this.setTelefono(condomino.getTelefono());
@@ -108,11 +116,13 @@ public class Condomino implements Serializable {
 		this.setSaldo(condomino.getSaldo());
 	}
 
-	public Float getSaldo() {
-		return saldo;
-	}
-
-	public void setSaldo(Float saldo) {
-		this.saldo = saldo;
+	@Override
+	public String toString() {
+		return "Condomino [username=" + username + 
+				", interior=" + interior + 
+				", nombre=" + nombre + 
+				", telefono=" + telefono + 
+				", correo=" + correo + 
+				", saldo=" + saldo + "]";
 	}
 }

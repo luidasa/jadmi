@@ -76,4 +76,12 @@ public class Pago implements Serializable {
 	public void setEstatus(PagoEstatus estatus) {
 		this.estatus = estatus;
 	}
+
+	@Override
+	public String toString() {
+		return "Pago [condomino=" + condomino + 
+				", importe=" + importe + 
+				", estatus=" + estatus + 
+				", fechaPagado=" + fechaPagado + "]";
+	}
 }

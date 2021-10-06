@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import mx.admino.models.Breadcrum;
 import mx.admino.models.Condomino;
 import mx.admino.models.Factura;
+import mx.admino.models.FacturaFormulario;
 import mx.admino.services.CondominioService;
 import mx.admino.services.CondominoService;
 import mx.admino.services.FacturaService;
@@ -65,7 +67,8 @@ public class FacturasController {
 			@ModelAttribute Factura factura,
 			Model model) {
 		
-		Pageable pageable = PageRequest.of(page - 1, rows);
+		Sort sort = Sort.by("fechaCorte", "asc");
+		Pageable pageable = PageRequest.of(page - 1, rows, sort);
 		Page<Factura> facturas ;
 		if (cid == null) {
 			facturas = facturaService.findAll(pageable);
@@ -79,7 +82,7 @@ public class FacturasController {
 	
 	@PostMapping("/facturas/generar")
 	public String postGenerar(
-			@Valid Factura factura,
+			@Valid FacturaFormulario factura,
 			BindingResult binding,
 			RedirectAttributes flash,
 			Model model) {

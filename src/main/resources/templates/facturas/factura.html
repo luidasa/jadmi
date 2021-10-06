@@ -15,91 +15,90 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
 		</nav>
 
-		<div class="container-fluid mt-4 mb-4">
-			<div class="receipt-content">
-			    <div class="container bootstrap snippets bootdey">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="invoice-wrapper">
-								<div class="intro">
-									<strong th:text="${factura.condomino.nombre}">John McClane</strong>, 
-									<br>
-									<strong th:text="${factura.condomino.interior}">John McClane</strong>, 
-									<br>
-									Importe por pagar <strong th:text="${#numbers.formatDecimal(factura.saldo, 3, 'COMMA', 2, 'POINT')}">$312.00</strong> antes del <strong th:text="${#dates.format(factura.fechaVencimiento, 'dd/MM/yyyy')}"></strong>
-								</div>
-			
-								<div class="payment-info">
-									<div class="row">
-										<div class="col-sm-6">
-											<span>Factura numero</span>
-											<strong th:text="${factura.id}">434334343</strong>
-										</div>
-										<div class="col-sm-6 text-right">
-											<span>Fecha de corte</span>
-											<strong th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}">Jul 09, 2014 - 12:20 pm</strong>
-										</div>
+		<div class="container-fluid py-4 bg-ligth">
+		    <div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="invoice-wrapper">
+							<div class="intro">
+								<strong th:text="${factura.condomino.nombre}">John McClane</strong>, 
+								<br>
+								<strong th:text="${factura.condomino.interior}">John McClane</strong>, 
+								<br>
+								Importe por pagar <strong th:text="${#numbers.formatDecimal(factura.saldo, 3, 'COMMA', 2, 'POINT')}">$312.00</strong> antes del <strong th:text="${#dates.format(factura.fechaVencimiento, 'dd/MM/yyyy')}"></strong>
+							</div>
+		
+							<div class="payment-info">
+								<div class="row">
+									<div class="col-sm-6">
+										<span>Factura numero</span>
+										<strong th:text="${factura.id}">434334343</strong>
 									</div>
-								</div>
-			
-								<div class="payment-details">
-									<div class="row">
-										<div class="col-sm-6">
-											<span>Condomino</span>
-											<strong th:text="${factura.condomino.nombre}">
-												Andres felipe posada
-											</strong>
-											<p>
-											</p>
-										</div>
-										<div class="col-sm-6 text-right">
-											<span>Paguese a</span>
-											<strong th:text="${condominio.nombre}">
-												Juan fernando arias
-											</strong>
-											<p>
-												<address th:utext="${condominio.domicilio}"></address>
-											</p>
-										</div>
+									<div class="col-sm-6 text-right">
+										<span>Fecha de corte</span>
+										<strong th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}">Jul 09, 2014 - 12:20 pm</strong>
 									</div>
-								</div>
-								
-								<table class="table table-striped line-items">
-									<thead class="headers">
-										<tr class="row">
-											<th class="col-md-9 text-center">Descripcion</th>
-											<th class="col-md-3 text-center">Importe</th>
-										</tr>
-									</thead>
-									<tbody class="items">
-										<tr class="row item">
-											<div class="col-xs-4 desc">
-												Html theme
-											</div>
-											<div class="col-xs-3 qty">
-												3
-											</div>
-											<div class="col-xs-5 amount text-right">
-												$60.00
-											</div>
-										</tr>
-									</tbody>
-									<tfoot class="total text-right">
-										<tr class="field">
-											<th class="text-right">Subtotal</th>
-											<th class="text-right">110</th>
-										</tr>
-									</tfoot>
-								</table>
-								
-								<div class="text-center">
-									<a class="btn btn-outline-default" href="#"><i class="fa fa-print"></i>Imprimir</a>
 								</div>
 							</div>
+		
+							<div class="payment-details">
+								<div class="row">
+									<div class="col-sm-6">
+										<span>Condomino</span>
+										<strong th:text="${factura.condomino.nombre}">
+											Andres felipe posada
+										</strong>
+										<p>
+										</p>
+									</div>
+									<div class="col-sm-6 text-right">
+										<span>Paguese a</span>
+										<strong th:text="${condominio.nombre}">
+											Juan fernando arias
+										</strong>
+										<p>
+											<address th:utext="${condominio.domicilio}"></address>
+										</p>
+									</div>
+								</div>
+							</div>
+							
+							<table class="table table-striped line-items">
+								<thead class="headers">
+									<tr class="row">
+										<th class="col-md-9 text-center">Descripcion</th>
+										<th class="col-md-3 text-center">Importe</th>
+									</tr>
+								</thead>
+								<tbody class="items">
+									<tr class="row item">
+										<div class="col-xs-4 desc">
+											Html theme
+										</div>
+										<div class="col-xs-3 qty">
+											3
+										</div>
+										<div class="col-xs-5 amount text-right">
+											$60.00
+										</div>
+									</tr>
+								</tbody>
+								<tfoot class="total text-right">
+									<tr class="field">
+										<th class="text-right">Subtotal</th>
+										<th class="text-right">110</th>
+									</tr>
+								</tfoot>
+							</table>
 						</div>
 					</div>
 				</div>
 			</div>
+			
+			<div class="text-center">
+				<a class="btn btn-default" href="#"><i data-feather="printer"></i>Imprimir</a>
+			</div>
+			
 		</div>
 		
 		<footer th:include="layouts/master::footer"></footer>

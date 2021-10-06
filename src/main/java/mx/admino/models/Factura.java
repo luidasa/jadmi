@@ -143,4 +143,20 @@ public class Factura implements Serializable {
 	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
+
+	@Override
+	public String toString() {
+		return "Factura [condomino=" + condomino + 
+				", cargos=" + cargos + 
+				", pagos=" + pagos + 
+				", fechaCorte=" + fechaCorte + 
+				", fechaVencimiento=" + fechaVencimiento + 
+				", facturaAnteriorFactura=" + facturaAnteriorFactura + 
+				", SaldoAnterior=" + SaldoAnterior + 
+				", importeCargos=" + importeCargos + 
+				", importePagos=" + importePagos + 
+				", Saldo=" + Saldo + "]";
+	}
+	
+	
 }
