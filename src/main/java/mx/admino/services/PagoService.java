@@ -24,4 +24,6 @@ public interface PagoService {
 	List<Pago> findByCondomino_IdAndFechaPagadoBetween(String cid, Date fechaInicial, Date fechaFinal);
 
 	List<Pago> saveAll(List<Pago> pagos);
+
+	List<Pago> findByFechaPagadoBetween(Date fechaCorte, Date fechaFinal);
 }

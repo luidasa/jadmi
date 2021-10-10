@@ -17,4 +17,6 @@ public interface CargoRepository extends MongoRepository<Cargo, String> {
 
 	List<Cargo> findByCondomino_IdAndFechaVencimientoBetween(String cid, Date fechaCorte, Date fechaVencimiento);
 
+	List<Cargo> findByFechaVencimientoBetween(Date fechaCorte, Date fechaFinal);
+
 }

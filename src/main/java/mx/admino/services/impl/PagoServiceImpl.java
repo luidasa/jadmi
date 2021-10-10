@@ -9,15 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import mx.admino.models.Pago;
+import mx.admino.models.PagoEstatus;
 import mx.admino.repositories.PagoRepository;
 import mx.admino.services.PagoService;
 
 @Service
 public class PagoServiceImpl implements PagoService {
 
+	@Autowired
+	MongoTemplate template;
+	
 	@Autowired
 	PagoRepository pagoRepository;
 	
@@ -50,5 +57,20 @@ public class PagoServiceImpl implements PagoService {
 	@Override
 	public List<Pago> saveAll(List<Pago> pagos) {
 		return pagoRepository.saveAll(pagos);
+	}
+
+	@Override
+	public List<Pago> findByFechaPagadoBetween(Date fechaCorte, Date fechaFinal) {
+
+		List<Pago> pagos = template.find(
+				  Query.query(
+						  Criteria
+						  	.where("FechaPagado")
+						  	.gte(fechaCorte)
+						  	.lte(fechaFinal)
+						  	.and("estatus")
+						  	.is(PagoEstatus.PENDIENTE)), Pago.class);
+		//return pagoRepository.findByFechaPagadoGreaterThanAndLessThan(fechaCorte, fechaFinal);
+		return pagos;
 	}
 }

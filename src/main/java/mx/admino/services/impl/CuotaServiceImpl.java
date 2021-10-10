@@ -14,7 +14,7 @@ import mx.admino.exceptions.CuotaNotFound;
 import mx.admino.models.Cargo;
 import mx.admino.models.Condomino;
 import mx.admino.models.Cuota;
-import mx.admino.models.CuotaStatus;
+import mx.admino.models.CuotaEstatus;
 import mx.admino.repositories.CuotaRepository;
 import mx.admino.services.CargoService;
 import mx.admino.services.CondominoService;
@@ -60,7 +60,7 @@ public class CuotaServiceImpl implements CuotaService {
 			List<Cargo> cargos = this.getCargos(cuota, c);
 			cargoService.saveAll(cargos);
 		});
-		cuota.setStatus(CuotaStatus.PLANEADO);
+		cuota.setEstatus(CuotaEstatus.PLANEADO);
 		this.save(cuota);
 	}
 

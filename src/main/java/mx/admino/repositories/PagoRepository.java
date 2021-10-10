@@ -17,4 +17,6 @@ public interface PagoRepository extends MongoRepository<Pago, String> {
 
 	List<Pago> findByCondomino_idAndFechaPagadoBetween(String cid, Date fechaInicial, Date fechaFinal);
 
+	List<Pago> findByFechaPagadoBetween(Date fechaCorte, Date fechaFinal);
+
 }

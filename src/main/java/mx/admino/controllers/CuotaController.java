@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.Breadcrum;
 import mx.admino.models.Cuota;
-import mx.admino.models.CuotaStatus;
+import mx.admino.models.CuotaEstatus;
 import mx.admino.services.CuotaService;
 
 @Controller
@@ -131,7 +131,7 @@ public class CuotaController {
 			RedirectAttributes flash,
 			Model model) {
 		Cuota cuota = cuotaService.findById(id);
-		if (cuota.getStatus() == CuotaStatus.REGISTRADO) {
+		if (cuota.getEstatus() == CuotaEstatus.REGISTRADO) {
 			cuotaService.schedule(cuota);
 			flash.addFlashAttribute("alert_success", "Se hizo el calendario de pagos para los condominos.");
 		} else {

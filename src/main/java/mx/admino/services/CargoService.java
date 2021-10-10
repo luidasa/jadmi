@@ -24,4 +24,6 @@ public interface CargoService {
 
 	List<Cargo> saveAll(List<Cargo> cargos);
 
+	List<Cargo> findByFechaVencimientoBetween(Date fechaCorte, Date fechaFinal);
+
 }

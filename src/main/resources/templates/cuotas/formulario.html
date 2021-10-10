@@ -73,8 +73,8 @@
 					<div class="card-footer text-end">
 						<a class="btn btn-danger" th:href="@{/cuotas/delete/{id}(id=${cuota.id})}">Borrar</a>
 						<a class="btn btn-warning" th:href="@{/cuotas/cancel/{id}(id=${cuota.id})}">Cancelar</a>
-						<a class="btn btn-secondary" th:href="@{/cuotas/schedule/{id}(id=${cuota.id})}" th:if="${cuota.status == T(mx.admino.models.CuotaStatus).REGISTRADO}">Planificar</a>
-						<button type="submit" class="btn btn-primary" th:if="${cuota.status == T(mx.admino.models.CuotaStatus).REGISTRADO}">Guardar</button>
+						<a class="btn btn-secondary" th:href="@{/cuotas/schedule/{id}(id=${cuota.id})}" th:if="${cuota.estatus == T(mx.admino.models.CuotaEstatus).REGISTRADO}">Planificar</a>
+						<button type="submit" class="btn btn-primary" th:if="${cuota.estatus == T(mx.admino.models.CuotaEstatus).REGISTRADO}">Guardar</button>
 					</div>
 				</div>
 			</form>

@@ -1,6 +1,6 @@
 package mx.admino.models;
 
-public enum CuotaStatus {
+public enum CuotaEstatus {
 
 	REGISTRADO,
 	PLANEADO,

@@ -8,15 +8,22 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import mx.admino.exceptions.CargoNotFound;
 import mx.admino.models.Cargo;
+import mx.admino.models.CargoEstatus;
 import mx.admino.repositories.CargoRepository;
 import mx.admino.services.CargoService;
 
 @Service
 public class CargoServiceImpl implements CargoService {
+	
+	@Autowired
+	MongoTemplate template;
 	
 	@Autowired
 	CargoRepository cargoRepository;
@@ -51,6 +58,18 @@ public class CargoServiceImpl implements CargoService {
 		List<Cargo> x = cargoRepository.saveAll(cargos);
 		x.stream().forEach(c -> System.out.println(c));
 		return x;
+	}
+
+	@Override
+	public List<Cargo> findByFechaVencimientoBetween(Date fechaCorte, Date fechaFinal) {
+		List<Cargo> cargos = template.find(
+				Query.query(Criteria.where("FechaVencimiento")
+						.gte(fechaCorte)
+						.lte(fechaFinal)
+						.and("estatus")
+						.is(CargoEstatus.PENDIENTE)), Cargo.class);
+		//return cargoRepository.findByFechaVencimientoBetween(fechaCorte, fechaFinal);
+		return cargos;
 	}
 
 }
