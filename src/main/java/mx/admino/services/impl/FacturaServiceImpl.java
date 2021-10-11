@@ -47,9 +47,6 @@ public class FacturaServiceImpl implements FacturaService {
 		List<Pago> pagos = pagosService.findByFechaPagadoBetween(fechaCorte, fechaFinal);				
 		List<Cargo> cargos = cargoService.findByFechaVencimientoBetween(fechaCorte, fechaFinal);
 		
-		System.out.println("pagos " + pagos.size());
-		System.out.println("cargos " + cargos.size());
-
 		condominoService.findAll().stream().forEach(c -> {
 			Factura nuevaFactura = new Factura();
 			nuevaFactura.setSaldoAnterior(c.getSaldo());
@@ -89,6 +86,7 @@ public class FacturaServiceImpl implements FacturaService {
 					return p;
 				})
 				.collect(Collectors.toList()));
+
 		cargoService.saveAll(
 				cargos.stream()
 					.map(p -> {
@@ -107,6 +105,4 @@ public class FacturaServiceImpl implements FacturaService {
 	public Factura findById(String id) {
 		return facturaRepository.findById(id).orElseThrow(() -> new FacturaNotFound());
 	}
-	
-	
 }

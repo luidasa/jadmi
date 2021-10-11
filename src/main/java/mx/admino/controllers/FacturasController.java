@@ -67,7 +67,7 @@ public class FacturasController {
 			@ModelAttribute Factura factura,
 			Model model) {
 		
-		Sort sort = Sort.by("fechaCorte", "asc");
+		Sort sort = Sort.by("fechaCorte", "asc").and(Sort.by("condomino.id", "asc"));
 		Pageable pageable = PageRequest.of(page - 1, rows, sort);
 		Page<Factura> facturas ;
 		if (cid == null) {
