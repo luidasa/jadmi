@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import mx.admino.models.Cargo;
+import mx.admino.models.CargoEstatus;
 
 @Repository
 public interface CargoRepository extends MongoRepository<Cargo, String> {
@@ -18,5 +19,7 @@ public interface CargoRepository extends MongoRepository<Cargo, String> {
 	List<Cargo> findByCondomino_IdAndFechaVencimientoBetween(String cid, Date fechaCorte, Date fechaVencimiento);
 
 	List<Cargo> findByFechaVencimientoBetween(Date fechaCorte, Date fechaFinal);
+
+	List<Cargo> findByFechaVencimientoBeforeAndEstatus(Date fechaCorte, CargoEstatus estatus);
 
 }

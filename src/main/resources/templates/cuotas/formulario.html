@@ -68,7 +68,26 @@
 						    <div id="importeHelp" class="form-text invalid-feedback"
 						    	th:if="${#fields.hasErrors('importe')}" th:errors="*{importe}">Importe</div>
 						  </div>
+						  <div class="col">
+						    <label for="importe" class="form-label">Importe desocupado</label>
+						    <input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp" 
+						    	th:field="${cuota.importeDesocupado}"
+						    	th:classappend="${#fields.hasErrors('importeDesocupado')} ? is-invalid : is-valid">						    	
+						    <div id="importeHelp" class="form-text invalid-feedback"
+						    	th:if="${#fields.hasErrors('importeDesocupado')}" th:errors="*{importeDesocupado}">Importe</div>
 						  </div>
+						</div>
+						<div class="row mb-3">
+						  <div class="col">
+							<div class="form-check">
+							  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" th:field="${cuota.esCompletaSiVacia}">
+							  <label class="form-check-label" for="flexCheckDefault">
+							    Cuota especial si esta vacía
+							  </label>
+							</div>
+						  </div>
+						  <div class="col"></div>
+						</div>
 					</div>
 					<div class="card-footer text-end">
 						<a class="btn btn-danger" th:href="@{/cuotas/delete/{id}(id=${cuota.id})}">Borrar</a>

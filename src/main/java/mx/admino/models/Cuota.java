@@ -31,6 +31,10 @@ public class Cuota implements Serializable {
 	
 	@NotNull
 	private Float importe;
+
+	private Float importeDesocupado;
+	
+	private Boolean esCompletaSiVacia;
 	
 	@NotNull
 	@NotEmpty
@@ -41,7 +45,6 @@ public class Cuota implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaInicio;
 	
-	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaFin;
 
@@ -112,7 +115,26 @@ public class Cuota implements Serializable {
 		this.fechaFin = cuota.getFechaFin();
 		this.importe = cuota.getImporte();
 		this.estatus = cuota.getEstatus();
+		this.esCompletaSiVacia = cuota.getEsCompletaSiVacia();
+		this.importeDesocupado = cuota.getImporteDesocupado();
 		
 		return this;
-	}	
+	}
+
+	public Boolean getEsCompletaSiVacia() {
+		return esCompletaSiVacia;
+	}
+
+	public void setEsCompletaSiVacia(Boolean esCompletaSiVacia) {
+		this.esCompletaSiVacia = esCompletaSiVacia;
+	}
+
+	public Float getImporteDesocupado() {
+		return importeDesocupado;
+	}
+
+	public void setImporteDesocupado(Float importeDesocupado) {
+		this.importeDesocupado = importeDesocupado;
+	}
+
 }

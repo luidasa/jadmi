@@ -15,10 +15,23 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
 		</nav>
 
+		<br>
 		<div class="container-fluid py-4 bg-ligth">
 		    <div class="container">
+		
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-sm-12">
+						<h1 class="text-center" th:text="${condominio.nombre}"></h1>
+					</div>
+				</div>
+				<br>
+		
+				<hr>
+				<div class="row">
+					<div class="col-sm-6">
+						<span>Factura numero</span>
+						<strong th:text="${factura.id}">434334343</strong>
+						<br>
 						<div class="invoice-wrapper">
 							<div class="text-left">
 								<strong th:text="${factura.condomino.nombre}">John McClane</strong>, 
@@ -26,27 +39,34 @@
 								<strong th:text="${factura.condomino.interior}">John McClane</strong>, 
 								<br>
 								<address th:utext="${condominio.domicilio}"></address>
-								<br>
-								Saldo inicial<strong th:text="${#numbers.formatDecimal(factura.saldoAnterior, 3, 'COMMA', 2, 'POINT')}">$312.00</strong>
-								<br>
-								Saldo <strong th:text="${#numbers.formatDecimal(factura.saldo, 3, 'COMMA', 2, 'POINT')}">$312.00</strong>
-								<br>
 							</div>
 						</div>
-					</div>
-				</div>
-		
-				<div class="row">
-					<div class="col-sm-6">
-						<span>Factura numero</span>
-						<strong th:text="${factura.id}">434334343</strong>
+
 					</div>
 					<div class="col-sm-6 text-end">
+						<span>Saldo inicial</span>
+						<strong th:text="${#numbers.formatDecimal(factura.saldoAnterior, 3, 'COMMA', 2, 'POINT')}">$312.00</strong>
+						<br>
+						<span>Pagos realizados</span>
+						<strong th:text="${#numbers.formatDecimal(factura.getImportePagos, 3, 'COMMA', 2, 'POINT')}">$312.00</strong>
+						<br>
+						<span>Cuotas a pagar</span>
+						<strong th:text="${#numbers.formatDecimal(factura.getImporteCargos, 3, 'COMMA', 2, 'POINT')}">$312.00</strong>
+						<br>
+						<span>Saldo final</span>
+						<strong th:text="${#numbers.formatDecimal(factura.saldo, 3, 'COMMA', 2, 'POINT')}">$312.00</strong>
+						<br>
 						<span>Fecha de corte</span>
 						<strong th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}">Jul 09, 2014 - 12:20 pm</strong>
 						<br>
 						Paguese antes del <strong th:text="${#dates.format(factura.fechaVencimiento, 'dd/MM/yyyy')}"></strong>
 						<br>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-sm-12">
+						<h3>Movimientos</h3>
 					</div>
 				</div>
 				<div class="row">

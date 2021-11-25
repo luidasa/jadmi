@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import mx.admino.models.Pago;
+import mx.admino.models.PagoEstatus;
 
 @Repository
 public interface PagoRepository extends MongoRepository<Pago, String> {
@@ -19,4 +20,5 @@ public interface PagoRepository extends MongoRepository<Pago, String> {
 
 	List<Pago> findByFechaPagadoBetween(Date fechaCorte, Date fechaFinal);
 
+	List<Pago> findByFechaPagadoBeforeAndEstatus(Date fechaCorte, PagoEstatus estatus);
 }

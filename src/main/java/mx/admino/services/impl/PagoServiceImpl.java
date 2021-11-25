@@ -60,17 +60,35 @@ public class PagoServiceImpl implements PagoService {
 	}
 
 	@Override
-	public List<Pago> findByFechaPagadoBetween(Date fechaCorte, Date fechaFinal) {
+	public List<Pago> findByFechaPagadoBetweenAndStatus(Date fechaInicio, Date fechaFinal, PagoEstatus estatus) {
 
 		List<Pago> pagos = template.find(
 				  Query.query(
 						  Criteria
 						  	.where("FechaPagado")
-						  	.gte(fechaCorte)
+						  	.gte(fechaInicio)
 						  	.lte(fechaFinal)
 						  	.and("estatus")
-						  	.is(PagoEstatus.PENDIENTE)), Pago.class);
+						  	.is(estatus)), Pago.class);
 		//return pagoRepository.findByFechaPagadoGreaterThanAndLessThan(fechaCorte, fechaFinal);
 		return pagos;
+	}
+
+	@Override
+	public List<Pago> findByFechaPagadoBetween(Date fechaInicio, Date fechaFinal) {
+
+		List<Pago> pagos = template.find(
+				  Query.query(
+						  Criteria
+						  	.where("FechaPagado")
+						  	.gte(fechaInicio)
+						  	.lte(fechaFinal)), Pago.class);
+		//return pagoRepository.findByFechaPagadoGreaterThanAndLessThan(fechaCorte, fechaFinal);
+		return pagos;
+	}
+
+	@Override
+	public List<Pago> findByFechaPagadoBeforeAndEstatus(Date fechaCorte, PagoEstatus estatus) {
+		return pagoRepository.findByFechaPagadoBeforeAndEstatus(fechaCorte, estatus);
 	}
 }

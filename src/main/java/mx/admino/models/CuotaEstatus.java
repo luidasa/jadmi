@@ -4,5 +4,6 @@ public enum CuotaEstatus {
 
 	REGISTRADO,
 	PLANEADO,
+	FINALIZADO,
 	CANCELADO;
 }

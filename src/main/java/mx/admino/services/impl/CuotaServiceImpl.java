@@ -69,7 +69,11 @@ public class CuotaServiceImpl implements CuotaService {
 		
 		Date fecha = cuota.getFechaInicio();
 		while(fecha.before(cuota.getFechaFin())) {
-			cargos.add(new Cargo(c, cuota.getImporte(), cuota.getNombre(), fecha));
+			if (cuota.getEsCompletaSiVacia() && c.getEstaDesocupada()) {
+				cargos.add(new Cargo(c, cuota.getImporteDesocupado(), cuota.getNombre(), fecha));				
+			} else {
+				cargos.add(new Cargo(c, cuota.getImporte(), cuota.getNombre(), fecha));				
+			}
 			fecha = addMonths(fecha, 1);
 		}
 		
@@ -85,5 +89,10 @@ public class CuotaServiceImpl implements CuotaService {
         } else {
             return null;
         }
+	}
+
+	@Override
+	public List<Cuota> findByEstatus(CuotaEstatus estatus) {
+		return cuotaRepository.findByEstatus(estatus);
 	}
 }

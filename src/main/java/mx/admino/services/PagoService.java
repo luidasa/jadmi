@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import mx.admino.models.Pago;
+import mx.admino.models.PagoEstatus;
 
 public interface PagoService {
 
@@ -26,4 +27,9 @@ public interface PagoService {
 	List<Pago> saveAll(List<Pago> pagos);
 
 	List<Pago> findByFechaPagadoBetween(Date fechaCorte, Date fechaFinal);
+
+	List<Pago> findByFechaPagadoBeforeAndEstatus(Date fechaCorte, PagoEstatus pendiente);
+
+	List<Pago> findByFechaPagadoBetweenAndStatus(Date fechaInicio, Date fechaFinal, PagoEstatus estatus);
+
 }

@@ -27,6 +27,13 @@ public class Cargo implements Serializable {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
+	public Cargo(Condomino condomino, Cuota cuota, Date fechaVencimiento) {
+		this(condomino,
+			condomino.getEstaDesocupada() && !cuota.getEsCompletaSiVacia() ? cuota.getImporteDesocupado(): cuota.getImporte(),
+			cuota.getDescripcion(),
+			fechaVencimiento);
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	@Id

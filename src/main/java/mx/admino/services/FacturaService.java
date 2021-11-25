@@ -11,7 +11,7 @@ public interface FacturaService {
 
 	Page<Factura> findAll(Pageable pageable);
 
-	void generate(Date fechaCorte, Date fechaVencimiento);
+	void generate(Date fechaInicioCorte, Date fechaCorte, Date fechaVencimiento);
 
 	Page<Factura> findByCondomino_Id(String cid, Pageable pageable);
 

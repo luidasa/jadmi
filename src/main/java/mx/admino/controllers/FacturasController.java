@@ -65,9 +65,10 @@ public class FacturasController {
 			@RequestParam(required = false, defaultValue = "10") Integer rows,
 			@RequestParam(required = false) String cid,
 			@ModelAttribute Factura factura,
+			@ModelAttribute FacturaFormulario facturaFormulario,
 			Model model) {
 		
-		Sort sort = Sort.by("fechaCorte", "asc").and(Sort.by("condomino.id", "asc"));
+		Sort sort = Sort.by("fechaCorte", "desc").and(Sort.by("condomino.id", "asc"));
 		Pageable pageable = PageRequest.of(page - 1, rows, sort);
 		Page<Factura> facturas ;
 		if (cid == null) {
@@ -95,6 +96,7 @@ public class FacturasController {
 		}
 		
 		facturaService.generate(
+				factura.getFechaInicioCorte(),
 				factura.getFechaCorte(),
 				factura.getFechaVencimiento());
 		

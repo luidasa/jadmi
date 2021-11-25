@@ -63,7 +63,14 @@
 					    	th:classappend="${#fields.hasErrors('saldo')} ? is-invalid : is-valid">
 					    <div id="correoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('saldo')}" th:errors="*{saldo}">Correo</div>
 					  </div>
-					  </div>
+					</div>
+				  <div class="form-group">
+				    <label for="estaDesocupada" class="form-label">Esta desocupada</label>
+				    <input type="checkbox" id="estaDesocupada" area-describedby="estaDesocupadaHelp" 
+				    	th:field="${condomino.estaDesocupada}" th:classappend="${#fields.hasErrors('estaDesocupada')} ? is-invalid : is-valid"/>
+				    <div id="estaDesocupadaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('estaDesocupada')}" th:errors="*{estaDesocupada}">Nombre</div>
+				  </div>
+					
 				</div>
 				<div class="card-footer text-end">
 					<a class="btn btn-secondary" th:href="@{/facturas(cid=${condomino.id})}">Facturas</a>

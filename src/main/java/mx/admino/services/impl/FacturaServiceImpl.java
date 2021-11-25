@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.joda.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,12 +13,16 @@ import org.springframework.stereotype.Service;
 import mx.admino.exceptions.FacturaNotFound;
 import mx.admino.models.Cargo;
 import mx.admino.models.CargoEstatus;
+import mx.admino.models.Condomino;
+import mx.admino.models.Cuota;
+import mx.admino.models.CuotaEstatus;
 import mx.admino.models.Factura;
 import mx.admino.models.Pago;
 import mx.admino.models.PagoEstatus;
 import mx.admino.repositories.FacturaRepository;
 import mx.admino.services.CargoService;
 import mx.admino.services.CondominoService;
+import mx.admino.services.CuotaService;
 import mx.admino.services.FacturaService;
 import mx.admino.services.PagoService;
 
@@ -36,18 +41,39 @@ public class FacturaServiceImpl implements FacturaService {
 	@Autowired
 	CargoService cargoService;
 	
+	@Autowired
+	CuotaService cuotasService;
+	
 	@Override
 	public Page<Factura> findAll(Pageable pageable) {
 		return facturaRepository.findAll(pageable);
 	}
 	
+	
 	@Override
-	public void generate(Date fechaCorte, Date fechaFinal) {
+	public void generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento) {
 		
-		List<Pago> pagos = pagosService.findByFechaPagadoBetween(fechaCorte, fechaFinal);				
-		List<Cargo> cargos = cargoService.findByFechaVencimientoBetween(fechaCorte, fechaFinal);
+		List<Condomino> condominos = condominoService.findAll();
+		Interval periodoEC = new Interval(fechaInicio.getTime(), fechaCorte.getTime());
+		// Generamos los cargos que esten en ese rango.
+		List<Cuota> cuotas = cuotasService.findByEstatus(CuotaEstatus.REGISTRADO).stream()
+				.filter(c -> {
+						Interval periodoCuota = new Interval(c.getFechaInicio().getTime(), c.getFechaFin().getTime());
+						return periodoCuota.overlaps(periodoEC);
+				}).toList();
+		condominos.stream().forEach(condomino -> {
+				cuotas.forEach(cuota -> {
+				Cargo cargo = new Cargo(condomino, cuota, fechaVencimiento);
+				cargoService.save(cargo);
+			});			
+		});
+		// Buscamos los pagos realizados
+		List<Pago> pagos = pagosService.findByFechaPagadoBetweenAndStatus(fechaInicio, fechaCorte, PagoEstatus.PENDIENTE);
 		
-		condominoService.findAll().stream().forEach(c -> {
+		// Buscamos las cuotas que van a aplicar en ese periodo y ademas les generamos los cargos a cada condominio.
+		List<Cargo> cargos = cargoService.findByFechaVencimientoBetweenAndEstatus(fechaInicio, fechaCorte, CargoEstatus.PENDIENTE);
+		
+		condominos.stream().forEach(c -> {
 			Factura nuevaFactura = new Factura();
 			nuevaFactura.setSaldoAnterior(c.getSaldo());
 			nuevaFactura.setPagos(
@@ -70,7 +96,7 @@ public class FacturaServiceImpl implements FacturaService {
 					nuevaFactura.getImporteCargos() -
 					nuevaFactura.getImportePagos());
 			nuevaFactura.setCondomino(c);
-			nuevaFactura.setFechaVencimiento(fechaFinal);
+			nuevaFactura.setFechaVencimiento(fechaVencimiento);
 			nuevaFactura.setFechaCorte(fechaCorte);
 			c.setSaldo(nuevaFactura.getSaldo());
 			nuevaFactura.getPagos().stream().forEach(pago -> pago.setEstatus(PagoEstatus.FACTURADO));

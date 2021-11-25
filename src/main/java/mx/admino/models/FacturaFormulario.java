@@ -12,6 +12,10 @@ public class FacturaFormulario {
 
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date fechaInicioCorte;
+
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaCorte;
 	
 	@NotNull
@@ -40,5 +44,13 @@ public class FacturaFormulario {
 
 	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
+	}
+
+	public Date getFechaInicioCorte() {
+		return fechaInicioCorte;
+	}
+
+	public void setFechaInicioCorte(Date fechaInicioCorte) {
+		this.fechaInicioCorte = fechaInicioCorte;
 	}
 }

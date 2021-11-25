@@ -72,4 +72,21 @@ public class CargoServiceImpl implements CargoService {
 		return cargos;
 	}
 
+	@Override
+	public List<Cargo> findByFechaVencimientoBeforeAndEstatus(Date fechaCorte, CargoEstatus estatus) {
+		return cargoRepository.findByFechaVencimientoBeforeAndEstatus(fechaCorte, estatus);
+	}
+
+	@Override
+	public List<Cargo> findByFechaVencimientoBetweenAndEstatus(Date fechaInicio, Date fechaCorte,
+			CargoEstatus estatus) {
+
+		List<Cargo> cargos = template.find(
+				Query.query(Criteria.where("FechaVencimiento")
+						.gte(fechaInicio)
+						.lte(fechaCorte)
+						.and("estatus")
+						.is(estatus)), Cargo.class);
+		return cargos;
+	}
 }

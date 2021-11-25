@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import mx.admino.models.Cargo;
+import mx.admino.models.CargoEstatus;
 
 public interface CargoService {
 	
@@ -25,5 +26,9 @@ public interface CargoService {
 	List<Cargo> saveAll(List<Cargo> cargos);
 
 	List<Cargo> findByFechaVencimientoBetween(Date fechaCorte, Date fechaFinal);
+
+	List<Cargo> findByFechaVencimientoBeforeAndEstatus(Date fechaCorte, CargoEstatus estatus);
+
+	List<Cargo> findByFechaVencimientoBetweenAndEstatus(Date fechaInicio, Date fechaCorte, CargoEstatus pendiente);
 
 }

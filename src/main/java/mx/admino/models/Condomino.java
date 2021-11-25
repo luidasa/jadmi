@@ -24,6 +24,7 @@ public class Condomino implements Serializable {
 
 		this.interior = interior;
 		this.nombre = nombre;
+		this.estaDesocupada = false;
 	}
 
 	@Id
@@ -50,6 +51,8 @@ public class Condomino implements Serializable {
 	private String correo;
 		
 	private Float saldo;
+	
+	private Boolean estaDesocupada;
 	
 	public String getId() {
 		return id;
@@ -114,6 +117,7 @@ public class Condomino implements Serializable {
 		this.setTelefono(condomino.getTelefono());
 		this.setCorreo(condomino.getCorreo());
 		this.setSaldo(condomino.getSaldo());
+		this.setEstaDesocupada(condomino.getEstaDesocupada());
 	}
 
 	@Override
@@ -124,5 +128,13 @@ public class Condomino implements Serializable {
 				", telefono=" + telefono + 
 				", correo=" + correo + 
 				", saldo=" + saldo + "]";
+	}
+
+	public Boolean getEstaDesocupada() {
+		return estaDesocupada;
+	}
+
+	public void setEstaDesocupada(Boolean estaDesocupada) {
+		this.estaDesocupada = estaDesocupada;
 	}
 }
