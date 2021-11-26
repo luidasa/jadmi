@@ -88,7 +88,12 @@ public class PagoServiceImpl implements PagoService {
 	}
 
 	@Override
-	public List<Pago> findByFechaPagadoBeforeAndEstatus(Date fechaCorte, PagoEstatus estatus) {
-		return pagoRepository.findByFechaPagadoBeforeAndEstatus(fechaCorte, estatus);
+	public List<Pago> findByFechaPagadoBeforeAndEstatus(Date fechaFinal, PagoEstatus estatus) {
+		List<Pago> pagos = template.find(
+				  Query.query(
+						  Criteria
+						  	.where("FechaPagado")
+						  	.lte(fechaFinal)), Pago.class);
+		return pagos;
 	}
 }

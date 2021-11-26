@@ -1,5 +1,6 @@
 package mx.admino.services.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,6 +9,10 @@ import org.joda.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 
 import mx.admino.exceptions.FacturaNotFound;
@@ -17,6 +22,7 @@ import mx.admino.models.Condomino;
 import mx.admino.models.Cuota;
 import mx.admino.models.CuotaEstatus;
 import mx.admino.models.Factura;
+import mx.admino.models.FacturaFiltro;
 import mx.admino.models.Pago;
 import mx.admino.models.PagoEstatus;
 import mx.admino.repositories.FacturaRepository;
@@ -31,6 +37,9 @@ public class FacturaServiceImpl implements FacturaService {
 
 	@Autowired
 	FacturaRepository facturaRepository;
+	
+	@Autowired
+	MongoTemplate template;
 
 	@Autowired
 	CondominoService condominoService;
@@ -51,24 +60,26 @@ public class FacturaServiceImpl implements FacturaService {
 	
 	
 	@Override
-	public void generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento) {
+	public List<Factura> generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento) {
 		
+		List<Factura> facturas = new ArrayList<>();
 		List<Condomino> condominos = condominoService.findAll();
 		Interval periodoEC = new Interval(fechaInicio.getTime(), fechaCorte.getTime());
-		// Generamos los cargos que esten en ese rango.
+		// Generamos los cargos que esten en ese rango dependiendo de la cuota que se haya registrado.
 		List<Cuota> cuotas = cuotasService.findByEstatus(CuotaEstatus.REGISTRADO).stream()
 				.filter(c -> {
 						Interval periodoCuota = new Interval(c.getFechaInicio().getTime(), c.getFechaFin().getTime());
 						return periodoCuota.overlaps(periodoEC);
 				}).toList();
+		System.out.print("Cuotas a facturar: " + cuotas.size());
 		condominos.stream().forEach(condomino -> {
 				cuotas.forEach(cuota -> {
 				Cargo cargo = new Cargo(condomino, cuota, fechaVencimiento);
 				cargoService.save(cargo);
 			});			
 		});
-		// Buscamos los pagos realizados
-		List<Pago> pagos = pagosService.findByFechaPagadoBetweenAndStatus(fechaInicio, fechaCorte, PagoEstatus.PENDIENTE);
+		// Buscamos los pagos realizados y que no hayan sido facturados con anterioridad.
+		List<Pago> pagos = pagosService.findByFechaPagadoBeforeAndEstatus(fechaCorte, PagoEstatus.PENDIENTE);
 		
 		// Buscamos las cuotas que van a aplicar en ese periodo y ademas les generamos los cargos a cada condominio.
 		List<Cargo> cargos = cargoService.findByFechaVencimientoBetweenAndEstatus(fechaInicio, fechaCorte, CargoEstatus.PENDIENTE);
@@ -102,6 +113,7 @@ public class FacturaServiceImpl implements FacturaService {
 			nuevaFactura.getPagos().stream().forEach(pago -> pago.setEstatus(PagoEstatus.FACTURADO));
 			nuevaFactura.getCargos().stream().forEach(cargo -> cargo.setEstatus(CargoEstatus.FACTURADO));
 			facturaRepository.save(nuevaFactura);
+			facturas.add(nuevaFactura);
 			condominoService.save(c);
 		});
 
@@ -120,6 +132,7 @@ public class FacturaServiceImpl implements FacturaService {
 						return p;
 					})
 					.collect(Collectors.toList()));
+		return facturas;
 	}
 
 	@Override
@@ -131,4 +144,38 @@ public class FacturaServiceImpl implements FacturaService {
 	public Factura findById(String id) {
 		return facturaRepository.findById(id).orElseThrow(() -> new FacturaNotFound());
 	}
+
+
+	@Override
+	public Factura generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento, Condomino condomino) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Page<Factura> search(FacturaFiltro filtro, Pageable pageable) {
+		
+		Criteria criterios = new Criteria();
+		
+		if (filtro.hasCondomino()) {
+			criterios.and("condomino.id").is(filtro.getCondomino().getId());
+		}
+		
+		if (filtro.hasFecha()) {
+			criterios.and("fechaCorte").gte(filtro.getFechaMinimo()).lte(filtro.getFechaMaxima());
+		}
+		
+		if (filtro.hasSaldo()) {
+			criterios.and("saldo").gte(filtro.getSaldoMinimo()).lte(filtro.getSaldoMaximo());
+		}
+		
+		Query query = Query.query(criterios);
+		List<Factura> facturas = template.find(query.with(pageable), Factura.class);
+		
+		return PageableExecutionUtils.getPage(
+				facturas, 
+		        pageable,
+		        () -> template.count(Query.of(query).limit(-1).skip(-1), Factura.class));	
+		}
 }

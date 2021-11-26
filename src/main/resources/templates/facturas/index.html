@@ -94,9 +94,11 @@
 			</div>
 		</div>
 		
+		
+		
 		<!-- Modal -->
 		<div class="modal fade" id="generarModal" tabindex="-1" aria-labelledby="generarModalLabel" aria-hidden="true">
-		  <form th:action="@{/facturas/generar}" method="post" th:object="${facturaFormulario}">
+		  <form th:action="@{/facturas/generar}" method="post" th:object="${facturaSolicitud}">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
 			      <div class="modal-header">
@@ -107,7 +109,7 @@
 			      	<div class="row">
 					  <div class="mb-3">
 					    <label for="condomino" class="form-label">Condomino</label>
-					    <select class="form-select" aria-describedby="condominoHelp" th:field="${facturaFormulario.condomino}">
+					    <select class="form-select" aria-describedby="condominoHelp" th:field="${facturaSolicitud.condomino}">
 					    <option value="">Todos</option>
 					    <option th:each="item: ${condominos}" th:value="${item.id}" th:text="${item.interior + ' ' + item.nombre}"></option>
 					    </select>
@@ -117,7 +119,7 @@
 					  <div class="mb-3">
 					    <label for="fechaInicioCorte" class="form-label">Fecha Inicio Corte</label>
 					    <input type="date" class="form-control" id="fechaInicioCorte" aria-describedby="fechaInicioCorteHelp" required
-					    	th:field="${facturaFormulario.fechaInicioCorte}"
+					    	th:field="${facturaSolicitud.fechaInicioCorte}"
 					    	th:classappend="${#fields.hasErrors('fechaInicioCorte')} ? is-invalid : is-valid">						    	
 					    <div id="fechaHelp" class="form-text invalid-feedback"
 					    	th:if="${#fields.hasErrors('fechaInicioCorte')}" th:errors="*{fechaInicioCorte}">Fecha inicio corte</div>
@@ -125,7 +127,7 @@
 					  <div class="mb-3">
 					    <label for="fechaCorte" class="form-label">Fecha Fin Corte</label>
 					    <input type="date" class="form-control" id="fechaCorte" aria-describedby="fechaCorteHelp" required
-					    	th:field="${facturaFormulario.fechaCorte}"
+					    	th:field="${facturaSolicitud.fechaCorte}"
 					    	th:classappend="${#fields.hasErrors('fechaCorte')} ? is-invalid : is-valid">						    	
 					    <div id="fechaHelp" class="form-text invalid-feedback"
 					    	th:if="${#fields.hasErrors('fechaCorte')}" th:errors="*{fechaCorte}">Fecha corte</div>
@@ -133,7 +135,7 @@
 					  <div class="mb-3">
 					    <label for="fechaVencimiento" class="form-label">Fecha Vencimiento</label>
 					    <input type="date" class="form-control" id="fechaVencimiento" aria-describedby="fechaHelp" required
-					    	th:field="${facturaFormulario.fechaVencimiento}"
+					    	th:field="${facturaSolicitud.fechaVencimiento}"
 					    	th:classappend="${#fields.hasErrors('fechaVencimiento')} ? is-invalid : is-valid">						    	
 					    <div id="fechaHelp" class="form-text invalid-feedback"
 					    	th:if="${#fields.hasErrors('fechaVencimiento')}" th:errors="*{fechaVencimiento}">Fecha vencimiento</div>

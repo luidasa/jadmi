@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class FacturaFormulario {
+public class FacturaSolicitud {
 
 	private Condomino condomino;
 
