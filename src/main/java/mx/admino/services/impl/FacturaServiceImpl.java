@@ -156,14 +156,16 @@ public class FacturaServiceImpl implements FacturaService {
 	@Override
 	public Page<Factura> search(FacturaFiltro filtro, Pageable pageable) {
 		
-		Criteria criterios = new Criteria();
+		Criteria criterios = Criteria.where("fechaCorte").is(filtro.getFechaCorte());
 		
 		if (filtro.hasCondomino()) {
 			criterios.and("condomino.id").is(filtro.getCondomino().getId());
 		}
 		
 		if (filtro.hasFecha()) {
-			criterios.and("fechaCorte").gte(filtro.getFechaMinimo()).lte(filtro.getFechaMaxima());
+			criterios.and("fechaCorte")
+				.gte(filtro.getFechaMinimo())
+				.lt(filtro.getFechaMaxima());
 		}
 		
 		if (filtro.hasSaldo()) {
@@ -172,6 +174,8 @@ public class FacturaServiceImpl implements FacturaService {
 		
 		Query query = Query.query(criterios);
 		List<Factura> facturas = template.find(query.with(pageable), Factura.class);
+		
+		System.out.print(query.toString());
 		
 		return PageableExecutionUtils.getPage(
 				facturas, 

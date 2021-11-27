@@ -1,17 +1,39 @@
 package mx.admino.models;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class FacturaFiltro {
+	
+	public FacturaFiltro() {
+		LocalDate today = LocalDate.now().atStartOfDay().toLocalDate();
+		LocalDate start = today.minusDays(today.getDayOfMonth());
+		//LocalDate end = start.plusMonths(1);
+
+		this.setFechaCorte(convertToDate(start));
+		//this.setFechaMinimo(convertToDate(start));
+		//this.setFechaMaxima(convertToDate(end));
+	}
 
 	private Condomino condomino;
 	
 	private Float saldoMinimo;
 	
 	private Float saldoMaximo;
-	
+
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date fechaCorte;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaMinimo;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaMaxima;
 
 	public Boolean hasCondomino() {
@@ -65,4 +87,30 @@ public class FacturaFiltro {
 	public void setFechaMaxima(Date fechaMaxima) {
 		this.fechaMaxima = fechaMaxima;
 	}
+	
+	public Date getFechaCorte() {
+		return fechaCorte;
+	}
+
+	public void setFechaCorte(Date fechaCorte) {
+		this.fechaCorte = fechaCorte;
+	}
+
+	public Date convertToDate(LocalDate dateToConvert) {
+	    return Date.from(dateToConvert.atStartOfDay()
+	      .atZone(ZoneId.systemDefault())
+	      .toInstant());
+	}
+
+	@Override
+	public String toString() {
+		return "FacturaFiltro [" + 
+				"condomino=" + condomino + 
+				", saldoMinimo=" + saldoMinimo + 
+				", saldoMaximo=" + saldoMaximo + 
+				", fechaMinimo=" + fechaMinimo + 
+				", fechaMaxima=" + fechaMaxima + "]";
+	}
+	
+	
 }

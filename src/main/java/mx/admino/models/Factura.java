@@ -47,7 +47,7 @@ public class Factura implements Serializable {
 	
 	private Float importePagos;
 	
-	private Float Saldo;
+	private Float saldo;
 	
 	public Date getFechaCorte() {
 		return fechaCorte;
@@ -122,11 +122,11 @@ public class Factura implements Serializable {
 	}
 
 	public Float getSaldo() {
-		return Saldo;
+		return this.saldo;
 	}
 
 	public void setSaldo(Float saldo) {
-		Saldo = saldo;
+		this.saldo = saldo;
 	}
 
 	public Condomino getCondomino() {
@@ -176,7 +176,7 @@ public class Factura implements Serializable {
 				", SaldoAnterior=" + SaldoAnterior + 
 				", importeCargos=" + importeCargos + 
 				", importePagos=" + importePagos + 
-				", Saldo=" + Saldo + "]";
+				", Saldo=" + saldo + "]";
 	}
 	
 	

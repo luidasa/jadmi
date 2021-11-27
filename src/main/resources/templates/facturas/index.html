@@ -22,8 +22,15 @@
 				<div th:replace="layouts/master::alerts"></div>				
 			</header>
 			<div class="card">
-				<div class="card-header">
+				<div class="card-header row">
+					<div class="col-md-6">
 					Estados de cuenta generados en el sistema
+					</div>
+					<div class="col-md-6 text-end">
+						<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#filtrarModal">
+						  Filtrar
+						</button>
+					</div>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -95,8 +102,80 @@
 		</div>
 		
 		
+		<!-- Search Modal -->
+		<div class="modal fade" id="filtrarModal" tabindex="-1" aria-labelledby="buscarModalLabel" aria-hidden="true">
+		  <form th:action="@{/facturas}" method="get" th:object="${facturaFiltro}">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="buscarModalLabel">Generar los estados de cuenta</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			      	<div class="row">
+					  <div class="mb-3">
+					    <label for="condomino" class="form-label">Condomino</label>
+					    <select class="form-select" aria-describedby="condominoHelp" th:field="${facturaFiltro.condomino}">
+					    <option value="">Todos</option>
+					    <option th:each="item: ${condominos}" th:value="${item.id}" th:text="${item.interior + ' ' + item.nombre}"></option>
+					    </select>
+					    <div id="condominoHelp" class="form-text invalid-feedback"
+					    	th:if="${#fields.hasErrors('condomino')}" th:errors="*{condomino}">Condomino</div>
+					  </div>
+					  <div class="mb-3">
+					    <label for="fechaCorte" class="form-label">Fecha de Corte</label>
+					    <input type="date" class="form-control" id="fechaCorte" aria-describedby="fechaCorteHelp" required
+					    	th:field="${facturaFiltro.fechaCorte}"
+					    	th:classappend="${#fields.hasErrors('fechaCorte')} ? is-invalid : is-valid">						    	
+					    <div id="fechaCorteHelp" class="form-text invalid-feedback"
+					    	th:if="${#fields.hasErrors('fechaCorte')}" th:errors="*{fechaCorte}">Fecha inicio corte</div>
+					  </div>
+					  <!--
+					  <div class="mb-3">
+					    <label for="fechaMinimo" class="form-label">Fecha Inicio</label>
+					    <input type="date" class="form-control" id="fechaMinimo" aria-describedby="fechaMinimoHelp" required
+					    	th:field="${facturaFiltro.fechaMinimo}"
+					    	th:classappend="${#fields.hasErrors('fechaMinimo')} ? is-invalid : is-valid">						    	
+					    <div id="fechaMinimoHelp" class="form-text invalid-feedback"
+					    	th:if="${#fields.hasErrors('fechaMinimo')}" th:errors="*{fechaMinimo}">Fecha inicio corte</div>
+					  </div>      	
+					  <div class="mb-3">
+					    <label for="fechaMaxima" class="form-label">Fecha Fin</label>
+					    <input type="date" class="form-control" id="fechaMaxima" aria-describedby="fechaMaximaHelp" required
+					    	th:field="${facturaFiltro.fechaMaxima}"
+					    	th:classappend="${#fields.hasErrors('fechaMaxima')} ? is-invalid : is-valid">						    	
+					    <div id="fechaMaximaHelp" class="form-text invalid-feedback"
+					    	th:if="${#fields.hasErrors('fechaMaxima')}" th:errors="*{fechaMaxima}">Fecha corte</div>
+					  </div>
+					  -->
+					  <div class="mb-3">
+					    <label for="saldoMinimo" class="form-label">Saldo minimo</label>
+					    <input type="number" class="form-control" id="saldoMinimo" aria-describedby="saldoMinimoHelp"
+					    	th:field="${facturaFiltro.saldoMinimo}"
+					    	th:classappend="${#fields.hasErrors('saldoMinimo')} ? is-invalid : is-valid">						    	
+					    <div id="saldoMinimoHelp" class="form-text invalid-feedback"
+					    	th:if="${#fields.hasErrors('saldoMinimo')}" th:errors="*{saldoMinimo}">Saldo minimo</div>
+					  </div>      	
+					  <div class="mb-3">
+					    <label for="saldoMaximo" class="form-label">Saldo máximo</label>
+					    <input type="number" class="form-control" id="saldoMaximo" aria-describedby="saldoMaximoHelp"
+					    	th:field="${facturaFiltro.saldoMaximo}"
+					    	th:classappend="${#fields.hasErrors('saldoMaximo')} ? is-invalid : is-valid">
+					    <div id="saldoMaximoHelp" class="form-text invalid-feedback"
+					    	th:if="${#fields.hasErrors('saldoMaximo')}" th:errors="*{saldoMaximo}">Saldo máximo</div>
+					  </div>      	
+			      	</div>	
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+			        <button type="submit" class="btn btn-primary">Buscar</button>
+			      </div>
+			    </div>
+			  </div>
+	      </form>      
+		</div>
 		
-		<!-- Modal -->
+		<!-- Generate Modal -->
 		<div class="modal fade" id="generarModal" tabindex="-1" aria-labelledby="generarModalLabel" aria-hidden="true">
 		  <form th:action="@{/facturas/generar}" method="post" th:object="${facturaSolicitud}">
 			  <div class="modal-dialog">
