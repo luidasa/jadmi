@@ -58,7 +58,6 @@ public class FacturaServiceImpl implements FacturaService {
 		return facturaRepository.findAll(pageable);
 	}
 	
-	
 	@Override
 	public List<Factura> generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento) {
 		
@@ -173,10 +172,7 @@ public class FacturaServiceImpl implements FacturaService {
 		}
 		
 		Query query = Query.query(criterios);
-		List<Factura> facturas = template.find(query.with(pageable), Factura.class);
-		
-		System.out.print(query.toString());
-		
+		List<Factura> facturas = template.find(query.with(pageable), Factura.class);		
 		return PageableExecutionUtils.getPage(
 				facturas, 
 		        pageable,
