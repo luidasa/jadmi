@@ -92,8 +92,8 @@ public class PagoServiceImpl implements PagoService {
 		List<Pago> pagos = template.find(
 				  Query.query(
 						  Criteria
-						  	.where("FechaPagado")
-						  	.lte(fechaFinal)), Pago.class);
+						  	.where("FechaPagado").lte(fechaFinal)
+						  	.and("estatus").is(estatus)), Pago.class);
 		return pagos;
 	}
 }

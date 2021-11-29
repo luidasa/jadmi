@@ -21,7 +21,7 @@
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>				
 			</header>
-			<form method="post" autocomplete="off" th:action="@{/pagos/nuevo}" th:object="${pago}">
+			<form method="post" autocomplete="off" th:action="@{${pago.id == null ? '/pagos/nuevo':'/pagos/' + pago.id}}" th:object="${pago}">
 				<div class="card">
 					<div class="card-header py-3">
 						Captura los datos del pago
@@ -29,7 +29,7 @@
 					<div class="card-body">
 						  <div class="mb-3 col">
 						    <label for="condomino" class="form-label">Condomino</label>
-						    <select class="form-control" aria-describedby="condominoHelp" th:field="${pago.condomino}">
+						    <select class="form-select" aria-describedby="condominoHelp" th:field="${pago.condomino}">
 						    <option value="">No identificado</option>
 						    <option th:each="item: ${condominos}" th:value="${item.id}" th:text="${item.interior}"></option>
 						    </select>

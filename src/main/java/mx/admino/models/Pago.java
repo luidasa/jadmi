@@ -3,6 +3,7 @@ package mx.admino.models;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -83,5 +84,15 @@ public class Pago implements Serializable {
 				", importe=" + importe + 
 				", estatus=" + estatus + 
 				", fechaPagado=" + fechaPagado + "]";
+	}
+
+	public Pago merge(@Valid Pago pago) {
+
+		this.setCondomino(pago.getCondomino());
+		this.setFechaPagado(pago.getFechaPagado());
+		this.setImporte(pago.getImporte());
+		this.setEstatus(pago.getEstatus());
+		
+		return this;
 	}
 }

@@ -84,7 +84,7 @@
 								<tbody class="items">									
 								<tr th:each="items:${factura.movimientos}">
 									<td th:text="${#dates.format(items.fecha, 'dd/MM/yyyy')}"></td>
-									<td th:text="${items.descripcion}"></td>
+									<td th:utext="${items.descripcion}"></td>
 									<td class="text-end" th:text="${items.importe > 0 ? #numbers.formatDecimal(items.importe, 3, 'COMMA', 2, 'POINT'): ''}"></td>
 									<td class="text-end" th:text="${items.importe < 0 ? #numbers.formatDecimal(items.importe, 3, 'COMMA', 2, 'POINT') : ''}"></td>
 								</tr>
