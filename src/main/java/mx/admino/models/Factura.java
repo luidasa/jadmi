@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
@@ -26,6 +27,10 @@ public class Factura implements Serializable {
 	private String id;
 	
 	private Condomino condomino;
+	
+	@NotNull
+	@Valid
+	private CorteFactura corte;
 	
 	private List<Cargo> cargos;
 	
@@ -177,6 +182,14 @@ public class Factura implements Serializable {
 				", importeCargos=" + importeCargos + 
 				", importePagos=" + importePagos + 
 				", Saldo=" + saldo + "]";
+	}
+
+	public CorteFactura getCorte() {
+		return corte;
+	}
+
+	public void setCorte(CorteFactura corte) {
+		this.corte = corte;
 	}
 	
 	

@@ -18,18 +18,20 @@ public class Cargo implements Serializable {
 		this.estatus = CargoEstatus.PENDIENTE;
 	}
 	
-	public Cargo(@NotNull Condomino condomino, @NotNull Float importe, @NotEmpty @NotBlank String concepto,
+	public Cargo(@NotNull Condomino condomino, @NotNull Float importe, Float descuento, @NotEmpty @NotBlank String concepto,
 			@NotNull Date fechaVencimiento) {
 		this();
 		this.condomino = condomino;
 		this.importe = importe;
+		this.descuento = descuento;
 		this.concepto = concepto;
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
 	public Cargo(Condomino condomino, Cuota cuota, Date fechaVencimiento) {
 		this(condomino,
-			condomino.getEstaDesocupada() && !cuota.getEsCompletaSiVacia() ? cuota.getImporteDesocupado(): cuota.getImporte(),
+			cuota.getImporte(),
+			condomino.getEstaDesocupada() && !cuota.getEsCompletaSiVacia() ? cuota.getImporteDesocupado(): 0,
 			cuota.getDescripcion(),
 			fechaVencimiento);
 	}
@@ -39,16 +41,33 @@ public class Cargo implements Serializable {
 	@Id
 	private String id;
 	
+	/**
+	 * Condomino que debe de aplicar el cargo
+	 */
 	@NotNull
 	private Condomino condomino;
 	
+	/**
+	 * Importe del cargo cuando la casa esta ocupada
+	 */
 	@NotNull
 	private Float importe;
 	
+	/**
+	 * Indica el descuento que debe de aplicarse si esta desocupada
+	 */
+	private Float descuento;
+	
+	/**
+	 * Concepto por el cual se esta aplicando el cargo.
+	 */
 	@NotEmpty
 	@NotBlank
 	private String concepto;
 	
+	/**
+	 * Estatus que tiene el cargo
+	 */
 	@NotNull
 	private CargoEstatus estatus;
 	
@@ -104,6 +123,14 @@ public class Cargo implements Serializable {
 		this.estatus = status;
 	}
 	
+	public Float getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(Float descuento) {
+		this.descuento = descuento;
+	}
+
 	@Override
 	public String toString() {
 		return "Cargo [condomino=" + condomino.getInterior() + 

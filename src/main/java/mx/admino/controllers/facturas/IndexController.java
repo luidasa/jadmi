@@ -22,7 +22,7 @@ import mx.admino.models.Breadcrum;
 import mx.admino.models.Condomino;
 import mx.admino.models.Factura;
 import mx.admino.models.FacturaFiltro;
-import mx.admino.models.FacturaSolicitud;
+import mx.admino.models.CorteFactura;
 import mx.admino.services.CondominoService;
 import mx.admino.services.FacturaService;
 
@@ -56,7 +56,7 @@ public class IndexController {
 			@RequestParam(required = false, defaultValue = "1") Integer page,
 			@RequestParam(required = false, defaultValue = "10") Integer rows,
 			@RequestParam(required = false) String cid,
-			@ModelAttribute FacturaSolicitud facturaSolicitud,
+			@ModelAttribute CorteFactura facturaSolicitud,
 			Model model) {
 		
 		

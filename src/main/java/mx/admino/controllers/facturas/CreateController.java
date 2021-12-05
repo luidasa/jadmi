@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import mx.admino.models.FacturaSolicitud;
+import mx.admino.models.CorteFactura;
 import mx.admino.services.CondominioService;
 import mx.admino.services.CondominoService;
 import mx.admino.services.FacturaService;
@@ -31,7 +31,7 @@ public class CreateController {
 	
 	@PostMapping("/facturas/generar")
 	public String postGenerar(
-			@ModelAttribute @Valid FacturaSolicitud facturaSolicitud,
+			@ModelAttribute @Valid CorteFactura facturaSolicitud,
 			BindingResult binding,
 			RedirectAttributes flash,
 			Model model) {
@@ -43,10 +43,7 @@ public class CreateController {
 			return viewName;
 		}
 		
-		facturaService.generate(
-				facturaSolicitud.getFechaInicioCorte(),
-				facturaSolicitud.getFechaCorte(),
-				facturaSolicitud.getFechaVencimiento());
+		facturaService.generate(facturaSolicitud);
 		
 		flash.addFlashAttribute("alert_success","Se agregan generaron las facturas para el periodo indicado");
 		viewName = "redirect:/facturas";

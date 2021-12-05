@@ -69,11 +69,7 @@ public class CuotaServiceImpl implements CuotaService {
 		
 		Date fecha = cuota.getFechaInicio();
 		while(fecha.before(cuota.getFechaFin())) {
-			if (cuota.getEsCompletaSiVacia() && c.getEstaDesocupada()) {
-				cargos.add(new Cargo(c, cuota.getImporteDesocupado(), cuota.getNombre(), fecha));				
-			} else {
-				cargos.add(new Cargo(c, cuota.getImporte(), cuota.getNombre(), fecha));				
-			}
+			cargos.add(new Cargo(c, cuota.getImporte(), cuota.getImporteDesocupado(), cuota.getNombre(), fecha));				
 			fecha = addMonths(fecha, 1);
 		}
 		
