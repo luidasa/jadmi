@@ -103,7 +103,7 @@
 		
 		<!-- Search Modal -->
 		<div class="modal fade" id="filtrarModal" tabindex="-1" aria-labelledby="buscarModalLabel" aria-hidden="true">
-		  <form th:action="@{/facturas}" method="get" th:object="${facturaFiltro}">
+		  <form th:action="@{/facturas}" method="get" th:object="${filtro}">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
 			      <div class="modal-header">
@@ -129,24 +129,6 @@
 					    <div id="fechaCorteHelp" class="form-text invalid-feedback"
 					    	th:if="${#fields.hasErrors('fechaCorte')}" th:errors="*{fechaCorte}">Fecha inicio corte</div>
 					  </div>
-					  <!--
-					  <div class="mb-3">
-					    <label for="fechaMinimo" class="form-label">Fecha Inicio</label>
-					    <input type="date" class="form-control" id="fechaMinimo" aria-describedby="fechaMinimoHelp" required
-					    	th:field="${facturaFiltro.fechaMinimo}"
-					    	th:classappend="${#fields.hasErrors('fechaMinimo')} ? is-invalid : is-valid">						    	
-					    <div id="fechaMinimoHelp" class="form-text invalid-feedback"
-					    	th:if="${#fields.hasErrors('fechaMinimo')}" th:errors="*{fechaMinimo}">Fecha inicio corte</div>
-					  </div>      	
-					  <div class="mb-3">
-					    <label for="fechaMaxima" class="form-label">Fecha Fin</label>
-					    <input type="date" class="form-control" id="fechaMaxima" aria-describedby="fechaMaximaHelp" required
-					    	th:field="${facturaFiltro.fechaMaxima}"
-					    	th:classappend="${#fields.hasErrors('fechaMaxima')} ? is-invalid : is-valid">						    	
-					    <div id="fechaMaximaHelp" class="form-text invalid-feedback"
-					    	th:if="${#fields.hasErrors('fechaMaxima')}" th:errors="*{fechaMaxima}">Fecha corte</div>
-					  </div>
-					  -->
 					  <div class="mb-3">
 						  <div class="col form-group">
 						    <label for="saldoMinimo" class="form-label">Saldo minimo</label>
@@ -178,7 +160,7 @@
 		
 		<!-- Generate Modal -->
 		<div class="modal fade" id="generarModal" tabindex="-1" aria-labelledby="generarModalLabel" aria-hidden="true">
-		  <form th:action="@{/facturas/generar}" method="post" th:object="${facturaSolicitud}">
+		  <form th:action="@{/facturas/generar}" method="post" th:object="${solicitud}">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
 			      <div class="modal-header">
@@ -190,15 +172,15 @@
 					  <div class="mb-3">
 					    <label for="fechaCorte" class="form-label">Fecha Corte</label>
 					    <input type="date" class="form-control" id="fechaCorte" aria-describedby="fechaCorteHelp" required
-					    	th:field="${facturaSolicitud.fechaCorte}"
-					    	th:classappend="${#fields.hasErrors('fechaCorte')} ? is-invalid ">						    	
+					    	th:field="${solicitud.fechaCorte}"
+					    	>						    	
 					    <div id="fechaHelp" class="form-text invalid-feedback"
 					    	th:if="${#fields.hasErrors('fechaCorte')}" th:errors="*{fechaCorte}">Fecha corte</div>
 					  </div>
 					  <div class="mb-3">
 					    <label for="fechaVencimiento" class="form-label">Fecha Vencimiento</label>
 					    <input type="date" class="form-control" id="fechaVencimiento" aria-describedby="fechaHelp" required
-					    	th:field="${facturaSolicitud.fechaVencimiento}"
+					    	th:field="${solicitud.fechaVencimiento}"
 					    	th:classappend="${#fields.hasErrors('fechaVencimiento')} ? is-invalid">	
 					    <div id="fechaHelp" class="form-text invalid-feedback"
 					    	th:if="${#fields.hasErrors('fechaVencimiento')}" th:errors="*{fechaVencimiento}">Fecha vencimiento</div>

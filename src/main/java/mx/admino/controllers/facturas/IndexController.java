@@ -39,7 +39,13 @@ public class IndexController {
 	private void getCondominos(Model model) {
 		List<Condomino> condominos = condominoService.findAll();
 		model.addAttribute("condominos", condominos);
-	}	
+		
+		FacturaFiltro filtro = new FacturaFiltro();
+		model.addAttribute("filtro", filtro);
+
+		CorteFactura solicitud = new CorteFactura();
+		model.addAttribute("solicitud", solicitud);
+}	
 	
 	private List<Breadcrum> getBreadcrum() {
 
@@ -51,12 +57,11 @@ public class IndexController {
 	
 	@GetMapping("/facturas")
 	public String getIndex(
-			@ModelAttribute @Valid FacturaFiltro facturaFiltro,
+			@Valid FacturaFiltro facturaFiltro,
 			BindingResult result,
 			@RequestParam(required = false, defaultValue = "1") Integer page,
 			@RequestParam(required = false, defaultValue = "10") Integer rows,
 			@RequestParam(required = false) String cid,
-			@ModelAttribute CorteFactura facturaSolicitud,
 			Model model) {
 		
 		
