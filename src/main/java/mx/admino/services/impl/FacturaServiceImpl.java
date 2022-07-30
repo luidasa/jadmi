@@ -76,13 +76,13 @@ public class FacturaServiceImpl implements FacturaService {
 				.filter(c -> {
 						Interval periodoCuota = new Interval(c.getFechaInicio().getTime(), c.getFechaFin().getTime());
 						return periodoCuota.overlaps(periodoEC);
-				}).toList();
+				}).collect(Collectors.toList());
 		System.out.print("Cuotas a facturar: " + cuotas.size());
 		condominos.stream().forEach(condomino -> {
 				cuotas.forEach(cuota -> {
 				Cargo cargo = new Cargo(condomino, cuota, fechaVencimiento);
 				cargoService.save(cargo);
-			});			
+			});
 		});
 		// Buscamos los pagos realizados y que no hayan sido facturados con anterioridad.
 		List<Pago> pagos = pagosService.findByFechaPagadoBeforeAndEstatus(fechaCorte, PagoEstatus.PENDIENTE);
