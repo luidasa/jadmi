@@ -154,20 +154,20 @@ public class Factura implements Serializable {
 		List<MovimientoFactura> movimientos = new ArrayList<>();
 		
 		movimientos = this.pagos.stream().map(p -> {
-			var m = new MovimientoFactura(
+			MovimientoFactura m = new MovimientoFactura(
 					p.getFechaPagado(),
 					"Pago", 
 					-1 * p.getImporte());
 			return m;
 		}).collect(Collectors.toList());
 		movimientos.addAll(this.cargos.stream().map(c -> {
-			var m = new MovimientoFactura(
+			MovimientoFactura m = new MovimientoFactura(
 					c.getFechaVencimiento(),
 					c.getConcepto(),
 					c.getImporte());
 			return m;
 		}).collect(Collectors.toList()));
-		return movimientos.stream().sorted().toList();
+		return movimientos;
 	}
 
 	@Override
