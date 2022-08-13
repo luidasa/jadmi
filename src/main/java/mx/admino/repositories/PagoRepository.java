@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import mx.admino.models.Pago;
 import mx.admino.models.PagoEstatus;
+import mx.admino.models.entities.Pago;
 
 @Repository
 public interface PagoRepository extends MongoRepository<Pago, String> {

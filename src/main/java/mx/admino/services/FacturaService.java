@@ -8,10 +8,10 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import mx.admino.models.Condomino;
-import mx.admino.models.CorteFactura;
-import mx.admino.models.Factura;
 import mx.admino.models.FacturaFiltro;
+import mx.admino.models.entities.Condomino;
+import mx.admino.models.entities.CorteFactura;
+import mx.admino.models.entities.Factura;
 
 public interface FacturaService {
 

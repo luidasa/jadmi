@@ -14,8 +14,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import mx.admino.models.Pago;
 import mx.admino.models.PagoEstatus;
+import mx.admino.models.entities.Pago;
 import mx.admino.repositories.PagoRepository;
 import mx.admino.services.PagoService;
 

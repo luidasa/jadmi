@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import mx.admino.models.CorteFactura;
+import mx.admino.models.entities.CorteFactura;
 import mx.admino.services.CondominioService;
 import mx.admino.services.CondominoService;
 import mx.admino.services.FacturaService;

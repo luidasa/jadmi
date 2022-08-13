@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import mx.admino.models.Condominio;
+import mx.admino.models.entities.Condominio;
 import mx.admino.services.CondominioService;
 
 @Controller

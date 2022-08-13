@@ -3,7 +3,7 @@ package mx.admino.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import mx.admino.models.Usuario;
+import mx.admino.models.entities.Usuario;
 import mx.admino.repositories.UsuarioRepository;
 import mx.admino.services.UsuarioService;
 

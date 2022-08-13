@@ -49,14 +49,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
 	        .authorizeRequests()
 	    	.antMatchers("/","/signup","/recover", "/reset").permitAll()
-	    	.antMatchers("/condomino").authenticated()
-	    	.antMatchers("/admin/*").hasRole("ADMIN").and()
+	    	.antMatchers("/condomino/**").hasRole("CONDOMINO")
+	    	.antMatchers("/admin/**").hasRole("ADMIN").and()
 	        .formLogin()
 	        .loginPage("/login")
 	        .permitAll()
             .defaultSuccessUrl("/panel", true)
             .and()
-	        .logout() // Metodo get pues he desabilitado CSRF
+	        .logout()
 	        .permitAll();
     }
     

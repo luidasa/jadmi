@@ -1,4 +1,4 @@
-package mx.admino.models;
+package mx.admino.models.entities;
 
 import java.util.Date;
 

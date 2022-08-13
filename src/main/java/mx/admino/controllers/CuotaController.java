@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.Breadcrum;
-import mx.admino.models.Cuota;
 import mx.admino.models.CuotaEstatus;
+import mx.admino.models.entities.Cuota;
 import mx.admino.services.CuotaService;
 
 @Controller

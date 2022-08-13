@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import mx.admino.models.Breadcrum;
-import mx.admino.models.Condomino;
-import mx.admino.models.Pago;
+import mx.admino.models.entities.Condomino;
+import mx.admino.models.entities.Pago;
 import mx.admino.services.CondominoService;
 import mx.admino.services.PagoService;
 

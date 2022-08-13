@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import mx.admino.models.Condomino;
+import mx.admino.models.entities.Condomino;
 import mx.admino.services.CondominioService;
 import mx.admino.services.CondominoService;
 import mx.admino.services.FacturaService;

@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import mx.admino.models.entities.Condomino;
+
 public class FacturaFiltro {
 	
 	public FacturaFiltro() {

@@ -8,8 +8,8 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import mx.admino.models.Cargo;
 import mx.admino.models.CargoEstatus;
+import mx.admino.models.entities.Cargo;
 
 public interface CargoService {
 	
