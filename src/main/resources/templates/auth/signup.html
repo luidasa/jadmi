@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es-MX" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admino - Administración de condominios</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-md-4 offset-md-4">
+				<form class="form-signin" name="f" th:action="@{/signin}" method="post">
+
+					<div th:if="${param.error}" class="alert alert-error">
+						Invalid username and password.
+					</div>
+					<div th:if="${param.logout}" class="alert alert-success">
+						You have been logged out.
+					</div>
+
+					<div class="text-center mb-4">
+						<img class="mb-4" src="/docs/4.6/assets/brand/bootstrap-solid.svg" alt="" width="72"
+							height="72">
+						<h1 class="h3 mb-3 font-weight-normal">Floating labels</h1>
+					</div>
+
+					<div class="form-label-group">
+						<input type="text" name="username" id="username" class="form-control" placeholder="Email address" required=""
+							autofocus="">
+						<label for="inputEmail">Email address</label>
+					</div>
+
+					<div class="form-label-group">
+						<input type="password" name="password" id="password" class="form-control" placeholder="Password" required="">
+						<label for="inputPassword">Password</label>
+					</div>
+
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+					<p class="mt-5 mb-3 text-muted text-center">© 2017-2022</p>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.Breadcrum;
-import mx.admino.models.Cargo;
-import mx.admino.models.Condomino;
+import mx.admino.models.entities.Cargo;
+import mx.admino.models.entities.Condomino;
 import mx.admino.services.CargoService;
 import mx.admino.services.CondominoService;
 

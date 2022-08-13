@@ -11,10 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import mx.admino.exceptions.CuotaNotFound;
-import mx.admino.models.Cargo;
-import mx.admino.models.Condomino;
-import mx.admino.models.Cuota;
 import mx.admino.models.CuotaEstatus;
+import mx.admino.models.entities.Cargo;
+import mx.admino.models.entities.Condomino;
+import mx.admino.models.entities.Cuota;
 import mx.admino.repositories.CuotaRepository;
 import mx.admino.services.CargoService;
 import mx.admino.services.CondominoService;

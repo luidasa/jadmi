@@ -9,12 +9,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import mx.admino.models.Condominio;
+import mx.admino.models.entities.Condominio;
 import mx.admino.services.CondominioService;
 
 @Controller
+@RequestMapping("/admin")
 public class CondominioController {
 
 	@Autowired

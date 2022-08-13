@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import mx.admino.models.Condomino;
+import mx.admino.models.entities.Condomino;
 
 
 public interface CondominoService {

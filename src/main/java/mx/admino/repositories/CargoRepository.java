@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import mx.admino.models.Cargo;
 import mx.admino.models.CargoEstatus;
+import mx.admino.models.entities.Cargo;
 
 @Repository
 public interface CargoRepository extends MongoRepository<Cargo, String> {

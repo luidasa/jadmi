@@ -1,4 +1,4 @@
-package mx.admino.models;
+package mx.admino.models.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,6 +11,8 @@ import javax.validation.constraints.Past;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import mx.admino.models.PagoEstatus;
 
 @Document(collection ="pagos")
 public class Pago implements Serializable {

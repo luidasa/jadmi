@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.Breadcrum;
-import mx.admino.models.Condomino;
+import mx.admino.models.entities.Condomino;
 import mx.admino.services.CondominoService;
 
 @Controller
-@RequestMapping("condominos")
+@RequestMapping("/admin/condominos")
 public class CondominoController {
 
 	@Autowired

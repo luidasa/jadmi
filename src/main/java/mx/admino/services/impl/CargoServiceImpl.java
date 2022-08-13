@@ -14,8 +14,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import mx.admino.exceptions.CargoNotFound;
-import mx.admino.models.Cargo;
 import mx.admino.models.CargoEstatus;
+import mx.admino.models.entities.Cargo;
 import mx.admino.repositories.CargoRepository;
 import mx.admino.services.CargoService;
 

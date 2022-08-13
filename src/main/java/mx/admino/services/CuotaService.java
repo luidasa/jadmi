@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import mx.admino.models.Cuota;
 import mx.admino.models.CuotaEstatus;
+import mx.admino.models.entities.Cuota;
 
 public interface CuotaService {
 

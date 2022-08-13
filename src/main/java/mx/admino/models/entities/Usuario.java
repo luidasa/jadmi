@@ -1,10 +1,8 @@
-package mx.admino.models;
+package mx.admino.models.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -14,24 +12,16 @@ import javax.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Document(collection = "usuarios")
-public class Usuario implements Serializable, UserDetails {
+public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	
 	public Usuario() {
 		this.roles = new ArrayList<Roles>();
-	}
-
-	public Usuario(String username, String password, Set<GrantedAuthority> grantedAuthorities) {
-		
-		this.username = username;
-		this.password = password;
-		this.authorities = grantedAuthorities;
+		this.authorities = new ArrayList<>();
 	}
 
 	@Id
@@ -57,7 +47,7 @@ public class Usuario implements Serializable, UserDetails {
 	
 	private Boolean enabled;
 
-	private Set<GrantedAuthority> authorities;
+	private List<String> authorities;
 
 	public String getId() {
 		return id;
@@ -99,28 +89,11 @@ public class Usuario implements Serializable, UserDetails {
 		this.enabled = enabled;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.authorities;
+	public List<String> getAuthorities() {
+		return authorities;
 	}
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return this.getEnabled();
+	public void setAuthorities(List<String> authorities) {
+		this.authorities = authorities;
 	}
 }
