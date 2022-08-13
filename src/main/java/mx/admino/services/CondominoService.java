@@ -19,4 +19,5 @@ public interface CondominoService {
 	Condomino findById(String id);
 
 	List<Condomino> findAll();
+
 }

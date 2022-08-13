@@ -42,5 +42,4 @@ public class CondominoServiceImpl implements CondominoService {
 	public List<Condomino> findAll() {
 		return condominoRepository.findAll();
 	}
-
 }
