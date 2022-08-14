@@ -8,9 +8,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.entities.Usuario;
+import mx.admino.services.CondominioService;
 import mx.admino.services.UsuarioService;
 
 @Controller
@@ -18,6 +20,9 @@ public class SignUpController {
 	
 	@Autowired
 	UsuarioService service;
+	
+	@Autowired
+	CondominioService condominioSrv;
 
 	@GetMapping("/signup")
 	public String getSignup() {
@@ -27,13 +32,14 @@ public class SignUpController {
 	@PostMapping("/signup")
 	public String postSignup(@Valid @ModelAttribute Usuario usuario,
 			BindingResult binding,
+			@RequestParam String condominio,
 			RedirectAttributes flash) {
 		
 		if (binding.hasErrors()) {
 			flash.addFlashAttribute("mensaje", "Ocurrio un error al crear el usuario.");
 			return "auth/signup";
 		}
-
+		
 		service.create(usuario);
 		
 		return "redirect:/panel";

@@ -6,8 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admino - Administración de condominios</title>
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+  <script src="https://unpkg.com/feather-icons"></script>    
 </head>
 
 <body>
@@ -89,10 +92,11 @@
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	  </div>
   </div>
-  <nav class="bg-light my-2 py-2" aria-label="breadcrumb" th:fragment="breadcrum">
+  
+  <nav class="bg-light my-2 py-1" aria-label="breadcrumb" th:fragment="breadcrum">
     <ol class="breadcrumb">
       <li class="breadcrumb-item" th:each="breadcrumItem: ${breadcrum}">
-      	<a th:href="@{${breadcrumItem.url}}" th:text="${breadcrumItem.etiqueta}" th:classappend="${breadcrumItem.activo} ? active">Home</a></li>
+      	<a th:href="@{${breadcrumItem.url}}" th:text="${breadcrumItem.etiqueta}" th:classappend="${breadcrumItem.activo} ? 'active' : ''">Home</a></li>
     </ol>
   </nav>
 
