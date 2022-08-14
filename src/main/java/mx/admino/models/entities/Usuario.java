@@ -41,9 +41,21 @@ public class Usuario implements Serializable {
 	private String password;
 	
 	@NotNull
+	private List<Roles> roles;
+	
+	@NotNull
 	@NotEmpty
 	@NotBlank
-	private List<Roles> roles;
+	@Size(min = 10)
+	private String name;
+	
+	@NotNull
+	@NotEmpty
+	@NotBlank
+	@Size(min = 10, max = 10)
+	private String phone;
+	
+	private String email;
 	
 	private Boolean enabled;
 
@@ -95,5 +107,37 @@ public class Usuario implements Serializable {
 
 	public void setAuthorities(List<String> authorities) {
 		this.authorities = authorities;
+	}
+
+	public List<Roles> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Roles> roles) {
+		this.roles = roles;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }
