@@ -26,7 +26,7 @@
 					<div class="form-group mb-2">
 						<label for="condominio">Condominio</label>
 						<input type="text" id="condominio" class="form-control"
-							placeholder="Nombre del condominio" required="" autofocus="" autocomplete="off"
+							placeholder="Nombre del condominio" required autofocus=""
 							th:field="${condominio.nombre}" th:classappend="${#fields.hasErrors('nombre')} ? is-invalid : is-valid">
 					    <div id="nombreHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
 					</div>
@@ -36,6 +36,15 @@
 					    	th:field="${condominio.domicilio}" th:classappend="${#fields.hasErrors('domicilio')} ? is-invalid : is-valid"></textarea>
 					    <div id="domicilioHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('domicilio')}" th:errors="*{domicilio}"></div>
 					</div>
+					
+					<div class="form-group mb-2">
+						<label for="unidades">Condominios</label>
+						<input id="unidades" class="form-control" type="number" min="2" step="1" required
+					    	th:field="${condominio.unidades}" th:classappend="${#fields.hasErrors('unidades')} ? is-invalid : is-valid">
+					    <div id="unidadesHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('unidades')}" th:errors="*{unidades}"></div>
+					</div>
+					
+					<hr>
 
 					<div class="form-group mb-2">
 						<label for="nombre">Administrador</label>

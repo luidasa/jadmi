@@ -1,5 +1,7 @@
 package mx.admino.services.impl;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +24,11 @@ public class CondominioServiceImpl implements CondominioService {
 	@Override
 	public Condominio save(@Valid Condominio condominio) {
 		return condominioRepository.save(condominio);
+	}
+
+	@Override
+	public List<Condominio> findByNombre(String nombre) {
+
+		return condominioRepository.findByNombre(nombre);
 	}
 }

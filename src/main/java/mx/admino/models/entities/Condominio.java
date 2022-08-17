@@ -3,6 +3,7 @@ package mx.admino.models.entities;
 import java.io.Serializable;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -24,21 +25,24 @@ public class Condominio implements Serializable {
 	@NotNull
 	@NotEmpty
 	@NotBlank
+	@Size(min = 5)
 	@Indexed(unique = true)
 	private String nombre;
 	
-	
+	@Transient
 	@NotNull
 	@NotEmpty
 	@NotBlank
 	private String administrador;
-		
+
+	@Transient
 	@NotNull
 	@NotEmpty
 	@NotBlank
 	@Size(min = 10, max = 10)
 	private String telefono;	
 	
+	@Transient
 	@NotNull
 	@Email
 	private String correo;
@@ -49,6 +53,9 @@ public class Condominio implements Serializable {
 	private String domicilio;
 	
 	private Float saldo;
+	
+	@Min(value = 2)
+	private Integer unidades;
 	
 	@Transient
 	private String password;
@@ -102,6 +109,14 @@ public class Condominio implements Serializable {
 
 	public void setCorreo(String correo) {
 		this.correo = correo;
+	}
+
+	public Integer getUnidades() {
+		return unidades;
+	}
+
+	public void setUnidades(Integer unidades) {
+		this.unidades = unidades;
 	}
 	
 }
