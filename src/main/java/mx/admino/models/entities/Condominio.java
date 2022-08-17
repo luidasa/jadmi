@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "condominio")
@@ -22,13 +24,20 @@ public class Condominio implements Serializable {
 	@NotNull
 	@NotEmpty
 	@NotBlank
+	@Indexed(unique = true)
 	private String nombre;
+	
 	
 	@NotNull
 	@NotEmpty
 	@NotBlank
+	private String administrador;
+		
+	@NotNull
+	@NotEmpty
+	@NotBlank
 	@Size(min = 10, max = 10)
-	private String telefono;
+	private String telefono;	
 	
 	@NotNull
 	@Email
@@ -39,8 +48,13 @@ public class Condominio implements Serializable {
 	@NotBlank
 	private String domicilio;
 	
-	@NotNull
 	private Float saldo;
+	
+	@Transient
+	private String password;
+	
+	@Transient
+	private String confirmacion;
 
 	public String getId() {
 		return id;

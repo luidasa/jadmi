@@ -8,10 +8,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import mx.admino.models.entities.Usuario;
+import mx.admino.models.entities.Condominio;
 import mx.admino.services.CondominioService;
 import mx.admino.services.UsuarioService;
 
@@ -19,30 +18,30 @@ import mx.admino.services.UsuarioService;
 public class SignUpController {
 	
 	@Autowired
-	UsuarioService service;
+	UsuarioService usuarioSrv;
 	
 	@Autowired
 	CondominioService condominioSrv;
+		
 
 	@GetMapping("/signup")
-	public String getSignup() {
+	public String getSignup(@ModelAttribute Condominio condominio) {
 		return "auth/signup";
 	}
 	
 	@PostMapping("/signup")
-	public String postSignup(@Valid @ModelAttribute Usuario usuario,
+	public String postSignup(@ModelAttribute @Valid Condominio condominio,
 			BindingResult binding,
-			@RequestParam String condominio,
 			RedirectAttributes flash) {
 		
 		if (binding.hasErrors()) {
-			flash.addFlashAttribute("mensaje", "Ocurrio un error al crear el usuario.");
+			flash.addFlashAttribute("mensaje", "Ocurrio un error al registrar el condominio.");
 			return "auth/signup";
 		}
 		
-		service.create(usuario);
+		var condominiodb = condominioSrv.save(condominio);
 		
-		return "redirect:/panel";
+		return "redirect:/login";
 		
 	}
 }

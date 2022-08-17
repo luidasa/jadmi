@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	        .authorizeRequests()
 	        .antMatchers("/resources/**").permitAll()
 	        .antMatchers("/signup", "/restore", "/change").permitAll()
-	        .antMatchers("/condominos/**").hasRole("CONDOMINO")
+	        .antMatchers("/condominio/**").hasRole("CONDOMINO")
 	        .antMatchers("/admin/**").hasRole("ADMIN").and()
 	        .formLogin()
 	        .loginPage("/login").defaultSuccessUrl("/condominos", false)
