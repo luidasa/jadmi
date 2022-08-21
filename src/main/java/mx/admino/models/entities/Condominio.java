@@ -39,6 +39,12 @@ public class Condominio implements Serializable {
 	@NotNull
 	@NotEmpty
 	@NotBlank
+	private String username;
+
+	@Transient
+	@NotNull
+	@NotEmpty
+	@NotBlank
 	@Size(min = 10, max = 10)
 	private String telefono;	
 	
@@ -117,6 +123,38 @@ public class Condominio implements Serializable {
 
 	public void setUnidades(Integer unidades) {
 		this.unidades = unidades;
+	}
+
+	public String getAdministrador() {
+		return administrador;
+	}
+
+	public void setAdministrador(String administrador) {
+		this.administrador = administrador;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getConfirmacion() {
+		return confirmacion;
+	}
+
+	public void setConfirmacion(String confirmacion) {
+		this.confirmacion = confirmacion;
 	}
 	
 }

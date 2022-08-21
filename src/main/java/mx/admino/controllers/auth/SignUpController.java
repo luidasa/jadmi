@@ -35,23 +35,29 @@ public class SignUpController {
 			BindingResult binding,
 			RedirectAttributes flash) {
 		
+		// Verificamos que el condominio no este registrado
 		if (condominioSrv.findByNombre(condominio.getNombre()).size() > 0) {
 			System.err.print("El nombre del condominio ya existe");
 			binding.addError(new FieldError("Condominio", "nombre", "El condominio ya ha sido registrado"));
 		}
 		
+		// Verificamos que el administrador no este registrado.
+		if (usuarioSrv.findByUsername(condominio.getUsername()) != null) {
+			System.err.print("El administrador del condominio ya existe");
+			binding.addError(new FieldError("Condominio", "username", "El username del administrador ya ha sido registrado. Inicie sesión para registrar el condominio."));			
+		}
+
+		// Verificamos que el 
+
 		if (binding.hasErrors()) {
-			flash.addFlashAttribute("mensaje", "Ocurrio un error al registrar el condominio.");
+			flash.addFlashAttribute("alert_danger", "Ocurrio un error al registrar el condominio.");
 			return "auth/signup";
 		}
-		// Verificamos que el condominio no este registrado
 		
-		// Verificamos que el administrador no este registrado.
 		
-		// si esta Registrado debe de iniciar sesión.
 		
 		var condominiodb = condominioSrv.save(condominio);
-		
+		flash.addAttribute("alert_success", "Gracias por tu registro. Hemos enviado un correo electrónico para confirmar su registro");
 		return "redirect:/login";
 		
 	}
