@@ -23,6 +23,25 @@ public class Usuario implements Serializable {
 		this.roles = new ArrayList<Roles>();
 		this.authorities = new ArrayList<>();
 	}
+	
+	public Usuario(
+			@NotNull @NotEmpty @NotBlank @Size(min = 5) String username,
+			@NotNull @NotEmpty @NotBlank @Size(min = 5) String password, 
+			@NotNull List<Roles> roles,
+			@NotNull @NotEmpty @NotBlank @Size(min = 10) String name,
+			@NotNull @NotEmpty @NotBlank @Size(min = 10, max = 10) String phone, 
+			String email, 
+			Boolean enabled) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+		this.enabled = enabled;
+	}
+
 
 	@Id
 	private String id;
