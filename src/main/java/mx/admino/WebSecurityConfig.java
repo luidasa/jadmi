@@ -30,8 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(@Autowired AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(this.userDetailsService)
-          .passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(this.userDetailsService);
     }
 	    
     

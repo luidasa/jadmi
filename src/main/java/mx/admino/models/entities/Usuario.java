@@ -159,4 +159,12 @@ public class Usuario implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [username=" + username + ", name=" + name + ", phone=" + phone + ", email=" + email
+				+ ", enabled=" + enabled + "]";
+	}
+	
+	
 }

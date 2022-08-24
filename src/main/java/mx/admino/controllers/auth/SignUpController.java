@@ -1,6 +1,7 @@
 package mx.admino.controllers.auth;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -86,10 +87,11 @@ public class SignUpController {
 		
 		// Agregamos el numero de unidades privativas que nos ha indicado el que se registra.
 		for(Integer i = 0; i < condominiodb.getUnidades(); i++ ) {
-			Condomino item = new Condomino( i.toString(),
-					i.toString());
-			
-			condominoSrv.save(item);
+			String interior = "Casa - " + (i + 1);
+			String nombre = UUID.randomUUID().toString();
+			if (condominoSrv.findByInterior(interior) == null) {
+				condominoSrv.save(new Condomino(interior, nombre));
+			}
 		}
 		flash.addAttribute("alert_success", "Gracias por confianza al registrar el condominio " + condominiodb.getNombre() + ". Hemos enviado un correo electrónico a " + usuarioDb.getEmail() + " para confirmar su registro" );
 		return "redirect:/login";		

@@ -23,9 +23,11 @@ public class AdminoUserDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
+		System.out.println(username);
 		var adminoUser = service.findByUsername(username);
 		
 		if (adminoUser == null) {
+			System.out.println("No existe");
 			throw new UsernameNotFoundException(username + " no esta registrado");
 		}
 		
@@ -36,6 +38,10 @@ public class AdminoUserDetailService implements UserDetailsService {
               grantedAuthorities.add(new SimpleGrantedAuthority(role));
           });
 
-        return new User(adminoUser.getUsername(), adminoUser.getPassword(), grantedAuthorities);
+		System.out.println(adminoUser);
+        return new User(
+        		adminoUser.getUsername(),
+        		adminoUser.getPassword(), 
+        		grantedAuthorities);
 	}
 }

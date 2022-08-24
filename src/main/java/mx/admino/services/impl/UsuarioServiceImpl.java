@@ -30,7 +30,4 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuario.setPassword(encoder.encode(usuario.getPassword()));
 		return repository.save(usuario);
 	}
-	
-	
-
 }

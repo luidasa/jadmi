@@ -9,33 +9,33 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
-  </nav>
       
   <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="row align-items-center g-lg-5 py-5">
       <div class="col-lg-7 text-center text-lg-start">
-        <h1 class="display-4 fw-bold lh-1 mb-3">Vertically centered hero sign-up form</h1>
-        <p class="col-lg-10 fs-4">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+        <h1 class="display-4 fw-bold lh-1 mb-3">Administración de condominio</h1>
+        <p class="col-lg-10 fs-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc laoreet, leo in porttitor vulputate, purus enim tincidunt orci, eu lobortis magna mauris vel nisi. Ut facilisis finibus pharetra. Cras auctor, neque sit amet ornare tempor, lacus nunc consequat erat, ac dignissim metus libero at lacus. Nulla vel nunc sit amet dolor faucibus sagittis. Integer tempus nulla est, in pretium ipsum mattis sit amet.</p>
       </div>
       <div class="col-md-10 mx-auto col-lg-5">
-        <form class="p-4 p-md-5 border rounded-3 bg-light">
+        <form class="p-4 p-md-5 border rounded-3 bg-light" th:action="@{/login}" method="POST">
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Email address</label>
+            <input name="username" type="text" class="form-control" id="floatingInput" placeholder="Nombre de usuario">
+            <label for="floatingInput">Username</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
+            <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Contraseña de usuario">
+            <label for="floatingPassword">Contraseña</label>
           </div>
           <div class="checkbox mb-3">
             <label>
-              <input type="checkbox" value="remember-me"> Remember me
+              <input type="checkbox" value="remember-me"> Recuerdame en este equipo
             </label>
           </div>
-          <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar</button>
           <hr class="my-4">
-          <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
+          <small class="text-muted">No tienes usuario <a th:href="@{/signup}">Registrate</a></small><br>
+          <small class="text-muted">Olvidaste tu contraseña <a th:href="@{/recover}">Recuperarla</a></small><br>
+          <small class="text-muted">Al iniciar sesión acepta los <a th:href="@{/pages/terms}">términos y condiciones.</a></small>
         </form>
       </div>
     </div>
