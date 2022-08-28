@@ -1,4 +1,4 @@
-package mx.admino.controllers;
+package mx.admino.controllers.admin;
 
 import java.util.ArrayList;
 import java.util.List;

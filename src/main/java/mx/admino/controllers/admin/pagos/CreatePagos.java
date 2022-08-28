@@ -1,4 +1,4 @@
-package mx.admino.controllers.pagos;
+package mx.admino.controllers.admin.pagos;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package mx.admino.controllers;
+package mx.admino.controllers.admin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +58,10 @@ public class CondominoController {
 	private List<Breadcrum> getBreadcrum(Condomino condomino) {
 
 		List<Breadcrum> x = new ArrayList<Breadcrum>();
-		x.add(new Breadcrum("Inicio", "/panel", false));
-		x.add(new Breadcrum("Condominos", "/condominos", condomino == null));
+		x.add(new Breadcrum("Inicio", "/admin/panel", false));
+		x.add(new Breadcrum("Condominos", "/admin/condominos", condomino == null));
 		if (condomino != null) {
-			x.add(new Breadcrum(condomino.getInterior(), "/condominos/" + condomino.getId(), true));			
+			x.add(new Breadcrum(condomino.getInterior(), "/admin/condominos/" + condomino.getId(), true));
 		}
 		return x ;
 	}
@@ -83,7 +83,7 @@ public class CondominoController {
 		itemdb.merge(condomino);
 		condominoService.save(itemdb);
 		flash.addFlashAttribute("alert_success", "Hemos guardado la información actualizada del condomino.");
-		viewName = "redirect:/condominos";
+		viewName = "redirect:/admin/condominos";
 		return viewName;
 	}
 }

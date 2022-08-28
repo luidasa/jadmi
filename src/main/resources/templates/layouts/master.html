@@ -16,12 +16,12 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" th:fragment="navbar">
+  <nav class="navbar navbar-expand-lg" th:fragment="navbar">
     <div class="container-fluid">
       <a class="navbar-brand" th:href="@{/}">
-        <img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"
+        <img src="/img/brand/jadmino.png" alt="Administra tu condominio" width="30" height="24"
           class="d-inline-block align-text-top">
-        AdminoMX
+        JAdmino
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,11 +51,17 @@
               <li><a class="dropdown-item" th:href="@{/pages/about}">Acerca</a></li>
             </ul>
           </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false" sec:>
+                    ${}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" th:href="@{/pages/faqs}">FAQs</a></li>
+                    <li><a class="dropdown-item" th:href="@{/pages/about}">Acerca</a></li>
+                </ul>
+            </li>
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-          <button class="btn btn-outline-light" type="submit">Buscar</button>
-        </form>
       </div>
     </div>
   </nav>

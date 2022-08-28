@@ -1,4 +1,4 @@
-package mx.admino.controllers;
+package mx.admino.controllers.admin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.Breadcrum;
@@ -26,6 +22,7 @@ import mx.admino.models.entities.Cuota;
 import mx.admino.services.CuotaService;
 
 @Controller
+@RequestMapping("/admin/cuotas")
 public class CuotaController {
 
 	@Autowired
@@ -45,7 +42,7 @@ public class CuotaController {
 		return x ;
 	}
 	
-	@GetMapping("/cuotas")
+	@GetMapping
 	public String index(
 			@RequestParam(required = false, defaultValue = "1") Integer page,
 			@RequestParam(required = false, defaultValue = "10") Integer rows,
@@ -58,7 +55,7 @@ public class CuotaController {
 		return "cuotas/index";
 	}
 	
-	@GetMapping("/cuotas/nuevo") 
+	@GetMapping("/nuevo")
 	public String getNuevo(
 			@ModelAttribute Cuota cuota,
 			Model model) {
@@ -67,7 +64,7 @@ public class CuotaController {
 		return "cuotas/formulario";
 	}
 	
-	@PostMapping("/cuotas/nuevo") 
+	@PostMapping("/nuevo")
 	public String postNuevo(@ModelAttribute @Valid Cuota cuota,
 			BindingResult binding,
 			RedirectAttributes flash,
@@ -79,12 +76,12 @@ public class CuotaController {
 			return viewName;
 		}
 		cuotaService.save(cuota);
-		viewName = "redirect:/cuotas/" + cuota.getId();
+		viewName = "redirect:/admin/cuotas/" + cuota.getId();
 		flash.addFlashAttribute("alert_success", "Se agrego una nueva cuota para todos los condominos");
 		return viewName;
 	}
 	
-	@GetMapping("/cuotas/{id}")
+	@GetMapping("/{id}")
 	public String getEdit(@PathVariable String id,
 			Model model) {
 		String viewName = "cuotas/formulario";
@@ -95,7 +92,7 @@ public class CuotaController {
 		return viewName ;
 	}
 	
-	@PostMapping("/cuotas/{id}")
+	@PostMapping("/{id}")
 	public String postEdit(@PathVariable String id,
 			@ModelAttribute @Valid Cuota cuota,
 			BindingResult binding,
@@ -115,7 +112,7 @@ public class CuotaController {
 		return viewName ;
 	}
 	
-	@GetMapping("/cuotas/delete/{id}") 
+	@GetMapping("/delete/{id}")
 	public String getDelete(
 			@PathVariable String id,
 			RedirectAttributes flash,
@@ -126,7 +123,7 @@ public class CuotaController {
 		return "redirect:/cuotas";
 	}
 	
-	@GetMapping("/cuotas/schedule/{id}")
+	@GetMapping("/schedule/{id}")
 	public String getSchedule(
 			@PathVariable String id,
 			RedirectAttributes flash,
@@ -138,6 +135,6 @@ public class CuotaController {
 		} else {
 			flash.addFlashAttribute("alert_danger", "No se puede generar el calendario para esta cuota.");
 		}
-		return "redirect:/cuotas";
+		return "redirect:/admin/cuotas";
 	}
 }

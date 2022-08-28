@@ -1,4 +1,4 @@
-package mx.admino.controllers.facturas;
+package mx.admino.controllers.admin.facturas;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package mx.admino.controllers.condominio;
+package mx.admino.controllers.condomino;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -16,7 +16,8 @@ import mx.admino.models.entities.Cargo;
 import mx.admino.services.IndicadoresService;
 
 /**
- * Controlador que muestra el panel de control para cada uno de los condominos.
+ * Controlador que muestra el panel de control para cada uno de los condominos, es decir,
+ * aquellos que no son administradores del condominio.
  */
 @Controller
 public class PanelCondominioController {

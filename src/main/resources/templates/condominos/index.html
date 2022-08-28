@@ -12,45 +12,42 @@
 
 <body>
 	<main>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
+		<nav th:replace="layouts/master::navbar">
 		</nav>
 
-		<div class="container mt-4">
+		<div class="container mt-2">
 			<header>
-				<h1>Condominos</h1>
+				<h1 class="text-muted fs-2">Condominos</h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>
 			</header>
 			<div class="card">
-				<div class="card-header">
-					Directorio de condominos registrados.
+				<div class="card-header bg-primary bg-gradient text-white">
+					<h5>Directorio de condominos registrados</h5>
 				</div>
-				<div class="card-body">
-					<div class="table-responsive">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th scope="col">Interior</th>
-									<th scope="col">Dueño</th>
-									<th scope="col">Telefono</th>
-									<th scope="col">Correo</th>
-									<th scope="col">Saldo</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="condomino: ${condominos}">
-									<th><a th:href="${'/condominos/' + condomino.id}" th:text="${condomino.interior}"></a></th>
-									<td th:text="${condomino.nombre}">Mark</td>
-									<td th:text="${condomino.telefono}">Otto</td>
-									<td th:text="${condomino.correo}">@mdo</td>
-									<td class="text-end" th:text="${#numbers.formatDecimal(condomino.saldo, 1, 'COMMA', 2, 'POINT')}">@mdo</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>		
+				<div class="card-body table-responsive p-0">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Interior</th>
+								<th scope="col">Dueño</th>
+								<th scope="col">Telefono</th>
+								<th scope="col">Correo</th>
+								<th scope="col">Saldo</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="condomino: ${condominos}">
+								<th><a th:href="${'/admin/condominos/' + condomino.id}" th:text="${condomino.interior}"></a></th>
+								<td th:text="${condomino.nombre}">Mark</td>
+								<td th:text="${condomino.telefono}">Otto</td>
+								<td th:text="${condomino.correo}">@mdo</td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(condomino.saldo, 1, 'COMMA', 2, 'POINT')}">@mdo</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<div class="card-footer">
-					<div class="row">
+				<div class="card-footer row">
 					<div class="col-md-6">
 						<nav aria-label="Page navigation">
 							<ul class="pagination">
@@ -79,9 +76,8 @@
 						</nav>		
 					</div>
 					<div class="col-md-6 text-end">
-						<a th:href="@{/facturas}" class="btn btn-secondary">Facturas</a>
-						<a th:href="@{/condominos/nuevo}" class="btn btn-primary">Agregar</a>
-					</div>
+						<a th:href="@{/admin/facturas}" class="btn btn-secondary">Facturas</a>
+						<a th:href="@{/admin/condominos/nuevo}" class="btn btn-primary">Agregar</a>
 					</div>
 				</div>
 			</div>

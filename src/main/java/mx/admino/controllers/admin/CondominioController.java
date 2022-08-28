@@ -1,4 +1,4 @@
-package mx.admino.controllers;
+package mx.admino.controllers.admin;
 
 import javax.validation.Valid;
 
