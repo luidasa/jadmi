@@ -15,6 +15,9 @@ import mx.admino.models.Breadcrum;
 import mx.admino.models.entities.Cargo;
 import mx.admino.services.IndicadoresService;
 
+/**
+ * Controlador que muestra el panel de control para cada uno de los condominos.
+ */
 @Controller
 public class PanelCondominioController {
 	
@@ -28,7 +31,7 @@ public class PanelCondominioController {
 		return x ;
 	}
 
-	@GetMapping("/condominio")
+	@GetMapping("/condominio/panel")
 	public String getPanel(Model model) {
 		
 		LocalDate fin = LocalDate.now();

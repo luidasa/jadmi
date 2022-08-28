@@ -1,8 +1,8 @@
 package mx.admino.models.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -12,16 +12,17 @@ import javax.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Document(collection = "usuarios")
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	
 	public Usuario() {
 		this.roles = new ArrayList<Roles>();
-		this.authorities = new ArrayList<>();
 	}
 	
 	public Usuario(
@@ -42,7 +43,6 @@ public class Usuario implements Serializable {
 		this.enabled = enabled;
 	}
 
-
 	@Id
 	private String id;
 	
@@ -58,10 +58,10 @@ public class Usuario implements Serializable {
 	@NotBlank
 	@Size(min = 5)
 	private String password;
-	
+
 	@NotNull
 	private List<Roles> roles;
-	
+
 	@NotNull
 	@NotEmpty
 	@NotBlank
@@ -78,8 +78,6 @@ public class Usuario implements Serializable {
 	
 	private Boolean enabled;
 
-	private List<String> authorities;
-
 	public String getId() {
 		return id;
 	}
@@ -89,10 +87,32 @@ public class Usuario implements Serializable {
 	}
 
 	public String getUsername() {
+
 		return username;
 	}
 
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return this.enabled;
+	}
+
 	public void setUsername(String username) {
+
 		this.username = username;
 	}
 
@@ -104,28 +124,14 @@ public class Usuario implements Serializable {
 		this.password = password;
 	}
 
-	public List<Roles> getRole() {
-		return roles;
-	}
-
-	public void setRole(List<Roles> role) {
-		this.roles = role;
-	}
-
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
 
-	public List<String> getAuthorities() {
-		return authorities;
-	}
-
-	public void setAuthorities(List<String> authorities) {
-		this.authorities = authorities;
+	public Set<GrantedAuthority> getAuthorities() {
+		return this.getRoles().stream()
+				.map(role -> new SimpleGrantedAuthority(role.toString()))
+				.collect(Collectors.toSet());
 	}
 
 	public List<Roles> getRoles() {

@@ -76,7 +76,7 @@ public class SignUpController {
 						condominio.getUsername(),
 						encoder.encode(condominio.getPassword()), 
 						Arrays.asList(new Roles[] {
-							Roles.ROLE_ADMINISTRADOR
+							Roles.ROLE_ADMIN
 						}),
 						condominio.getAdministrador(),
 						condominio.getTelefono(),

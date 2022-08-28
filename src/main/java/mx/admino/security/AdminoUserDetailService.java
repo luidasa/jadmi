@@ -1,4 +1,4 @@
-package mx.admino.services.impl;
+package mx.admino.security;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,11 +10,11 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 
 import mx.admino.services.UsuarioService;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class AdminoUserDetailService implements UserDetailsService {
 	
 	@Autowired
@@ -30,18 +30,6 @@ public class AdminoUserDetailService implements UserDetailsService {
 			System.out.println("No existe");
 			throw new UsernameNotFoundException(username + " no esta registrado");
 		}
-		
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-
-        adminoUser.getAuthorities()
-          .forEach(role -> {
-              grantedAuthorities.add(new SimpleGrantedAuthority(role));
-          });
-
-		System.out.println(adminoUser);
-        return new User(
-        		adminoUser.getUsername(),
-        		adminoUser.getPassword(), 
-        		grantedAuthorities);
+		return adminoUser;
 	}
 }
