@@ -1,4 +1,4 @@
-package mx.admino.controllers.condomino;
+package mx.admino.controllers;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -20,7 +20,7 @@ import mx.admino.services.IndicadoresService;
  * aquellos que no son administradores del condominio.
  */
 @Controller
-public class PanelCondominioController {
+public class DashboardController {
 	
 	@Autowired
 	IndicadoresService service;
@@ -32,7 +32,7 @@ public class PanelCondominioController {
 		return x ;
 	}
 
-	@GetMapping("/condominio/panel")
+	@GetMapping("/panel")
 	public String getPanel(Model model) {
 		
 		LocalDate fin = LocalDate.now();

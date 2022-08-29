@@ -17,7 +17,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg" th:fragment="navbar">
-    <div class="container-fluid">
+    <div class="container">
       <a class="navbar-brand" th:href="@{/}">
         <img src="/img/brand/jadmino.png" alt="Administra tu condominio" width="30" height="24"
           class="d-inline-block align-text-top">
@@ -27,8 +27,8 @@
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <div class="collapse navbar-collapse d-flex bd-highlight" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-grow-1 bd-highlight">
           <li class="nav-item"  sec:authorize="hasRole('ROLE_ADMIN')">
             <a class="nav-link active" aria-current="page" th:href="@{/admin/condominos}">Condominos</a>
           </li>
@@ -51,17 +51,22 @@
               <li><a class="dropdown-item" th:href="@{/pages/about}">Acerca</a></li>
             </ul>
           </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false" sec:>
-                    ${}
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" th:href="@{/pages/faqs}">FAQs</a></li>
-                    <li><a class="dropdown-item" th:href="@{/pages/about}">Acerca</a></li>
-                </ul>
-            </li>
         </ul>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 bd-highlight"  th:if="${#authentication.isAuthenticated()}">
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="usuarioDropdown" role="button" data-bs-toggle="dropdown"
+                 aria-expanded="false" th:text="${#authentication.name}">
+                  Nombre
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="usuarioDropdown">
+                  <li><a class="dropdown-item" th:href="@{/perfil}">Perfil</a></li>
+                  <li>
+                      <form th:action="@{/logout}"><button class="dropdown-item">Salir</button></form>
+                  </li>
+              </ul>
+          </li>
+
+      </ul>
       </div>
     </div>
   </nav>
