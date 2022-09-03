@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.entities.CorteFactura;
@@ -17,7 +18,8 @@ import mx.admino.services.CondominoService;
 import mx.admino.services.FacturaService;
 
 @Controller
-public class CreateController {
+@RequestMapping("/admin/facturas")
+public class CreateFacturasController {
 
 	@Autowired
 	FacturaService facturaService;
@@ -29,7 +31,7 @@ public class CreateController {
 	CondominioService condominioService;
 	
 	
-	@PostMapping("/facturas/generar")
+	@PostMapping("/generar")
 	public String postGenerar(
 			@ModelAttribute @Valid CorteFactura facturaSolicitud,
 			BindingResult binding,
@@ -46,7 +48,7 @@ public class CreateController {
 		facturaService.generate(facturaSolicitud);
 		
 		flash.addFlashAttribute("alert_success","Se agregan generaron las facturas para el periodo indicado");
-		viewName = "redirect:/facturas";
+		viewName = "redirect:/admin/facturas";
 		
 		return viewName;
 	}

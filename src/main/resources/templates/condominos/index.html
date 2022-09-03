@@ -61,13 +61,13 @@
 								<li class="page-item" th:each="i : ${#numbers.sequence( 1, condominos.getTotalPages)}">
 									<a class="page-link" 
 										th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"  
-										th:href="@{/condominos(page=${i}, size=10)}" 
+										th:href="@{/admin/condominos(page=${i}, size=10)}"
 										th:text="${i}">1
 									</a>
 								</li>
 								<li class="page-item">
 									<a class="page-link" 
-										th:classappend="${condominos.isLast ? 'disabled' : ''}" 
+										th:classappend="${condominos.isLast ? 'disabled' : ''}"
 										aria-label="Siguiente">
 										<span aria-hidden="true">&raquo;</span>
 									</a>

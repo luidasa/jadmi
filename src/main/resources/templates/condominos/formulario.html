@@ -21,19 +21,23 @@
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>				
 			</header>
-			<form th:action="@{${'/admin/condominos/' + condomino.id}}" method="post" th:object="${condomino}">
+			<form th:action="@{${condomino.id != null ? '/admin/condominos/' + condomino.id: '/admin/condominos/nuevo' }}" method="post" th:object="${condomino}">
 			<div class="card">
-				<div class="card-header bg-primary bg-gradient text-white">
+				<div class="card-header bg-primary bg-opacity-25 text-muted">
 					<h5>Información del dueño</h5>
 				</div>
-				<div class="card-body row">
-					<div class="mb-3">
-					    <label for="interior" class="form-label">Interior</label>
-					    <input type="text" class="form-control" id="interior" aria-describedby="interiorHelp" 
-					    	th:field="${condomino.interior}"
-					    	th:classappend="${#fields.hasErrors('interior')} ? 'is-invalid' : ''">
-					    <div id="interiorHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('interior')}" th:errors="*{interior}">Error</div>
-					  </div>
+				<div class="card-body">
+					<div class="row">
+					<div class="col-md-4">
+						<div class="mb-3">
+						    <label for="interior" class="form-label">Interior</label>
+						    <input type="text" class="form-control" id="interior" aria-describedby="interiorHelp" 
+						    	th:field="${condomino.interior}"
+						    	th:classappend="${#fields.hasErrors('interior')} ? 'is-invalid' : ''">
+						    <div id="interiorHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('interior')}" th:errors="*{interior}">Error</div>
+						  </div>
+					</div>
+					<div class="col-md-8">
 					  <div class="mb-3">
 					    <label for="nombre" class="form-label">Nombre</label>
 					    <input type="text" class="form-control" id="nombre" aria-describedby="nombreHelp" 
@@ -41,6 +45,8 @@
 					    	th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''">
 					    <div id="nombreHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre</div>
 					  </div>
+					</div>
+					</div>
 					  <div class="row">
 					  <div class="mb-3 col">
 					    <label for="telefono" class="form-label">Telefono</label>
@@ -58,20 +64,28 @@
 					  </div>
 					  <div class="mb-3 col">
 					    <label for="saldo" class="form-label">Saldo</label>
-					    <input type="text" class="form-control" id="correo" aria-describedby="saldoHelp" 
+					    <input type="text" class="form-control" id="saldo" aria-describedby="saldoHelp"
 					    	th:field="${condomino.saldo}"
 					    	th:classappend="${#fields.hasErrors('saldo')} ? 'is-invalid' : ''">
-					    <div id="correoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('saldo')}" th:errors="*{saldo}">Correo</div>
+					    <div id="saldoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('saldo')}" th:errors="*{saldo}">Correo</div>
 					  </div>
 					</div>
-				  <div class="form-group">
-				    <label for="estaDesocupada" class="form-label">Esta desocupada</label>
-				    <input type="checkbox" id="estaDesocupada" area-describedby="estaDesocupadaHelp" 
-				    	th:field="${condomino.estaDesocupada}"
-						th:classappend="${#fields.hasErrors('estaDesocupada')} ? 'is-invalid' : ''"/>
-				    <div id="estaDesocupadaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('estaDesocupada')}" th:errors="*{estaDesocupada}">Nombre</div>
-				  </div>
-					
+					<div class="row">
+					  <div class="form-group col">
+					    <label for="estaDesocupada" class="form-label">Esta desocupada</label>
+					    <input type="checkbox" id="estaDesocupada" area-describedby="estaDesocupadaHelp" 
+					    	th:field="${condomino.estaDesocupada}"
+							th:classappend="${#fields.hasErrors('estaDesocupada')} ? 'is-invalid' : ''"/>
+					    <div id="estaDesocupadaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('estaDesocupada')}" th:errors="*{estaDesocupada}">Nombre</div>
+					  </div>
+					  <div class="form-group col">
+					    <label for="estaRentada" class="form-label">Esta rentada</label>
+					    <input type="checkbox" id="estaRentada" area-describedby="estaRentadaHelp" 
+					    	th:field="${condomino.estaRentada}"
+							th:classappend="${#fields.hasErrors('estaRentada')} ? 'is-invalid' : ''"/>
+					    <div id="estaRentadaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('estaRentada')}" th:errors="*{estaRentada}">Nombre</div>
+					  </div>
+					</div>
 				</div>
 				<div class="card-footer text-end">
 					<a class="btn btn-secondary" th:href="@{/admin/facturas(cid=${condomino.id})}">Facturas</a>

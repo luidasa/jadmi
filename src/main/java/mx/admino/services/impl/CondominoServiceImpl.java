@@ -25,6 +25,7 @@ public class CondominoServiceImpl implements CondominoService {
 
 	@Override
 	public Condomino save(Condomino condomino) {
+		
 		return condominoRepository.save(condomino);
 	}
 

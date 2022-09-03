@@ -25,6 +25,7 @@ public class Condomino implements Serializable {
 		this.interior = interior;
 		this.nombre = nombre;
 		this.estaDesocupada = false;
+		this.estaRentada = false;
 	}
 
 	@Id
@@ -53,6 +54,8 @@ public class Condomino implements Serializable {
 	private Float saldo;
 	
 	private Boolean estaDesocupada;
+	
+	private Boolean estaRentada;
 	
 	public String getId() {
 		return id;
@@ -110,6 +113,22 @@ public class Condomino implements Serializable {
 		this.saldo = saldo;
 	}
 
+	public Boolean getEstaDesocupada() {
+		return estaDesocupada;
+	}
+
+	public void setEstaDesocupada(Boolean estaDesocupada) {
+		this.estaDesocupada = estaDesocupada;
+	}
+
+	public Boolean getEstaRentada() {
+		return estaRentada;
+	}
+
+	public void setEstaRentada(Boolean estaRentada) {
+		this.estaRentada = estaRentada;
+	}
+	
 	public void merge(Condomino condomino) {
 		
 		this.setInterior(condomino.getInterior());
@@ -130,11 +149,4 @@ public class Condomino implements Serializable {
 				", saldo=" + saldo + "]";
 	}
 
-	public Boolean getEstaDesocupada() {
-		return estaDesocupada;
-	}
-
-	public void setEstaDesocupada(Boolean estaDesocupada) {
-		this.estaDesocupada = estaDesocupada;
-	}
 }

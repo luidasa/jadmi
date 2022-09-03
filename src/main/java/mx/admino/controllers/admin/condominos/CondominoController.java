@@ -1,4 +1,4 @@
-package mx.admino.controllers.admin;
+package mx.admino.controllers.admin.condominos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +30,19 @@ public class CondominoController {
 
 	@Autowired
 	CondominoService condominoService;
+
+	private List<Breadcrum> getBreadcrum(Condomino condomino) {
+
+		List<Breadcrum> x = new ArrayList<Breadcrum>();
+		x.add(new Breadcrum("Inicio", "/admin/panel", false));
+		x.add(new Breadcrum("Condominos", "/admin/condominos", condomino == null));
+		if (condomino != null) {
+			x.add(new Breadcrum(condomino.getInterior(), "/admin/condominos/" + condomino.getId(), true));
+		} else {
+			x.add(new Breadcrum("Nuevo", "/admin/condominos/nuevo", true));
+		}
+		return x ;
+	}
 	
 	@GetMapping()
 	public String index(
@@ -42,48 +55,5 @@ public class CondominoController {
 		model.addAttribute("condominos", condominos);
 		model.addAttribute("breadcrum", getBreadcrum(null));
 		return "condominos/index";
-	}
-	
-	@GetMapping("/{id}")
-	public String getEdit(
-			@PathVariable String id,
-			Model model) {
-	
-		Condomino condomino = condominoService.findById(id);
-		model.addAttribute("condomino", condomino );
-		model.addAttribute("breadcrum", getBreadcrum(condomino));
-		return "condominos/formulario";
-	}
-	
-	private List<Breadcrum> getBreadcrum(Condomino condomino) {
-
-		List<Breadcrum> x = new ArrayList<Breadcrum>();
-		x.add(new Breadcrum("Inicio", "/admin/panel", false));
-		x.add(new Breadcrum("Condominos", "/admin/condominos", condomino == null));
-		if (condomino != null) {
-			x.add(new Breadcrum(condomino.getInterior(), "/admin/condominos/" + condomino.getId(), true));
-		}
-		return x ;
-	}
-
-	@PostMapping("/{id}")
-	public String postEdit(
-			@PathVariable String id,
-			@ModelAttribute @Valid Condomino condomino,
-			BindingResult binding,
-			RedirectAttributes flash,
-			Model model) {
-		String viewName = "condominos/formulario";
-		
-		if (binding.hasErrors()) {
-			return viewName;
-		}
-		
-		Condomino itemdb = condominoService.findById(id);
-		itemdb.merge(condomino);
-		condominoService.save(itemdb);
-		flash.addFlashAttribute("alert_success", "Hemos guardado la información actualizada del condomino.");
-		viewName = "redirect:/admin/condominos";
-		return viewName;
 	}
 }

@@ -2,6 +2,7 @@ package mx.admino.services;
 
 import javax.validation.Valid;
 
+import mx.admino.models.entities.Token;
 import mx.admino.models.entities.Usuario;
 
 public interface UsuarioService {
@@ -10,5 +11,7 @@ public interface UsuarioService {
 
 	Usuario create(@Valid Usuario usuario);
 
-	
+    Usuario findByEmail(String correo);
+
+    Token save(Token newToken);
 }

@@ -13,8 +13,10 @@ import mx.admino.models.entities.Condomino;
 import mx.admino.services.CondominioService;
 import mx.admino.services.CondominoService;
 import mx.admino.services.FacturaService;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/admin/facturas")
 public class DetailController {
 
 	@Autowired
@@ -32,7 +34,7 @@ public class DetailController {
 		model.addAttribute("condominos", condominos);
 	}
 
-	@GetMapping("/facturas/{id}")
+	@GetMapping("/{id}")
 	public String getFactura(
 			@PathVariable String id,
 			Model model) {

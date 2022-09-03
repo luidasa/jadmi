@@ -55,7 +55,7 @@ public class IndexController {
 		return x ;
 	}
 	
-	@GetMapping("/facturas")
+	@GetMapping("/admin/facturas")
 	public String getIndex(
 			@Valid FacturaFiltro facturaFiltro,
 			BindingResult result,
