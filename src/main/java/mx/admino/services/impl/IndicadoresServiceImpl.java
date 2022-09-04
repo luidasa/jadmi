@@ -13,7 +13,7 @@ public class IndicadoresServiceImpl implements IndicadoresService {
 
 	@Override
 	public List<Resumen> findByPeriod(Date inicio, Date fin) {
-		// TODO Auto-generated method stub
+		// TODO Deben de generarse la consulta que permita ver los indicadores en un periodo de tiempo
 		return null;
 	}
 

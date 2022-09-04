@@ -49,4 +49,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public Token save(Token newToken) {
 		return tokenRepository.save(newToken);
 	}
+
+	@Override
+	public Token findTokenByCode(String code) {
+		return tokenRepository.findOneByCode(code);
+	}
+
+	@Override
+	public Usuario save(Usuario usuario) {
+		return repository.save(usuario);
+	}
 }

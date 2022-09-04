@@ -10,6 +10,7 @@ import java.util.Properties;
 @Configuration
 public class MailConfig {
 
+    /// TODO. Deben de ponerse los parametros en variables de ambiente para tomarlas de alli y/o en el archivo de propiedades.
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

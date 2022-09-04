@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TokenRepository extends MongoRepository<Token, String> {
 
+    Token findOneByCode(String code);
 }

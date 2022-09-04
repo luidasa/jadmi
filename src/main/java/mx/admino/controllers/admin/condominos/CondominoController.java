@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,9 @@ public class CondominoController {
 
 	@Autowired
 	CondominoService condominoService;
+
+	@Autowired
+	ApplicationEventPublisher eventPublisher;
 
 	private List<Breadcrum> getBreadcrum(Condomino condomino) {
 

@@ -154,7 +154,7 @@ public class FacturaServiceImpl implements FacturaService {
 
 	@Override
 	public Factura generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento, Condomino condomino) {
-		// TODO Auto-generated method stub
+		// TODO Debe de implementarse el metodo que genera la factura de un condominio.
 		return null;
 	}
 

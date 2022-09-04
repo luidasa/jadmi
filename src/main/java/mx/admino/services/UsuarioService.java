@@ -14,4 +14,8 @@ public interface UsuarioService {
     Usuario findByEmail(String correo);
 
     Token save(Token newToken);
+
+    Token findTokenByCode(String code);
+
+    Usuario save(Usuario usuario);
 }

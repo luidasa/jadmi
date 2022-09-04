@@ -13,15 +13,25 @@
 <body>
 	<div class="container mt-5">
 		<div class="row">
+			<div class="col-md-6 offset-md-3">
+				<div th:replace="layouts/master::alerts"></div>
+			</div>
+			<div th:if="${param.error}" class="alert alert-error col-md-6 offset-md-3" th:text="${param.error}" >
+				Usuario y contraseña incorrectos
+			</div>
+			<div th:if="${param.logout}" class="alert alert-success col-md-6 offset-md-3">
+				Has cerrado la sesión
+			</div>
+			<div th:if="${param.info}" class="alert alert-info col-md-6 offset-md-3" th:text="${param.info}">
+				Usuario y contraseña incorrectos
+			</div>
+			<div th:if="${param.success}" class="alert alert-info col-md-6 offset-md-3" th:text="${param.success}">
+				Usuario y contraseña incorrectos
+			</div>
+
 			<div class="col-md-4 offset-md-4">
 				<form class="form-signin" name="f" th:action="@{/login}" method="post" autocomplete="off">
 
-					<div th:if="${param.error}" class="alert alert-error">
-						Usuario y contraseña incorrectos
-					</div>
-					<div th:if="${param.logout}" class="alert alert-success">
-						Has cerrado la sesión
-					</div>
 
 					<div class="text-center mb-4">
 						<img class="mb-4" src="/img/brand/jadmino.png" alt="" width="72"

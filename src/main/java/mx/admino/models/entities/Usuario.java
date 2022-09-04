@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,13 +23,12 @@ public class Usuario implements Serializable, UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	public Usuario() {
-		this.roles = new ArrayList<Roles>();
+		this.condominios = new ArrayList<>();
 	}
 	
 	public Usuario(
 			@NotNull @NotEmpty @NotBlank @Size(min = 5) String username,
 			@NotNull @NotEmpty @NotBlank @Size(min = 5) String password, 
-			@NotNull List<Roles> roles,
 			@NotNull @NotEmpty @NotBlank @Size(min = 10) String name,
 			@NotNull @NotEmpty @NotBlank @Size(min = 10, max = 10) String phone, 
 			String email, 
@@ -36,7 +36,6 @@ public class Usuario implements Serializable, UserDetails {
 		super();
 		this.username = username;
 		this.password = password;
-		this.roles = roles;
 		this.name = name;
 		this.phone = phone;
 		this.email = email;
@@ -59,8 +58,12 @@ public class Usuario implements Serializable, UserDetails {
 	@Size(min = 5)
 	private String password;
 
+	@Transient
 	@NotNull
-	private List<Roles> roles;
+	@NotEmpty
+	@NotBlank
+	@Size(min = 5)
+	private String confirmation;
 
 	@NotNull
 	@NotEmpty
@@ -77,6 +80,8 @@ public class Usuario implements Serializable, UserDetails {
 	private String email;
 	
 	private Boolean enabled;
+
+	private List<Condominio> condominios;
 
 	public String getId() {
 		return id;
@@ -128,18 +133,22 @@ public class Usuario implements Serializable, UserDetails {
 		this.enabled = enabled;
 	}
 
+	public String getConfirmation() {
+		return confirmation;
+	}
+
+	public void setConfirmation(String confirmation) {
+		this.confirmation = confirmation;
+	}
+
 	public Set<GrantedAuthority> getAuthorities() {
+		return null;
+		/*
 		return this.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.toString()))
 				.collect(Collectors.toSet());
-	}
 
-	public List<Roles> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Roles> roles) {
-		this.roles = roles;
+		 */
 	}
 
 	public String getName() {
@@ -164,6 +173,18 @@ public class Usuario implements Serializable, UserDetails {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public List<Condominio> getCondominios() {
+		return condominios;
+	}
+
+	public void setCondominios(List<Condominio> condominios) {
+		this.condominios = condominios;
 	}
 
 	@Override

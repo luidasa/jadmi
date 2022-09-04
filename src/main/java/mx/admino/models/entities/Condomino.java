@@ -2,13 +2,10 @@ package mx.admino.models.entities;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Digits;
+import javax.validation.constraints.*;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="condominos")
@@ -19,28 +16,22 @@ public class Condomino implements Serializable {
 	public Condomino() {
 	}
 	
-	public Condomino(String interior, String nombre) {
+	public Condomino(Condominio condominio, String interior) {
 		this();
 
+		this.condominio = condominio;
 		this.interior = interior;
-		this.nombre = nombre;
 		this.estaDesocupada = false;
 		this.estaRentada = false;
 	}
 
 	@Id
 	private String id;
-	
-	private String username;
-	
+
 	@NotEmpty
 	@NotBlank
 	private String interior;
-	
-	@NotEmpty
-	@NotBlank
-	private String nombre;
-	
+
 	@NotEmpty
 	@NotBlank
 	@Digits(fraction = 0, integer = 10)
@@ -56,6 +47,10 @@ public class Condomino implements Serializable {
 	private Boolean estaDesocupada;
 	
 	private Boolean estaRentada;
+
+	@DBRef
+	@NotNull
+	private Condominio condominio;
 	
 	public String getId() {
 		return id;
@@ -65,28 +60,12 @@ public class Condomino implements Serializable {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getInterior() {
 		return interior;
 	}
 
 	public void setInterior(String interior) {
 		this.interior = interior;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	public String getTelefono() {
@@ -128,11 +107,18 @@ public class Condomino implements Serializable {
 	public void setEstaRentada(Boolean estaRentada) {
 		this.estaRentada = estaRentada;
 	}
-	
+
+	public Condominio getCondominio() {
+		return condominio;
+	}
+
+	public void setCondominio(Condominio condominio) {
+		this.condominio = condominio;
+	}
+
 	public void merge(Condomino condomino) {
 		
 		this.setInterior(condomino.getInterior());
-		this.setNombre(condomino.getNombre());
 		this.setTelefono(condomino.getTelefono());
 		this.setCorreo(condomino.getCorreo());
 		this.setSaldo(condomino.getSaldo());
@@ -141,10 +127,8 @@ public class Condomino implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Condomino [username=" + username + 
-				", interior=" + interior + 
-				", nombre=" + nombre + 
-				", telefono=" + telefono + 
+		return "Condomino [interior=" + interior +
+				", telefono=" + telefono +
 				", correo=" + correo + 
 				", saldo=" + saldo + "]";
 	}

@@ -8,14 +8,15 @@
 	<title>Admino - Administración de condominios</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+	<script src="https://www.google.com/recaptcha/api.js"></script>
 </head>
 
 <body>
 	<div class="container mt-5">
 		<div class="row">
 			<div class="col-md-8 offset-md-2">
-				<form class="form-signin" name="f" th:action="@{/signup}" method="post" autocomplete="off"
-					th:object="${condominio}">
+				<form id="signupForm" class="form-signin" name="f" th:action="@{/signup}" method="post" autocomplete="off"
+					th:object="${usuario}">
 
 					<div class="text-center mb-4">
 						<img class="mb-4" src="/img/brand/jadmino.png" alt="" width="72"
@@ -26,59 +27,39 @@
 					<div th:replace="layouts/master::alerts"></div>				
 
 					<div class="form-group mb-2">
-						<label for="condominio">Condominio</label>
-						<input type="text" id="condominio" class="form-control" placeholder="Nombre del condominio"
-							required autofocus="" th:field="${condominio.nombre}" th:classappend="${#fields.hasErrors('nombre')} ? is-invalid : ''">
-					    <div id="nombreHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
-					</div>
-					<div class="form-group mb-2">
-						<label for="direccion">Dirección</label>
-						<textarea id="direccion" class="form-control"
-					    	th:field="${condominio.domicilio}" th:classappend="${#fields.hasErrors('domicilio')} ? is-invalid : ''"></textarea>
-					    <div id="domicilioHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('domicilio')}" th:errors="*{domicilio}"></div>
-					</div>
-					
-					<div class="form-group mb-2">
-						<label for="unidades">Condominios</label>
-						<input id="unidades" class="form-control" type="number" min="2" step="1" required
-					    	th:field="${condominio.unidades}" th:classappend="${#fields.hasErrors('unidades')} ? is-invalid : ''">
-					    <div id="unidadesHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('unidades')}" th:errors="*{unidades}"></div>
-					</div>
-					
-					<hr>
-
-					<div class="form-group mb-2">
-						<label for="nombre">Administrador</label>
-						<input type="text" id="nombre" class="form-control" placeholder="Nombre del administrador" required
-							th:field="${condominio.administrador}" th:classappend="${#fields.hasErrors('administrador')} ? is-invalid : ''">
-					    <div class="form-text invalid-feedback" th:if="${#fields.hasErrors('administrador')}" th:errors="*{administrador}"></div>
+						<label for="nombre">Nombre</label>
+						<input type="text" id="nombre" class="form-control" placeholder="Nombre completo" required
+							th:field="${usuario.name}" th:classappend="${#fields.hasErrors('name')} ? is-invalid : ''">
+					    <div class="form-text invalid-feedback"
+							 th:if="${#fields.hasErrors('name')}"
+							 th:errors="*{name}"></div>
 					</div>
 					
 					<div class="row mb-2">
 						<div class="col">
 							<div class="form-group">
-								<label for="username">Usuario administrador</label>
+								<label for="username">Usuario</label>
 								<input type="text" id="username" class="form-control"
 									placeholder="Elija un nombre de usuario" required 
-									th:field="${condominio.username}" th:classappend="${#fields.hasErrors('username')} ? is-invalid : ''">
+									th:field="${usuario.username}" th:classappend="${#fields.hasErrors('username')} ? is-invalid : ''">
 					    		<div class="form-text invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
 							</div>
 						</div>
 						<div class="col">
 							<div class="form-group">
-								<label for="inputEmail">Email administrador</label>
+								<label for="inputEmail">Email</label>
 								<input type="email" id="inputEmail" class="form-control" placeholder="Buzon de Email" required
-									th:field="${condominio.correo}" th:classappend="${#fields.hasErrors('correo')} ? is-invalid : ''">
-					   			 <div class="form-text invalid-feedback" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></div>
+									th:field="${usuario.email}" th:classappend="${#fields.hasErrors('email')} ? is-invalid : ''">
+					   			 <div class="form-text invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 							</div>
 						</div>
 						<div class="col">
 							<div class="form-group">
-								<label for="inputPhone">Teléfono administrador</label>
+								<label for="inputPhone">Teléfono</label>
 								<input type="text" id="inputPhone" class="form-control" maxlength="10" minlength="10" 
 									placeholder="Teléfono de contacto" required 
-									th:field="${condominio.telefono}" th:classappend="${#fields.hasErrors('telefono')} ? is-invalid : ''">
-						    <div class="form-text invalid-feedback" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Telefono</div>
+									th:field="${usuario.phone}" th:classappend="${#fields.hasErrors('phone')} ? is-invalid : ''">
+						    <div class="form-text invalid-feedback" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Teléfono</div>
 						</div>
 					</div>
 
@@ -86,17 +67,17 @@
 						<div class="col">
 							<div class="form-group">
 								<label for="password">Contraseña</label>
-								<input type="password" name="password" id="password" class="form-control" placeholder="Escriba una contraseña" required
-									th:field="${condominio.password}" th:classappend="${#fields.hasErrors('password')} ? is-invalid : ''">
+								<input type="password" id="password" class="form-control" placeholder="Escriba una contraseña" required
+									th:field="${usuario.password}" th:classappend="${#fields.hasErrors('password')} ? is-invalid : ''">
 								<div class="form-text invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Telefono</div>
 							</div>
 						</div>
 						<div class="col">
 							<div class="form-group">
 								<label for="confirmation">Confirmación</label>
-								<input type="password" name="confirmation" id="confirmation" class="form-control" placeholder="Confirma tu contraseña" required
-									th:field="${condominio.confirmacion}" th:classappend="${#fields.hasErrors('confirmacion')} ? is-invalid : ''">
-							    <div class="form-text invalid-feedback" th:if="${#fields.hasErrors('confirmacion')}" th:errors="*{confirmacion}">Telefono</div>
+								<input type="password" id="confirmation" class="form-control" placeholder="Confirma tu contraseña" required
+									th:field="${usuario.confirmation}" th:classappend="${#fields.hasErrors('confirmation')} ? is-invalid : ''">
+							    <div class="form-text invalid-feedback" th:if="${#fields.hasErrors('confirmation')}" th:errors="*{confirmation}">Telefono</div>
 							</div>
 						</div>
 					</div>
@@ -107,7 +88,11 @@
 						<span>
 							Ya tienes cuenta <a th:href="@{/login}">inicia sesión.</a>
 						</span>
-						<button class="btn btn-primary" type="submit">Registrar</button>
+						<button class="g-recaptcha btn btn-primary"
+								th:attr="data-sitekey=${reCAPTCHASiteKey}"
+								data-callback='onSubmit'
+								data-action='submit'
+								type="submit">Registrar</button>
 					</div>
 
 					<p class="mt-5 mb-3 text-muted text-center">© 2017-2022</p>
@@ -116,5 +101,9 @@
 		</div>
 	</div>
 </body>
-
+<script>
+	function onSubmit(token) {
+		document.getElementById("signupForm").submit();
+	}
+</script>
 </html>

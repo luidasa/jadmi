@@ -1,13 +1,16 @@
 package mx.admino.controllers.auth;
 
-import java.util.Arrays;
-import java.util.UUID;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import mx.admino.components.VerifyReCAPTCHA;
+import mx.admino.events.OnUserRegisteredEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,85 +18,93 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import mx.admino.models.entities.Condominio;
-import mx.admino.models.entities.Condomino;
-import mx.admino.models.entities.Roles;
 import mx.admino.models.entities.Usuario;
-import mx.admino.services.CondominioService;
-import mx.admino.services.CondominoService;
 import mx.admino.services.UsuarioService;
+
+import java.io.IOException;
 
 @Controller
 public class SignUpController {
-	
+
+	@Value("${server.baseUrl}")
+	String urlBase;
+
+	@Value("${reCAPTCHA.site.key}")
+	String reCAPTCHASiteKey;
+
+	@Autowired
+	ApplicationEventPublisher eventPublisher;
+
 	@Autowired
 	UsuarioService usuarioSrv;
-	
-	@Autowired
-	CondominioService condominioSrv;
-	
-	@Autowired
-	CondominoService condominoSrv;
-	
+
 	@Autowired
 	PasswordEncoder encoder;
 
 	@GetMapping("/signup")
-	public String getSignup(@ModelAttribute Condominio condominio) {
+	public String getSignup(@ModelAttribute Usuario usuario, Model model) {
+
+		model.addAttribute("reCAPTCHASiteKey", reCAPTCHASiteKey);
 		return "auth/signup";
 	}
 	
 	@PostMapping("/signup")
-	public String postSignup(@ModelAttribute @Valid Condominio condominio,
+	public String postSignup(@ModelAttribute @Valid Usuario usuario,
 			BindingResult binding,
-			RedirectAttributes flash) {
-		
-		// Verificamos que el condominio no este registrado
-		if (condominioSrv.findByNombre(condominio.getNombre()).size() > 0) {
-			System.err.print("El nombre del condominio ya existe");
-			binding.addError(new FieldError("Condominio", "nombre", "El condominio ya ha sido registrado"));
+			RedirectAttributes flash,
+			Model model,
+			 HttpServletRequest req) {
+
+		model.addAttribute("reCAPTCHASiteKey", reCAPTCHASiteKey);
+
+		String gRecaptchaResponse = req.getParameter("g-recaptcha-response");
+		System.out.println(gRecaptchaResponse);
+		boolean verify = false;
+		try {
+			verify = VerifyReCAPTCHA.verify(gRecaptchaResponse);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-		
+		// Verificamos el catpcha.
+		if (!verify) {
+			System.err.print("No es un humano");
+			binding.addError(new FieldError("usuario", "name", "Fallo la validación de humanidad."));
+		}
+
 		// Verificamos que el administrador no este registrado.
-		if (usuarioSrv.findByUsername(condominio.getUsername()) != null) {
+		if (usuarioSrv.findByUsername(usuario.getUsername()) != null) {
 			System.err.print("El administrador del condominio ya existe");
-			binding.addError(new FieldError("Condominio", "username", "El administrador ya ha sido registrado. Inicie sesión para registrar el condominio."));			
+			binding.addError(new FieldError("usuario", "username", "El nombre de usuario ya ha sido registrado."));
 		}
-		
+
+		// Verificamos que el administrador no este registrado.
+		if (usuarioSrv.findByEmail(usuario.getEmail()) != null) {
+			System.err.print("Este correo ya esta registrado");
+			binding.addError(new FieldError("usuario", "email", "El correo ya ha sido registrado."));
+		}
+
 		// Verificamos que la confirmación de la contraseña y la contraseña sean las mismas
-		if (!condominio.getPassword().equals(condominio.getConfirmacion())) {
+		if (!usuario.getPassword().equals(usuario.getConfirmation())) {
 			System.err.print("La contraseña y su confirmación no son iguales.");
-			binding.addError(new FieldError("Condominio", "confirmacion", "La contraseña y su confirmación no son iguales."));						
+			binding.addError(new FieldError("usuario", "confirmation", "La contraseña y su confirmación no son iguales."));
 		}
 
 		// Verificamos que los objetos del dominio no tengan error.
 		if (binding.hasErrors()) {
-			flash.addFlashAttribute("alert_danger", "Ocurrio un error al registrar el condominio.");
+			flash.addFlashAttribute("error", "Ocurrio un error al registrar el condominio.");
 			return "auth/signup";
-		}		
+		}
 		Usuario usuarioDb = usuarioSrv.create(
 				new Usuario(
-						condominio.getUsername(),
-						encoder.encode(condominio.getPassword()), 
-						Arrays.asList(new Roles[] {
-							Roles.ROLE_ADMIN
-						}),
-						condominio.getAdministrador(),
-						condominio.getTelefono(),
-						condominio.getCorreo(),
+						usuario.getUsername(),
+						encoder.encode(usuario.getPassword()),
+						usuario.getName(),
+						usuario.getPhone(),
+						usuario.getEmail(),
 						false));
-		
-		var condominiodb = condominioSrv.save(condominio);
-		
-		// Agregamos el numero de unidades privativas que nos ha indicado el que se registra.
-		for(Integer i = 0; i < condominiodb.getUnidades(); i++ ) {
-			String interior = "Casa - " + (i + 1);
-			String nombre = UUID.randomUUID().toString();
-			if (condominoSrv.findByInterior(interior) == null) {
-				condominoSrv.save(new Condomino(interior, nombre));
-			}
-		}
-		flash.addAttribute("alert_success", "Gracias por confianza al registrar el condominio " + condominiodb.getNombre() + ". Hemos enviado un correo electrónico a " + usuarioDb.getEmail() + " para confirmar su registro" );
+
+		eventPublisher.publishEvent(new OnUserRegisteredEvent(usuarioDb, urlBase));
+		flash.addAttribute("alert_success", "Gracias por registrarse con nosotros " + usuarioDb.getName() + ". Hemos enviado un correo electrónico a " + usuarioDb.getEmail() + " para confirmar su registro." );
 		return "redirect:/login";		
 	}
 }
