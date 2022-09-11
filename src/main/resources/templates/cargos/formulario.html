@@ -28,13 +28,13 @@
 					<div class="card-body">
 						<div class="row">
 						  <div class="mb-3 col">
-						    <label for="condomino" class="form-label">Condomino</label>
-						    <select class="form-select" aria-describedby="condominoHelp" th:field="${cargo.condomino}" required>
+						    <label for="casa" class="form-label">Condomino</label>
+						    <select class="form-select" aria-describedby="condominoHelp" th:field="${cargo.casa}" required>
 						    <option value="">No identificado</option>
-						    <option th:each="item: ${condominos}" th:value="${item.id}" th:text="${item.interior + ' ' + item.nombre}"></option>
+						    <option th:each="item: ${casas}" th:value="${item.id}" th:text="${item.interior + ' ' + item.nombre}"></option>
 						    </select>
 						    <div id="condominoHelp" class="form-text invalid-feedback"
-						    	th:if="${#fields.hasErrors('condomino')}" th:errors="*{condomino}">Condomino</div>
+						    	th:if="${#fields.hasErrors('casa')}" th:errors="*{casa}">Condomino</div>
 						  </div>
 						  <div class="mb-3 col">
 						    <label for="concepto" class="form-label">Concepto</label>

@@ -43,10 +43,10 @@
 										<a th:href="@{'/pagos/' + ${pago.id}}" th:text="${#dates.format(pago.fechaPagado, 'dd/MM/yyyy')}"></a> 
 									</td>
 									<td>
-										<a th:href="@{'/condominos/' + ${pago.condomino?.id}}" th:text="${pago.condomino?.Interior}" th:if="${pago.condomino != null}"></a> 
-										<span th:if="${pago.condomino == null}">No identificado</span>
+										<a th:href="@{'/casas/' + ${pago.casa?.id}}" th:text="${pago.casa?.Interior}" th:if="${pago.casa != null}"></a>
+										<span th:if="${pago.casa == null}">No identificado</span>
 									</td>
-									<td th:text="${pago.condomino?.nombre}">Otto</td>
+									<td th:text="${pago.casa?.nombre}">Otto</td>
 									<td th:text="${pago.estatus}">Otto</td>
 									<td class="text-end" th:text="${#numbers.formatDecimal(pago.importe, 3, 'COMMA', 2, 'POINT')}">
 									</td>

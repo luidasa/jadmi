@@ -26,7 +26,7 @@ public class Factura implements Serializable {
 	@Id
 	private String id;
 	
-	private Condomino condomino;
+	private Casa casa;
 	
 	@NotNull
 	@Valid
@@ -134,12 +134,12 @@ public class Factura implements Serializable {
 		this.saldo = saldo;
 	}
 
-	public Condomino getCondomino() {
-		return condomino;
+	public Casa getCondomino() {
+		return casa;
 	}
 
-	public void setCondomino(Condomino condomino) {
-		this.condomino = condomino;
+	public void setCondomino(Casa casa) {
+		this.casa = casa;
 	}
 
 	public Date getFechaVencimiento() {
@@ -172,7 +172,7 @@ public class Factura implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Factura [condomino=" + condomino + 
+		return "Factura [condomino=" + casa +
 				", cargos=" + cargos + 
 				", pagos=" + pagos + 
 				", fechaCorte=" + fechaCorte + 

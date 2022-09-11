@@ -1,4 +1,4 @@
-package mx.admino.controllers.admin.pagos;
+package mx.admino.controllers.pagos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.Breadcrum;
-import mx.admino.models.entities.Condomino;
+import mx.admino.models.entities.Casa;
 import mx.admino.models.entities.Pago;
-import mx.admino.services.CondominoService;
+import mx.admino.services.CasasService;
 import mx.admino.services.PagoService;
 
 @Controller
@@ -31,7 +31,7 @@ public class UpdatePagos {
 	PagoService pagoService;
 	
 	@Autowired
-	CondominoService condominoService;
+    CasasService casasService;
 	
 	private List<Breadcrum> getBreadcrum(Pago pago) {
 
@@ -49,8 +49,8 @@ public class UpdatePagos {
 	
 	@ModelAttribute
 	private void getCondominios(Model model) {
-		List<Condomino> condominos = condominoService.findAll();
-		model.addAttribute("condominos", condominos);
+		List<Casa> casas = casasService.findAll();
+		model.addAttribute("condominos", casas);
 	}
 		
 	@GetMapping("/pagos/{id}")

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import mx.admino.models.entities.*;
 import org.joda.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,16 +23,11 @@ import mx.admino.models.CargoEstatus;
 import mx.admino.models.CuotaEstatus;
 import mx.admino.models.FacturaFiltro;
 import mx.admino.models.PagoEstatus;
-import mx.admino.models.entities.Cargo;
-import mx.admino.models.entities.Condomino;
-import mx.admino.models.entities.CorteFactura;
-import mx.admino.models.entities.Cuota;
-import mx.admino.models.entities.Factura;
-import mx.admino.models.entities.Pago;
+import mx.admino.models.entities.Casa;
 import mx.admino.repositories.CorteFacturaRepository;
 import mx.admino.repositories.FacturaRepository;
 import mx.admino.services.CargoService;
-import mx.admino.services.CondominoService;
+import mx.admino.services.CasasService;
 import mx.admino.services.CuotaService;
 import mx.admino.services.FacturaService;
 import mx.admino.services.PagoService;
@@ -49,7 +45,7 @@ public class FacturaServiceImpl implements FacturaService {
 	MongoTemplate template;
 
 	@Autowired
-	CondominoService condominoService;
+    CasasService casasService;
 	
 	@Autowired
 	PagoService pagosService;
@@ -69,7 +65,7 @@ public class FacturaServiceImpl implements FacturaService {
 	public List<Factura> generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento) {
 		
 		List<Factura> facturas = new ArrayList<>();
-		List<Condomino> condominos = condominoService.findAll();
+		List<Casa> casas = casasService.findAll();
 		Interval periodoEC = new Interval(fechaInicio.getTime(), fechaCorte.getTime());
 		// Generamos los cargos que esten en ese rango dependiendo de la cuota que se haya registrado.
 		List<Cuota> cuotas = cuotasService.findByEstatus(CuotaEstatus.REGISTRADO).stream()
@@ -78,7 +74,7 @@ public class FacturaServiceImpl implements FacturaService {
 						return periodoCuota.overlaps(periodoEC);
 				}).collect(Collectors.toList());
 		System.out.print("Cuotas a facturar: " + cuotas.size());
-		condominos.stream().forEach(condomino -> {
+		casas.stream().forEach(condomino -> {
 				cuotas.forEach(cuota -> {
 				Cargo cargo = new Cargo(condomino, cuota, fechaVencimiento);
 				cargoService.save(cargo);
@@ -90,7 +86,7 @@ public class FacturaServiceImpl implements FacturaService {
 		// Buscamos las cuotas que van a aplicar en ese periodo y ademas les generamos los cargos a cada condominio.
 		List<Cargo> cargos = cargoService.findByFechaVencimientoBetweenAndEstatus(fechaInicio, fechaCorte, CargoEstatus.PENDIENTE);
 		
-		condominos.stream().forEach(c -> {
+		casas.stream().forEach(c -> {
 			Factura nuevaFactura = new Factura();
 			nuevaFactura.setSaldoAnterior(c.getSaldo());
 			nuevaFactura.setPagos(
@@ -120,7 +116,7 @@ public class FacturaServiceImpl implements FacturaService {
 			nuevaFactura.getCargos().stream().forEach(cargo -> cargo.setEstatus(CargoEstatus.FACTURADO));
 			facturaRepository.save(nuevaFactura);
 			facturas.add(nuevaFactura);
-			condominoService.save(c);
+			casasService.save(c);
 		});
 
 		pagosService.saveAll(
@@ -153,7 +149,7 @@ public class FacturaServiceImpl implements FacturaService {
 
 
 	@Override
-	public Factura generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento, Condomino condomino) {
+	public Factura generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento, Casa casa) {
 		// TODO Debe de implementarse el metodo que genera la factura de un condominio.
 		return null;
 	}
@@ -190,7 +186,7 @@ public class FacturaServiceImpl implements FacturaService {
 	public List<Factura> generate(Date fechaCorte, Date fechaVencimiento) {
 		
 		List<Factura> facturas = new ArrayList<>();
-		List<Condomino> condominos = condominoService.findAll();
+		List<Casa> casas = casasService.findAll();
 		
 		// Buscamos los pagos realizados y que no hayan sido facturados con anterioridad.
 		List<Pago> pagos = pagosService.findByFechaPagadoBeforeAndEstatus(fechaCorte, PagoEstatus.PENDIENTE);
@@ -198,7 +194,7 @@ public class FacturaServiceImpl implements FacturaService {
 		// Buscamos las cuotas que van a aplicar en ese periodo y ademas les generamos los cargos a cada condominio.
 		List<Cargo> cargos = cargoService.findByFechaVencimientoBeforeAndEstatus(fechaCorte, CargoEstatus.PENDIENTE);
 		
-		condominos.stream().forEach(c -> {
+		casas.stream().forEach(c -> {
 			Factura nuevaFactura = new Factura();
 			nuevaFactura.setSaldoAnterior(c.getSaldo());
 			nuevaFactura.setPagos(
@@ -228,7 +224,7 @@ public class FacturaServiceImpl implements FacturaService {
 			nuevaFactura.getCargos().stream().forEach(cargo -> cargo.setEstatus(CargoEstatus.FACTURADO));
 			facturaRepository.save(nuevaFactura);
 			facturas.add(nuevaFactura);
-			condominoService.save(c);
+			casasService.save(c);
 		});
 
 		pagosService.saveAll(
@@ -254,7 +250,7 @@ public class FacturaServiceImpl implements FacturaService {
 
 		corteFacturaRepository.save(corte);
 		List<Factura> facturas = new ArrayList<>();
-		List<Condomino> condominos = condominoService.findAll();
+		List<Casa> casas = casasService.findAll();
 		
 		// Buscamos los pagos realizados y que no hayan sido facturados con anterioridad.
 		List<Pago> pagos = pagosService.findByFechaPagadoBeforeAndEstatus(corte.getFechaCorte(), PagoEstatus.PENDIENTE);
@@ -262,7 +258,7 @@ public class FacturaServiceImpl implements FacturaService {
 		// Buscamos las cuotas que van a aplicar en ese periodo y ademas les generamos los cargos a cada condominio.
 		List<Cargo> cargos = cargoService.findByFechaVencimientoBeforeAndEstatus(corte.getFechaCorte(), CargoEstatus.PENDIENTE);
 		
-		condominos.stream().forEach(c -> {
+		casas.stream().forEach(c -> {
 			Factura nuevaFactura = new Factura();
 			nuevaFactura.setSaldoAnterior(c.getSaldo());
 			nuevaFactura.setPagos(
@@ -293,7 +289,7 @@ public class FacturaServiceImpl implements FacturaService {
 			nuevaFactura.getCargos().stream().forEach(cargo -> cargo.setEstatus(CargoEstatus.FACTURADO));
 			facturaRepository.save(nuevaFactura);
 			facturas.add(nuevaFactura);
-			condominoService.save(c);
+			casasService.save(c);
 		});
 
 		pagosService.saveAll(

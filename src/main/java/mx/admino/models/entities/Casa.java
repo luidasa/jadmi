@@ -8,15 +8,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="condominos")
-public class Condomino implements Serializable {
+@Document(collection="casas")
+public class Casa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public Condomino() {
+	public Casa() {
 	}
 	
-	public Condomino(Condominio condominio, String interior) {
+	public Casa(Condominio condominio, String interior) {
 		this();
 
 		this.condominio = condominio;
@@ -48,11 +48,15 @@ public class Condomino implements Serializable {
 	
 	private Boolean estaRentada;
 
+	private String nombre;
+
+	private Usuario duenio;
+
 	@DBRef
 	@NotNull
 	private Condominio condominio;
-	
-	public String getId() {
+
+    public String getId() {
 		return id;
 	}
 
@@ -105,29 +109,49 @@ public class Condomino implements Serializable {
 	}
 
 	public void setEstaRentada(Boolean estaRentada) {
+
 		this.estaRentada = estaRentada;
 	}
 
 	public Condominio getCondominio() {
+
 		return condominio;
 	}
 
 	public void setCondominio(Condominio condominio) {
+
 		this.condominio = condominio;
 	}
 
-	public void merge(Condomino condomino) {
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public Usuario getDuenio() {
+		return duenio;
+	}
+
+	public void setDuenio(Usuario duenio) {
+		this.duenio = duenio;
+	}
+
+	public void merge(Casa casa) {
 		
-		this.setInterior(condomino.getInterior());
-		this.setTelefono(condomino.getTelefono());
-		this.setCorreo(condomino.getCorreo());
-		this.setSaldo(condomino.getSaldo());
-		this.setEstaDesocupada(condomino.getEstaDesocupada());
+		this.setInterior(casa.getInterior());
+		this.setTelefono(casa.getTelefono());
+		this.setCorreo(casa.getCorreo());
+		this.setSaldo(casa.getSaldo());
+		this.setEstaDesocupada(casa.getEstaDesocupada());
 	}
 
 	@Override
 	public String toString() {
 		return "Condomino [interior=" + interior +
+				", condominio=" + condominio +
 				", telefono=" + telefono +
 				", correo=" + correo + 
 				", saldo=" + saldo + "]";

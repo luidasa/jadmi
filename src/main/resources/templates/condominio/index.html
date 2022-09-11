@@ -17,57 +17,59 @@
 
 		<div class="container mt-2">
 			<header>
-				<h1 class="text-muted fs-2">Condominos</h1>
+				<h1 class="text-muted fs-2">Condominios</h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>
 			</header>
 			<div class="card">
 				<div class="card-header bg-primary bg-gradient text-white">
-					<h5>Directorio de condominos registrados</h5>
+					Directorio de condominios
 				</div>
 				<div class="card-body table-responsive p-0">
 					<table class="table table-striped">
 						<thead>
 							<tr>
-								<th scope="col">Interior</th>
-								<th scope="col">Dueño</th>
+								<th scope="col">Nombre</th>
+								<th scope="col">Dirección</th>
 								<th scope="col">Telefono</th>
-								<th scope="col">Correo</th>
+								<th scope="col">Ingresos</th>
+								<th scope="col">Cargos</th>
 								<th scope="col">Saldo</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="condomino: ${condominos}">
-								<th><a th:href="${'/admin/condominos/' + condomino.id}" th:text="${condomino.interior}"></a></th>
-								<td th:text="${condomino.nombre}">Mark</td>
-								<td th:text="${condomino.telefono}">Otto</td>
-								<td th:text="${condomino.correo}">@mdo</td>
-								<td class="text-end" th:text="${#numbers.formatDecimal(condomino.saldo, 1, 'COMMA', 2, 'POINT')}">@mdo</td>
+							<tr th:each="condominio: ${condominios}">
+								<th><a th:href="${'/condominios/' + condominio.id}" th:text="${condominio.nombre}"></a></th>
+								<td th:text="${condominio.domicilio}">Mark</td>
+								<td th:text="${condominio.telefono}">Otto</td>
+								<td>@mdo</td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(condominio.saldo, 1, 'COMMA', 2, 'POINT')}">@mdo</td>
 							</tr>
+							<tr th:if="${condominios.totalPages == 0}"><td colspan="6" class="text-center">No tiene casas en ningun condominios.</td></tr>
 						</tbody>
 					</table>
 				</div>
 				<div class="card-footer row">
 					<div class="col-md-6">
-						<nav aria-label="Page navigation">
+						<nav aria-label="Page navigation" th:if="${condominios.totalPages > 0}">
 							<ul class="pagination">
 								<li class="page-item">
 									<a class="page-link" href="#" aria-label="Anterior">
 										<span aria-hidden="true"
-										th:classappend="${condominos.isFirst ? 'disabled' : ''}"
+										th:classappend="${condominios.isFirst ? 'disabled' : ''}"
 										>&laquo;</span>
 									</a>
 								</li>
-								<li class="page-item" th:each="i : ${#numbers.sequence( 1, condominos.getTotalPages)}">
+								<li class="page-item" th:each="i : ${#numbers.sequence( 1, condominios.totalPages)}">
 									<a class="page-link" 
 										th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"  
-										th:href="@{/admin/condominos(page=${i}, size=10)}"
+										th:href="@{/condominios(page=${i}, size=10)}"
 										th:text="${i}">1
 									</a>
 								</li>
 								<li class="page-item">
 									<a class="page-link" 
-										th:classappend="${condominos.isLast ? 'disabled' : ''}"
+										th:classappend="${condominios.isLast ? 'disabled' : ''}"
 										aria-label="Siguiente">
 										<span aria-hidden="true">&raquo;</span>
 									</a>
@@ -76,8 +78,7 @@
 						</nav>		
 					</div>
 					<div class="col-md-6 text-end">
-						<a th:href="@{/admin/facturas}" class="btn btn-secondary">Facturas</a>
-						<a th:href="@{/admin/condominos/nuevo}" class="btn btn-primary">Agregar</a>
+						<a th:href="@{/condominios/nuevo}" class="btn btn-primary">Agregar</a>
 					</div>
 				</div>
 			</div>

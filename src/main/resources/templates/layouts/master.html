@@ -29,17 +29,21 @@
       </button>
       <div class="collapse navbar-collapse d-flex bd-highlight" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-grow-1 bd-highlight">
-          <li class="nav-item"  sec:authorize="hasRole('ROLE_ADMIN')">
-            <a class="nav-link active" aria-current="page" th:href="@{/admin/condominos}">Condominos</a>
-          </li>
-          <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-            <a class="nav-link active" aria-current="page" th:href="@{/admin/condominio}">Condominio</a>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="condominiosDropdown" role="button" data-bs-toggle="dropdown"
+                 aria-expanded="false">
+                  Condominios
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="condominiosDropdown">
+                  <li th:each="condominio: ${condominios}"><a class="dropdown-item" th:href="@{${'/condominios/' + condominio.id }}" th:text="${condominio.nombre}">FAQs</a></li>
+                  <li><a class="dropdown-item" th:href="@{/condominios/nuevo}">Nuevo</a></li>
+              </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/pages/features}">Caracteristicas</a>
+            <a class="nav-link" th:href="@{/paginas/caracteristicas}">Caracteristicas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/pages/price}">Precio</a>
+            <a class="nav-link" th:href="@{/paginas/precio}">Precio</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -47,8 +51,8 @@
               Ayuda
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" th:href="@{/pages/faqs}">FAQs</a></li>
-              <li><a class="dropdown-item" th:href="@{/pages/about}">Acerca</a></li>
+              <li><a class="dropdown-item" th:href="@{/paginas/faqs}">FAQs</a></li>
+              <li><a class="dropdown-item" th:href="@{/paginas/about}">Acerca</a></li>
             </ul>
           </li>
         </ul>
@@ -72,7 +76,7 @@
   </nav>
   
   <div th:fragment="alerts">
-	  <div class="alert alert-primary" role="alert" th:if="${alert_primary}">
+	  <div class="alert alert-primary d-flex " role="alert" th:if="${alert_primary}">
 	  	<span th:text="${alert_primary}"></span>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	  </div>

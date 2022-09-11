@@ -1,11 +1,10 @@
-package mx.admino.controllers.admin.condominos;
+package mx.admino.controllers.casas;
 
 import mx.admino.models.Breadcrum;
-import mx.admino.models.entities.Condomino;
-import mx.admino.services.CondominoService;
+import mx.admino.models.entities.Casa;
+import mx.admino.services.CasasService;
 import mx.admino.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +18,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/condominos")
-public class EditarCondominoController {
+public class CrearCondominoController {
 
     @Autowired
-    ApplicationEventPublisher eventPublisher;
-
-    @Autowired
-    CondominoService condominoSrv;
+    CasasService condominoSrv;
 
     @Autowired
     UsuarioService usuarioSrv;
@@ -33,33 +29,29 @@ public class EditarCondominoController {
     @Autowired
     PasswordEncoder encoder;
 
-    private List<Breadcrum> getBreadcrum(Condomino condomino) {
+    private List<Breadcrum> getBreadcrum(Casa casa) {
 
         List<Breadcrum> x = new ArrayList<Breadcrum>();
         x.add(new Breadcrum("Inicio", "/admin/panel", false));
-        x.add(new Breadcrum("Condominos", "/admin/condominos", condomino == null));
-        if (condomino != null) {
-            x.add(new Breadcrum(condomino.getInterior(), "/admin/condominos/" + condomino.getId(), true));
+        x.add(new Breadcrum("Condominos", "/admin/condominos", casa == null));
+        if ((casa != null) && (casa.getId() != null))  {
+            x.add(new Breadcrum(casa.getInterior(), "/admin/condominos/" + casa.getId(), true));
+        } else {
+            x.add(new Breadcrum("Nuevo", "/admin/condominos/nuevo", true));
         }
         return x ;
     }
 
-    @GetMapping("/{id}")
-    public String getEdit(
-            @PathVariable String id,
-            Model model) {
-
-        Condomino condomino = condominoSrv.findById(id);
-        model.addAttribute("condomino", condomino );
-        model.addAttribute("breadcrum", getBreadcrum(condomino));
+    @GetMapping("/nuevo")
+    public String getCreate(Model model) {
+        model.addAttribute("breadcrum", getBreadcrum(null));
+        model.addAttribute("condomino", new Casa());
         return "condominos/formulario";
     }
 
-
-    @PostMapping("/{id}")
+    @PostMapping("/nuevo")
     public String postEdit(
-            @PathVariable String id,
-            @ModelAttribute @Valid Condomino condomino,
+            @ModelAttribute @Valid Casa casa,
             BindingResult binding,
             RedirectAttributes flash,
             Model model) {
@@ -68,12 +60,10 @@ public class EditarCondominoController {
         if (binding.hasErrors()) {
             return viewName;
         }
-        Condomino itemdb = condominoSrv.findById(id);
-        itemdb.merge(condomino);
-        condominoSrv.save(itemdb);
+
+        condominoSrv.save(casa);
         flash.addFlashAttribute("alert_success", "Hemos guardado la información actualizada del condomino.");
         viewName = "redirect:/admin/condominos";
         return viewName;
     }
-
 }

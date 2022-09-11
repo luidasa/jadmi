@@ -41,8 +41,8 @@
 							<tbody>
 								<tr th:each="cargo:${cargos}" th:if="${cargos.getTotalElements() > 0}">
 									<td th:text="${#dates.format(cargo.fechaVencimiento, 'dd/MM/yyyy')}">Mark</td>
-									<td th:text="${cargo.condomino.interior}">Otto</td>
-									<td th:text="${cargo.condomino.nombre}">@mdo</td>
+									<td th:text="${cargo.casa.interior}">Otto</td>
+									<td th:text="${cargo.casa.nombre}">@mdo</td>
 									<td th:utext="${cargo.concepto}">Mark</td>
 									<td th:text="${cargo.estatus}">Mark</td>
 									<td class="text-end" th:text="${#numbers.formatDecimal(cargo.importe, 3, 'COMMA', 2, 'POINT')}">@mdo</td>

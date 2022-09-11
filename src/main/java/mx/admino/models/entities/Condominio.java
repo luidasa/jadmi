@@ -2,7 +2,7 @@ package mx.admino.models.entities;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.Email;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "condominio")
@@ -28,77 +28,92 @@ public class Condominio implements Serializable {
 	@Size(min = 5)
 	@Indexed(unique = true)
 	private String nombre;
-	
-	@Transient
-	@NotNull
-	@NotEmpty
-	@NotBlank
-	private String administrador;
 
-	@Transient
-	@NotNull
-	@NotEmpty
-	@NotBlank
-	private String username;
+	@DBRef
+	private Usuario administrador;
 
-	@Transient
 	@NotNull
 	@NotEmpty
 	@NotBlank
-	@Size(min = 10, max = 10)
-	private String telefono;	
-	
-	@Transient
+	private String telefono;
+
 	@NotNull
-	@Email
+	@NotEmpty
+	@NotBlank
 	private String correo;
-	
+
 	@NotNull
 	@NotEmpty
 	@NotBlank
 	private String domicilio;
-	
+
 	private Float saldo;
 	
 	@Min(value = 2)
 	private Integer unidades;
-	
-	@Transient
-	private String password;
-	
-	@Transient
-	private String confirmacion;
 
-	public String getId() {
+	public Condominio() {
+		this.unidades = 0;
+	}
+
+	public Condominio(String nombre) {
+
+		this.nombre = nombre;
+	}
+
+    public String getId() {
+
 		return id;
 	}
 
 	public void setId(String id) {
+
 		this.id = id;
 	}
 
 	public String getNombre() {
+
 		return nombre;
 	}
 
 	public void setNombre(String nombre) {
+
 		this.nombre = nombre;
 	}
 
 	public String getDomicilio() {
+
 		return domicilio;
 	}
 
 	public void setDomicilio(String domicilio) {
-		this.domicilio = domicilio;
+		this
+				.domicilio = domicilio;
 	}
 
 	public Float getSaldo() {
+
 		return saldo;
 	}
 
 	public void setSaldo(Float saldo) {
 		this.saldo = saldo;
+	}
+
+	public Integer getUnidades() {
+		return unidades;
+	}
+
+	public void setUnidades(Integer unidades) {
+		this.unidades = unidades;
+	}
+
+	public Usuario getAdministrador() {
+		return administrador;
+	}
+
+	public void setAdministrador(Usuario administrador) {
+		this.administrador = administrador;
 	}
 
 	public String getTelefono() {
@@ -117,44 +132,38 @@ public class Condominio implements Serializable {
 		this.correo = correo;
 	}
 
-	public Integer getUnidades() {
-		return unidades;
+	@Override
+	public String toString() {
+		return "Condominio{" +
+				"id='" + id + '\'' +
+				", nombre='" + nombre + '\'' +
+				", administrador=" + administrador.getName() +
+				", telefono='" + telefono + '\'' +
+				", correo='" + correo + '\'' +
+				", domicilio='" + domicilio + '\'' +
+				", saldo=" + saldo +
+				", unidades=" + unidades +
+				'}';
 	}
 
-	public void setUnidades(Integer unidades) {
+	public Condominio merge(Condominio condominio) {
+
+		this.nombre = condominio.getNombre();
+		this.telefono = condominio.getTelefono();
+		this.correo = condominio.getCorreo();
+		this.domicilio = condominio.getDomicilio();
+		this.saldo = condominio.getSaldo();
+
+		return this;
+	}
+
+	public Condominio(String nombre, Usuario administrador, String telefono, String correo, String domicilio, Float saldo, Integer unidades) {
+		this.nombre = nombre;
+		this.administrador = administrador;
+		this.telefono = telefono;
+		this.correo = correo;
+		this.domicilio = domicilio;
+		this.saldo = saldo;
 		this.unidades = unidades;
 	}
-
-	public String getAdministrador() {
-		return administrador;
-	}
-
-	public void setAdministrador(String administrador) {
-		this.administrador = administrador;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getConfirmacion() {
-		return confirmacion;
-	}
-
-	public void setConfirmacion(String confirmacion) {
-		this.confirmacion = confirmacion;
-	}
-	
 }

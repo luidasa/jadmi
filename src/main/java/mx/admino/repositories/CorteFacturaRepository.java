@@ -10,6 +10,4 @@ import mx.admino.models.entities.CorteFactura;
 @Repository
 public interface CorteFacturaRepository extends MongoRepository<CorteFactura, String> {
 
-	CorteFactura findFirstByFechaCorte(Date fechaCorte);
-
 }

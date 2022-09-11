@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import mx.admino.models.entities.Casa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,11 +14,10 @@ import org.springframework.stereotype.Service;
 import mx.admino.exceptions.CuotaNotFound;
 import mx.admino.models.CuotaEstatus;
 import mx.admino.models.entities.Cargo;
-import mx.admino.models.entities.Condomino;
 import mx.admino.models.entities.Cuota;
 import mx.admino.repositories.CuotaRepository;
 import mx.admino.services.CargoService;
-import mx.admino.services.CondominoService;
+import mx.admino.services.CasasService;
 import mx.admino.services.CuotaService;
 
 @Service
@@ -30,7 +30,7 @@ public class CuotaServiceImpl implements CuotaService {
 	CargoService cargoService;
 
 	@Autowired
-	CondominoService condominoService;
+    CasasService casasService;
 
 	
 	@Override
@@ -56,7 +56,7 @@ public class CuotaServiceImpl implements CuotaService {
 	@Override
 	public void schedule(Cuota cuota) {
 
-		condominoService.findAll().stream().forEach(c -> {
+		casasService.findAll().stream().forEach(c -> {
 			List<Cargo> cargos = this.getCargos(cuota, c);
 			cargoService.saveAll(cargos);
 		});
@@ -64,7 +64,7 @@ public class CuotaServiceImpl implements CuotaService {
 		this.save(cuota);
 	}
 
-	public List<Cargo> getCargos(Cuota cuota, Condomino c) {
+	public List<Cargo> getCargos(Cuota cuota, Casa c) {
 		List<Cargo> cargos = new ArrayList<>();
 		
 		Date fecha = cuota.getFechaInicio();

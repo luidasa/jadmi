@@ -6,9 +6,8 @@ import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
+import mx.admino.models.entities.Casa;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import mx.admino.models.entities.Condomino;
 
 public class FacturaFiltro {
 	
@@ -22,7 +21,7 @@ public class FacturaFiltro {
 		//this.setFechaMaxima(convertToDate(end));
 	}
 
-	private Condomino condomino;
+	private Casa casa;
 	
 	private Float saldoMinimo;
 	
@@ -42,12 +41,12 @@ public class FacturaFiltro {
 		return getCondomino() != null;
 	}
 
-	public Condomino getCondomino() {
-		return condomino;
+	public Casa getCondomino() {
+		return casa;
 	}
 
-	public void setCondomino(Condomino condomino) {
-		this.condomino = condomino;
+	public void setCondomino(Casa casa) {
+		this.casa = casa;
 	}
 
 	public Boolean hasSaldo() {
@@ -107,7 +106,7 @@ public class FacturaFiltro {
 	@Override
 	public String toString() {
 		return "FacturaFiltro [" + 
-				"condomino=" + condomino + 
+				"condomino=" + casa +
 				", saldoMinimo=" + saldoMinimo + 
 				", saldoMaximo=" + saldoMaximo + 
 				", fechaMinimo=" + fechaMinimo + 

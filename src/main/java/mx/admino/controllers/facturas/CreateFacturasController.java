@@ -1,4 +1,4 @@
-package mx.admino.controllers.admin.facturas;
+package mx.admino.controllers.facturas;
 
 import javax.validation.Valid;
 
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.entities.CorteFactura;
 import mx.admino.services.CondominioService;
-import mx.admino.services.CondominoService;
+import mx.admino.services.CasasService;
 import mx.admino.services.FacturaService;
 
 @Controller
@@ -25,7 +25,7 @@ public class CreateFacturasController {
 	FacturaService facturaService;
 	
 	@Autowired
-	CondominoService condominoService;
+    CasasService casasService;
 	
 	@Autowired
 	CondominioService condominioService;

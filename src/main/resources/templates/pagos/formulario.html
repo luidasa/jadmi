@@ -28,10 +28,10 @@
 					</div>
 					<div class="card-body">
 						  <div class="mb-3 col">
-						    <label for="condomino" class="form-label">Condomino</label>
-						    <select class="form-select" aria-describedby="condominoHelp" th:field="${pago.condomino}">
+						    <label for="casa" class="form-label">Condomino</label>
+						    <select class="form-select" aria-describedby="condominoHelp" th:field="${pago.casa}">
 						    <option value="">No identificado</option>
-						    <option th:each="item: ${condominos}" th:value="${item.id}" th:text="${item.interior}"></option>
+						    <option th:each="item: ${casas}" th:value="${item.id}" th:text="${item.interior}"></option>
 						    </select>
 						    <div id="condominoHelp" class="form-text">Condomino </div>
 						  </div>

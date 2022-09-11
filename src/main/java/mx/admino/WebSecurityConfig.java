@@ -56,9 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/condomino/**").hasAnyRole("CONDOMINO", "ADMIN")
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/profile").authenticated()
+                .antMatchers("/profile", "/condominios/**", "/condominos/**", "/pagos/**","/cuotas/**", "/").authenticated()
                 .antMatchers("/login", "/signup", "/restore", "/change").permitAll()
                 .and()
             .csrf().disable()
@@ -66,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login").failureUrl("/login?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/panel")
+                .defaultSuccessUrl("/condominios")
                 .permitAll()
                 .and()
             .logout()

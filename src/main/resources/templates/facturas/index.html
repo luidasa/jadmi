@@ -53,8 +53,8 @@
 										<a th:href="@{/facturas/{id}(id=${factura.id})}" th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}"></a>
 									</td>
 									<td th:text="${#dates.format(factura.fechaVencimiento, 'dd/MM/yyyy')}"></td>
-									<td th:text="${factura.condomino.interior}"></td>
-									<td th:text="${factura.condomino.nombre}"></td>
+									<td th:text="${factura.casa.interior}"></td>
+									<td th:text="${factura.casa.nombre}"></td>
 									<td class="text-end" th:text="${#numbers.formatDecimal(factura.saldoAnterior, 1, 'COMMA', 2, 'POINT')}"></td>
 									<td class="text-end" th:text="${#numbers.formatDecimal(factura.importePagos, 1, 'COMMA', 2, 'POINT')}"></td>
 									<td class="text-end" th:text="${#numbers.formatDecimal(factura.importeCargos, 1, 'COMMA', 2, 'POINT')}"></td>
@@ -80,7 +80,7 @@
 									<li class="page-item" th:each="i : ${#numbers.sequence( 1, facturas.getTotalPages)}">
 										<a class="page-link"
 											th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"  
-											th:href="@{/facturas(page=${i}, size=10, condomino=${#request.getParameter('condomino')},fechaCorte=${#request.getParameter('fechaCorte')},saldoMinimo=${#request.getParameter('saldoMinimo')},saldoMaximo=${#request.getParameter('saldoMaximo')})}" 
+											th:href="@{/facturas(page=${i}, size=10, casa=${#request.getParameter('casa')},fechaCorte=${#request.getParameter('fechaCorte')},saldoMinimo=${#request.getParameter('saldoMinimo')},saldoMaximo=${#request.getParameter('saldoMaximo')})}"
 											th:text="${i}">1</a>
 									</li>
 									<li class="page-item">
@@ -113,13 +113,13 @@
 			      <div class="modal-body">
 			      	<div class="row">
 					  <div class="mb-3">
-					    <label for="condomino" class="form-label">Condomino</label>
-					    <select class="form-select" aria-describedby="condominoHelp" th:field="${facturaFiltro.condomino}">
+					    <label for="casa" class="form-label">Condomino</label>
+					    <select class="form-select" aria-describedby="condominoHelp" th:field="${facturaFiltro.casa}">
 					    <option value="">Todos</option>
-					    <option th:each="item: ${condominos}" th:value="${item.id}" th:text="${item.interior + ' ' + item.nombre}"></option>
+					    <option th:each="item: ${casas}" th:value="${item.id}" th:text="${item.interior + ' ' + item.nombre}"></option>
 					    </select>
 					    <div id="condominoHelp" class="form-text invalid-feedback"
-					    	th:if="${#fields.hasErrors('condomino')}" th:errors="*{condomino}">Condomino</div>
+					    	th:if="${#fields.hasErrors('casa')}" th:errors="*{casa}">Condomino</div>
 					  </div>
 					  <div class="mb-3">
 					    <label for="fechaCorte" class="form-label">Fecha de Corte</label>

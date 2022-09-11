@@ -1,4 +1,4 @@
-package mx.admino.controllers.admin.pagos;
+package mx.admino.controllers.pagos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.Breadcrum;
-import mx.admino.models.entities.Condomino;
+import mx.admino.models.entities.Casa;
 import mx.admino.models.entities.Pago;
-import mx.admino.services.CondominoService;
+import mx.admino.services.CasasService;
 import mx.admino.services.PagoService;
 @Controller
 public class CreatePagos {
@@ -29,7 +29,7 @@ public class CreatePagos {
 	PagoService pagoService;
 	
 	@Autowired
-	CondominoService condominoService;
+    CasasService casasService;
 	
 	private List<Breadcrum> getBreadcrum(Pago pago) {
 
@@ -47,8 +47,8 @@ public class CreatePagos {
 	
 	@ModelAttribute
 	private void getCondominios(Model model) {
-		List<Condomino> condominos = condominoService.findAll();
-		model.addAttribute("condominos", condominos);
+		List<Casa> casas = casasService.findAll();
+		model.addAttribute("condominos", casas);
 	}
 	
 	@GetMapping("/pagos/nuevo")
@@ -58,8 +58,8 @@ public class CreatePagos {
 		
 		Pago pago = new Pago();
 		if ((cid != null) && (!cid.isBlank()) && (!cid.isEmpty())) {
-			Condomino condomino = condominoService.findById(cid);
-			pago.setCondomino(condomino);
+			Casa casa = casasService.findById(cid);
+			pago.setCondomino(casa);
 		}
 		model.addAttribute("pago", pago  );
 		model.addAttribute("breadcrum", getBreadcrum(pago));

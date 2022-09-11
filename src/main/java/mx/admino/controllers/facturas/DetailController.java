@@ -1,4 +1,4 @@
-package mx.admino.controllers.admin.facturas;
+package mx.admino.controllers.facturas;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import mx.admino.models.entities.Condomino;
+import mx.admino.models.entities.Casa;
 import mx.admino.services.CondominioService;
-import mx.admino.services.CondominoService;
+import mx.admino.services.CasasService;
 import mx.admino.services.FacturaService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,15 +23,15 @@ public class DetailController {
 	FacturaService facturaService;
 	
 	@Autowired
-	CondominoService condominoService;
+    CasasService casasService;
 	
 	@Autowired
 	CondominioService condominioService;
 	
 	@ModelAttribute
 	private void getCondominios(Model model) {
-		List<Condomino> condominos = condominoService.findAll();
-		model.addAttribute("condominos", condominos);
+		List<Casa> casas = casasService.findAll();
+		model.addAttribute("condominos", casas);
 	}
 
 	@GetMapping("/{id}")

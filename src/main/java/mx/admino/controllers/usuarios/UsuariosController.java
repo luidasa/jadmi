@@ -1,4 +1,4 @@
-package mx.admino.controllers.admin.usuarios;
+package mx.admino.controllers.usuarios;
 
 import mx.admino.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;

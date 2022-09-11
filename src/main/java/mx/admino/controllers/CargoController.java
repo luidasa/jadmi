@@ -1,10 +1,11 @@
-package mx.admino.controllers.admin;
+package mx.admino.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import mx.admino.models.entities.Casa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,9 +23,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.Breadcrum;
 import mx.admino.models.entities.Cargo;
-import mx.admino.models.entities.Condomino;
 import mx.admino.services.CargoService;
-import mx.admino.services.CondominoService;
+import mx.admino.services.CasasService;
 
 @Controller
 public class CargoController {
@@ -33,7 +33,7 @@ public class CargoController {
 	CargoService cargoService;
 
 	@Autowired
-	CondominoService condominoService;
+    CasasService casasService;
 	
 	private List<Breadcrum> getBreadcrum(Cargo cargo) {
 
@@ -51,8 +51,8 @@ public class CargoController {
 	
 	@ModelAttribute
 	private void getCondominios(Model model) {
-		List<Condomino> condominos = condominoService.findAll();
-		model.addAttribute("condominos", condominos);
+		List<Casa> casas = casasService.findAll();
+		model.addAttribute("condominos", casas);
 	}	
 	
 	@GetMapping("/cargos")
@@ -80,8 +80,8 @@ public class CargoController {
 			Model model) {
 		Cargo cargo = new Cargo();
 		if ((cid!=null) && (!cid.isEmpty()) && (!cid.isBlank())) {
-			Condomino condomino = condominoService.findById(cid);
-			cargo.setCondomino(condomino);
+			Casa casa = casasService.findById(cid);
+			cargo.setCondomino(casa);
 		}
 		model.addAttribute("breadcrum", getBreadcrum(cargo));
 		model.addAttribute("cargo", cargo);

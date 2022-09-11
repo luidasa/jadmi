@@ -5,11 +5,11 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import mx.admino.models.entities.Casa;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import mx.admino.models.FacturaFiltro;
-import mx.admino.models.entities.Condomino;
 import mx.admino.models.entities.CorteFactura;
 import mx.admino.models.entities.Factura;
 
@@ -19,7 +19,7 @@ public interface FacturaService {
 
 	List<Factura> generate(Date fechaInicioCorte, Date fechaCorte, Date fechaVencimiento);
 	
-	Factura generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento, Condomino condomino);
+	Factura generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento, Casa casa);
 
 	Page<Factura> findByCondomino_Id(String cid, Pageable pageable);
 

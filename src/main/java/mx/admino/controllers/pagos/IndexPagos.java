@@ -1,9 +1,10 @@
-package mx.admino.controllers.admin.pagos;
+package mx.admino.controllers.pagos;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import mx.admino.models.entities.Casa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,9 +18,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import mx.admino.models.Breadcrum;
-import mx.admino.models.entities.Condomino;
 import mx.admino.models.entities.Pago;
-import mx.admino.services.CondominoService;
+import mx.admino.services.CasasService;
 import mx.admino.services.PagoService;
 
 @Controller
@@ -29,7 +29,7 @@ public class IndexPagos {
 	PagoService pagoService;
 	
 	@Autowired
-	CondominoService condominoService;
+    CasasService casasService;
 	
 	private List<Breadcrum> getBreadcrum(Pago pago) {
 
@@ -47,8 +47,8 @@ public class IndexPagos {
 	
 	@ModelAttribute
 	private void getCondominios(Model model) {
-		List<Condomino> condominos = condominoService.findAll();
-		model.addAttribute("condominos", condominos);
+		List<Casa> casas = casasService.findAll();
+		model.addAttribute("condominos", casas);
 	}
 	
 	@GetMapping("/pagos")

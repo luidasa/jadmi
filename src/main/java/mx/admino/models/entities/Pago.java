@@ -26,7 +26,7 @@ public class Pago implements Serializable {
 	@Id
 	private String id;
 	
-	private Condomino condomino;
+	private Casa casa;
 	
 	@NotNull
 	@DecimalMin("0.01") 
@@ -48,12 +48,12 @@ public class Pago implements Serializable {
 		this.id = id;
 	}
 
-	public Condomino getCondomino() {
-		return condomino;
+	public Casa getCondomino() {
+		return casa;
 	}
 
-	public void setCondomino(Condomino condomino) {
-		this.condomino = condomino;
+	public void setCondomino(Casa casa) {
+		this.casa = casa;
 	}
 
 	public Float getImporte() {
@@ -82,7 +82,7 @@ public class Pago implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Pago [condomino=" + condomino + 
+		return "Pago [condomino=" + casa +
 				", importe=" + importe + 
 				", estatus=" + estatus + 
 				", fechaPagado=" + fechaPagado + "]";

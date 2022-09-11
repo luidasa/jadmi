@@ -1,4 +1,4 @@
-package mx.admino.controllers.admin;
+package mx.admino.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import mx.admino.models.entities.Cuota;
 import mx.admino.services.CuotaService;
 
 @Controller
-@RequestMapping("/admin/cuotas")
+@RequestMapping("/cuotas")
 public class CuotaController {
 
 	@Autowired

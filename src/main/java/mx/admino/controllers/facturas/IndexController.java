@@ -1,4 +1,4 @@
-package mx.admino.controllers.admin.facturas;
+package mx.admino.controllers.facturas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import mx.admino.models.Breadcrum;
 import mx.admino.models.FacturaFiltro;
-import mx.admino.models.entities.Condomino;
+import mx.admino.models.entities.Casa;
 import mx.admino.models.entities.CorteFactura;
 import mx.admino.models.entities.Factura;
-import mx.admino.services.CondominoService;
+import mx.admino.services.CasasService;
 import mx.admino.services.FacturaService;
 
 @Controller
@@ -33,12 +33,12 @@ public class IndexController {
 	FacturaService facturaService;
 	
 	@Autowired
-	CondominoService condominoService;
+    CasasService casasService;
 	
 	@ModelAttribute
 	private void getCondominos(Model model) {
-		List<Condomino> condominos = condominoService.findAll();
-		model.addAttribute("condominos", condominos);
+		List<Casa> casas = casasService.findAll();
+		model.addAttribute("condominos", casas);
 		
 		FacturaFiltro filtro = new FacturaFiltro();
 		model.addAttribute("filtro", filtro);
@@ -68,7 +68,7 @@ public class IndexController {
 		Sort sort = Sort.by("fechaCorte", Direction.DESC.toString()).and(Sort.by("condomino.id"));
 		Pageable pageable = PageRequest.of(page - 1, rows, sort);
 		if (cid != null) {
-			facturaFiltro.setCondomino(condominoService.findById(cid));
+			facturaFiltro.setCondomino(casasService.findById(cid));
 		}
 		System.out.println(facturaFiltro);
 		Page<Factura> facturas = facturaService.search(facturaFiltro, pageable);

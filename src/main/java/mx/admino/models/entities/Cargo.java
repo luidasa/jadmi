@@ -20,20 +20,20 @@ public class Cargo implements Serializable {
 		this.estatus = CargoEstatus.PENDIENTE;
 	}
 	
-	public Cargo(@NotNull Condomino condomino, @NotNull Float importe, Float descuento, @NotEmpty @NotBlank String concepto,
-			@NotNull Date fechaVencimiento) {
+	public Cargo(@NotNull Casa casa, @NotNull Float importe, Float descuento, @NotEmpty @NotBlank String concepto,
+                 @NotNull Date fechaVencimiento) {
 		this();
-		this.condomino = condomino;
+		this.casa = casa;
 		this.importe = importe;
 		this.descuento = descuento;
 		this.concepto = concepto;
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
-	public Cargo(Condomino condomino, Cuota cuota, Date fechaVencimiento) {
-		this(condomino,
+	public Cargo(Casa casa, Cuota cuota, Date fechaVencimiento) {
+		this(casa,
 			cuota.getImporte(),
-			condomino.getEstaDesocupada() && !cuota.getEsCompletaSiVacia() ? cuota.getImporteDesocupado(): 0,
+			casa.getEstaDesocupada() && !cuota.getEsCompletaSiVacia() ? cuota.getImporteDesocupado(): 0,
 			cuota.getDescripcion(),
 			fechaVencimiento);
 	}
@@ -47,7 +47,7 @@ public class Cargo implements Serializable {
 	 * Condomino que debe de aplicar el cargo
 	 */
 	@NotNull
-	private Condomino condomino;
+	private Casa casa;
 	
 	/**
 	 * Importe del cargo cuando la casa esta ocupada
@@ -109,12 +109,12 @@ public class Cargo implements Serializable {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
-	public Condomino getCondomino() {
-		return condomino;
+	public Casa getCondomino() {
+		return casa;
 	}
 
-	public void setCondomino(Condomino condomino) {
-		this.condomino = condomino;
+	public void setCondomino(Casa casa) {
+		this.casa = casa;
 	}
 
 	public CargoEstatus getEstatus() {
@@ -135,7 +135,7 @@ public class Cargo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Cargo [condomino=" + condomino.getInterior() + 
+		return "Cargo [condomino=" + casa.getInterior() +
 				", importe=" + importe + 
 				", concepto=" + concepto + 
 				", status=" + estatus + 

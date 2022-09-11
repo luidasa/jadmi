@@ -38,7 +38,7 @@
 						</thead>
 						<tbody>
 							<tr th:each="usuario: ${usuarios}">
-								<th><a th:href="${'/admin/usuarios/' + usuario.id}" th:text="${usuario.condomino.interior}"></a></th>
+								<th><a th:href="${'/admin/usuarios/' + usuario.id}" th:text="${usuario.casa.interior}"></a></th>
 								<td th:text="${usuario.nombre}">Mark</td>
 								<td th:text="${usuario.figura}">Mark</td>
 								<td th:text="${usuario.telefono}">Otto</td>
