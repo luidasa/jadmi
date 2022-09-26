@@ -87,40 +87,45 @@ public class Condominio implements Serializable {
 	}
 
 	public void setDomicilio(String domicilio) {
-		this
-				.domicilio = domicilio;
+		this.domicilio = domicilio;
 	}
 
 	public Float getSaldo() {
-
 		return saldo;
 	}
 
 	public void setSaldo(Float saldo) {
+
 		this.saldo = saldo;
 	}
 
 	public Integer getUnidades() {
+
 		return unidades;
 	}
 
 	public void setUnidades(Integer unidades) {
+
 		this.unidades = unidades;
 	}
 
 	public Usuario getAdministrador() {
+
 		return administrador;
 	}
 
 	public void setAdministrador(Usuario administrador) {
+
 		this.administrador = administrador;
 	}
 
 	public String getTelefono() {
+
 		return telefono;
 	}
 
 	public void setTelefono(String telefono) {
+
 		this.telefono = telefono;
 	}
 
@@ -129,6 +134,7 @@ public class Condominio implements Serializable {
 	}
 
 	public void setCorreo(String correo) {
+
 		this.correo = correo;
 	}
 
@@ -152,7 +158,6 @@ public class Condominio implements Serializable {
 		this.telefono = condominio.getTelefono();
 		this.correo = condominio.getCorreo();
 		this.domicilio = condominio.getDomicilio();
-		this.saldo = condominio.getSaldo();
 
 		return this;
 	}

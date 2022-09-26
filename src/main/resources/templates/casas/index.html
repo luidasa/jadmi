@@ -21,6 +21,9 @@
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>
 			</header>
+
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_condominio('Casas')"></ul>
+
 			<div class="card">
 				<div class="card-header bg-primary bg-gradient text-white">
 					Directorio de casas
@@ -48,9 +51,7 @@
 								<a th:href="@{/condominios/{cid}/casas/generar(cid=${condominio.id})}">Oprime aqui.</a></td></tr>
 						</tbody>
 					</table>
-				</div>
-				<div class="card-footer d-flex justify-content-between">
-					<nav aria-label="Page navigation">
+					<nav class="d-flex justify-content-center mr-2" aria-label="Page navigation">
 						<ul class="pagination" th:if="${casas.totalPages > 0}">
 							<li class="page-item">
 								<span class="page-link disabled" th:if="${casas.isFirst}">
@@ -64,9 +65,9 @@
 								<span class="page-link active" th:text="${param.page}" th:if="${param.page == i}">
 								</span>
 								<a class="page-link"
-									th:if="${param.page != i}"
-									th:href="@{/condominios/{cid}/casas(cid=${condominio.id}, page=${i}, size=10)}"
-									th:text="${i}">1
+								   th:if="${param.page != i}"
+								   th:href="@{/condominios/{cid}/casas(cid=${condominio.id}, page=${i}, size=10)}"
+								   th:text="${i}">1
 								</a>
 							</li>
 							<li class="page-item">
@@ -74,14 +75,16 @@
 									<span aria-hidden="true">&raquo;</span>
 								</span>
 								<a class="page-link"
-								   	th:href="@{/condominios/{cid}/casas(cid=${condominio.id}, page=${casas.totalPages}, size=10)}"
-									th:if="${!casas.isLast}"
-									aria-label="Siguiente">
+								   th:href="@{/condominios/{cid}/casas(cid=${condominio.id}, page=${casas.totalPages}, size=10)}"
+								   th:if="${!casas.isLast}"
+								   aria-label="Siguiente">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>
 						</ul>
 					</nav>
+				</div>
+				<div class="card-footer">
 					<div class="text-end">
 						<a th:href="@{/condominios/{cid}/casas/facturas(cid=${condominio.id})}" class="btn btn-outline-secondary">Facturas</a>
 						<a th:href="@{/condominios/{cid}/casas/nuevo(cid=${condominio.id})}" class="btn btn-outline-primary">Agregar</a>

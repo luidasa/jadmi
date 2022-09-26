@@ -14,15 +14,19 @@ public class Casa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Casa() {
-	}
-	
-	public Casa(Condominio condominio, String interior) {
-		this();
-
-		this.condominio = condominio;
-		this.interior = interior;
 		this.estaDesocupada = false;
 		this.estaRentada = false;
+	}
+
+	public Casa(Condominio condominio) {
+		this();
+		this.condominio = condominio;
+	}
+
+	public Casa(Condominio condominio, String interior) {
+		this(condominio);
+
+		this.interior = interior;
 	}
 
 	@Id
@@ -50,13 +54,13 @@ public class Casa implements Serializable {
 
 	private String nombre;
 
+	@DBRef(lazy = true)
 	private Usuario duenio;
 
-	@DBRef
-	@NotNull
+	@DBRef(lazy = true)
 	private Condominio condominio;
 
-    public String getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -140,11 +144,11 @@ public class Casa implements Serializable {
 	}
 
 	public void merge(Casa casa) {
-		
+
+		this.setNombre(casa.getNombre());
 		this.setInterior(casa.getInterior());
 		this.setTelefono(casa.getTelefono());
 		this.setCorreo(casa.getCorreo());
-		this.setSaldo(casa.getSaldo());
 		this.setEstaDesocupada(casa.getEstaDesocupada());
 	}
 

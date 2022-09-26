@@ -1,4 +1,4 @@
-package mx.admino.controllers;
+package mx.admino.controllers.cargos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class CargoController {
 		model.addAttribute("condominos", casas);
 	}	
 	
-	@GetMapping("/cargos")
+	@GetMapping("/condominios/{cid}/cargos")
 	public String index(Model model,
 			@RequestParam(required = false, defaultValue = "1") Integer page,
 			@RequestParam(required = false, defaultValue = "10") Integer rows,
@@ -73,45 +73,15 @@ public class CargoController {
 		model.addAttribute("cargos", cargos);
 		return "cargos/index";
 	}
-	
-	@GetMapping("/cargos/nuevo")
-	public String getNuevo(
-			@RequestParam(required = false) String cid,
-			Model model) {
-		Cargo cargo = new Cargo();
-		if ((cid!=null) && (!cid.isEmpty()) && (!cid.isBlank())) {
-			Casa casa = casasService.findById(cid);
-			cargo.setCondomino(casa);
-		}
-		model.addAttribute("breadcrum", getBreadcrum(cargo));
-		model.addAttribute("cargo", cargo);
-		return "cargos/formulario";
-	}
-	
-	@PostMapping("/cargos/nuevo")
-	public String postNuevo(
-			@ModelAttribute @Valid Cargo cargo,
-			BindingResult binding,
-			RedirectAttributes flash,
-			Model model) {
-		String viewName = "cargos/formulario";
 
-		model.addAttribute("breadcrum", getBreadcrum(cargo));
-		if (binding.hasErrors()) {
-			return viewName;
-		}
-		cargoService.save(cargo);
-		viewName = "redirect:/cargos";
-		flash.addFlashAttribute("alert_success", "Cargo registrado en el condomino.");
-		return viewName;
-	}
-	
-	@GetMapping("/cargos/{id}")
+	@GetMapping("/condominios/{cid}/cargos/{id}")
 	public String getEditar(@PathVariable String id,
-			Model model) {
+							Model model) {
 		Cargo cargo = cargoService.findById(id);
 		model.addAttribute("cargo", cargo);
 		model.addAttribute("breadcrum", getBreadcrum(cargo));
 		return "cargos/formulario";
 	}
+
+
 }

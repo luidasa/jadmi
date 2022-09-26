@@ -17,7 +17,7 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
 		</nav>
 
-		<div class="container mt-4">
+		<div class="container mt-2">
 			<header>
 				<h1>Registro de cuota condominal</h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
@@ -25,10 +25,10 @@
 			</header>
 			<form th:action="@{/cuotas/{id}(id=${cuota.id != null ? cuota.id : 'nuevo'})}" method="post" th:object="${cuota}">
 				<div class="card">
-					<div class="card-header py-3">
+					<div class="card-header bg-primary bg-gradient text-white py-3">
 						Captura los datos del cuota acordada
 					</div>
-					<div class="card-body">
+					<div class="card-body ">
 					  <div class="mb-3">
 					    <label for="nombre" class="form-label">Nombre</label>
 					    <input type="text" class="form-control" id="nombre" aria-describedby="nombreHelp" 

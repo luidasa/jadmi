@@ -21,6 +21,7 @@
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>
 			</header>
+
 			<div class="card">
 				<div class="card-header bg-primary bg-gradient text-white">
 					Directorio de condominios
@@ -43,43 +44,41 @@
 								<td th:text="${condominio.domicilio}">Mark</td>
 								<td th:text="${condominio.telefono}">Otto</td>
 								<td>@mdo</td>
+								<td>@mdo</td>
 								<td class="text-end" th:text="${#numbers.formatDecimal(condominio.saldo, 1, 'COMMA', 2, 'POINT')}">@mdo</td>
 							</tr>
 							<tr th:if="${condominios.totalPages == 0}"><td colspan="6" class="text-center">No tiene casas en ningun condominios.</td></tr>
 						</tbody>
 					</table>
+					<nav class="nav justify-content-center" aria-label="Page navigation" th:if="${condominios.totalPages > 0}">
+						<ul class="pagination">
+							<li class="page-item" th:classappend="${condominios.isFirst ? 'disabled': ''}">
+								<span class="page-link">
+									<span aria-hidden="true">&laquo;</span>
+								</span>
+								<a class="page-link" th:href="@{/condominios(page=1, size=10)}" aria-label="Anterior"
+								   th:if="${!condominios.isFirst}">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li class="page-item" th:each="i : ${#numbers.sequence( 1, condominios.totalPages)}">
+								<a class="page-link"
+								   th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"
+								   th:href="@{/condominios(page=${i}, size=10)}"
+								   th:text="${i}">1
+								</a>
+							</li>
+							<li class="page-item" th:classappend="${condominios.isLast ? 'disabled' : ''}">
+								<a class="page-link"
+								   aria-label="Siguiente">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
 				</div>
-				<div class="card-footer row">
-					<div class="col-md-6">
-						<nav aria-label="Page navigation" th:if="${condominios.totalPages > 0}">
-							<ul class="pagination">
-								<li class="page-item">
-									<a class="page-link" href="#" aria-label="Anterior">
-										<span aria-hidden="true"
-										th:classappend="${condominios.isFirst ? 'disabled' : ''}"
-										>&laquo;</span>
-									</a>
-								</li>
-								<li class="page-item" th:each="i : ${#numbers.sequence( 1, condominios.totalPages)}">
-									<a class="page-link" 
-										th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"  
-										th:href="@{/condominios(page=${i}, size=10)}"
-										th:text="${i}">1
-									</a>
-								</li>
-								<li class="page-item">
-									<a class="page-link" 
-										th:classappend="${condominios.isLast ? 'disabled' : ''}"
-										aria-label="Siguiente">
-										<span aria-hidden="true">&raquo;</span>
-									</a>
-								</li>
-							</ul>
-						</nav>		
-					</div>
-					<div class="col-md-6 text-end">
-						<a th:href="@{/condominios/nuevo}" class="btn btn-primary">Agregar</a>
-					</div>
+				<div class="card-footer d-flex justify-content-between">
+					<a th:href="@{/condominios/nuevo}" class="btn btn-outline-primary">Agregar</a>
 				</div>
 			</div>
 		</div>

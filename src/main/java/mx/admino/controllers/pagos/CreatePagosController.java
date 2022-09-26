@@ -23,7 +23,7 @@ import mx.admino.models.entities.Pago;
 import mx.admino.services.CasasService;
 import mx.admino.services.PagoService;
 @Controller
-public class CreatePagos {
+public class CreatePagosController {
 
 	@Autowired
 	PagoService pagoService;

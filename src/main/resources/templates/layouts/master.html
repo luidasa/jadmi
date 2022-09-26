@@ -74,37 +74,69 @@
       </div>
     </div>
   </nav>
-  
+
+  <ul class="nav mb-2" th:fragment="navbar_condominio(paso)">
+      <li class="nav-item"
+          th:classappend="${paso=='Generales' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link" aria-current="page"
+             th:classappend="${paso=='Generales' ?  'active': ''}"
+             th:href="@{/condominios/{cid}(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Generales</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Casas' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Casas' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/casas(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Casas</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Cuotas' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Cuotas' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/cuotas(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Cuotas</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Gastos' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Gastos' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/gastos(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Gastos</a>
+      </li>
+  </ul>
+
+
   <div th:fragment="alerts">
-	  <div class="alert alert-primary d-flex " role="alert" th:if="${alert_primary}">
+	  <div class="alert alert-primary alert-dismissible fade show" role="alert" th:if="${alert_primary}">
 	  	<span th:text="${alert_primary}"></span>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	  </div>
-	  <div class="alert alert-secondary" role="alert" th:if="${alert_secondary}">
+	  <div class="alert alert-secondary alert-dismissible fade show" role="alert" th:if="${alert_secondary}">
 	  	<span th:text="${alert_secondary}"></span>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	  </div>
-	  <div class="alert alert-success" role="alert" th:if="${alert_success}">
+	  <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${alert_success}">
 	  	<span th:text="${alert_success}"></span>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	  </div>
-	  <div class="alert alert-danger" role="alert" th:if="${alert_danger}">
+	  <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${alert_danger}">
 	  	<span th:text="${alert_danger}"></span>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	  </div>
-	  <div class="alert alert-warning" role="alert" th:if="${alert_warning}">
+	  <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${alert_warning}">
 	  	<span th:text="${alert_warning}"></span>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	  </div>
-	  <div class="alert alert-info" role="alert" th:if="${alert_info}">
+	  <div class="alert alert-info alert-dismissible fade show" role="alert" th:if="${alert_info}">
 	  	<span th:text="${alert_info}"></span>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	  </div>
-	  <div class="alert alert-light" role="alert" th:if="${alert_light}">
+	  <div class="alert alert-light alert-dismissible fade show" role="alert" th:if="${alert_light}">
 	  	<span th:text="${alert_light}"></span>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	  </div>
-	  <div class="alert alert-dark" role="alert" th:if="${alert_dark}">
+	  <div class="alert alert-dark alert-dismissible fade show" role="alert" th:if="${alert_dark}">
 	  	<span th:text="${alert_dark}"></span>
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	  </div>

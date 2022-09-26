@@ -15,17 +15,19 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
 		</nav>
 
-		<div class="container mt-4">
+		<div class="container mt-2">
 			<header>
-				<h1>Cuotas</h1>
+				<h1 class="text-muted fs-2">Cuotas</h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>				
 			</header>
+
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_condominio('Cuotas')"></ul>
 			<div class="card">
-				<div class="card-header py-3">
+				<div class="card-header  bg-primary bg-gradient text-white">
 					Listado de cuotas acordadas del condominio
 				</div>
-				<div class="card-body">
+				<div class="card-body p-0">
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>
@@ -54,35 +56,35 @@
 								</tr>
 							</tbody>
 						</table>
-					</div>		
+						<nav aria-label="Page navigation" th:if="${cuotas.totalPages > 0}">
+							<ul class="pagination">
+								<li class="page-item">
+									<a class="page-link" href="#" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+								<li class="page-item" th:each="i : ${#numbers.sequence( 1, cuotas.getTotalPages)}">
+									<a class="page-link"
+									   th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"
+									   th:href="@{/condominios/{cid}/cuotas(cid=${condominio.id}, page=${i}, size=10)}"
+									   th:text="${i}">1
+									</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" th:href="@{/condominios/{cid}/cuotas(cid=${condominio.id}, page=1)}" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
 				</div>
-				<div class="card-footer">
+				<div class="card-footer ">
 					<div class="row">
 						<div class="col-md-6">
-							<nav aria-label="Page navigation" th:if="${cuotas.getTotalElements() > 0}">
-								<ul class="pagination">
-									<li class="page-item">
-										<a class="page-link" href="#" aria-label="Previous">
-											<span aria-hidden="true">&laquo;</span>
-										</a>
-									</li>
-									<li class="page-item" th:each="i : ${#numbers.sequence( 1, cuotas.getTotalPages)}">
-										<a class="page-link" 
-											th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"  
-											th:href="@{/cuotas(page=${i}, size=10)}" 
-											th:text="${i}">1
-										</a>
-									</li>
-									<li class="page-item">
-										<a class="page-link" href="#" aria-label="Next">
-											<span aria-hidden="true">&raquo;</span>
-										</a>
-									</li>
-								</ul>
-							</nav>		
 						</div>
 						<div class="col-md-6 text-end">
-							<a th:href="@{/cuotas/nuevo}" class="btn btn-primary">Agregar</a>
+							<a th:href="@{/condominios/{cid}/cuotas/nuevo(cid=${condominio.id})}" class="btn btn-primary">Agregar</a>
 						</div>
 					</div>
 				</div>

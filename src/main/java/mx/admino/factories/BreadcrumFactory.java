@@ -1,6 +1,7 @@
 package mx.admino.factories;
 
 import mx.admino.models.Breadcrum;
+import mx.admino.models.entities.Cargo;
 import mx.admino.models.entities.Casa;
 import mx.admino.models.entities.Condominio;
 
@@ -30,15 +31,15 @@ public class BreadcrumFactory {
         x.add(new Breadcrum("Inicio", "/panel", false));
         x.add(new Breadcrum("Condominios", "/condominios", condominio == null));
         x.add(new Breadcrum(condominio.getNombre(), "/condominios/" + condominio.getId(), false));
+        x.add(new Breadcrum("Casas", "/condominios/" + condominio.getId() +"/casas", casa == null));
         if (casa != null) {
             if (casa.getId() != null) {
-                x.add(new Breadcrum(casa.getInterior(), "/condominios/" + condominio.getId() + "/" + casa.getId(), true));
+                x.add(new Breadcrum(casa.getInterior(), "/condominios/" + condominio.getId() + "/casas/" + casa.getId(), true));
             } else {
-                x.add(new Breadcrum(casa.getInterior(), "/condominios/" + condominio.getId() + "/nuevo", true));
+                x.add(new Breadcrum("Nueva", "/condominios/" + condominio.getId() + "/casas/nuevo", true));
             }
-        } else {
-                x.add(new Breadcrum("Casas", "/condominios/" + condominio.getId() +"/casas", true));
         }
         return x ;
     }
+
 }

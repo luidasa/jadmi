@@ -17,14 +17,14 @@
 
 		<div class="container mt-2">
 			<header>
-				<h1 class="text-muted fs-2">Condominos</h1>
+				<h1 class="text-muted fs-2"><span th:text="${condominio.nombre}"></span> <span th:text="${casa.interior}"></span></h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>				
 			</header>
-			<form th:action="@{${casa.id != null ? '/admin/casas/' + casa.id: '/admin/casas/nuevo' }}" method="post" th:object="${casa}">
+			<form th:action="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${casa.id == null ? 'nuevo' : casa.id})}" method="post" th:object="${casa}">
 			<div class="card">
-				<div class="card-header bg-primary bg-opacity-25 text-muted">
-					<h5>Información del dueño</h5>
+				<div class="card-header bg-primary bg-gradient text-white">
+					Información del casa <span th:text="${casa.id}"></span>
 				</div>
 				<div class="card-body">
 					<div class="row">
@@ -39,7 +39,7 @@
 					</div>
 					<div class="col-md-8">
 					  <div class="mb-3">
-					    <label for="nombre" class="form-label">Nombre</label>
+					    <label for="nombre" class="form-label">Dueño</label>
 					    <input type="text" class="form-control" id="nombre" aria-describedby="nombreHelp" 
 					    	th:field="${casa.nombre}"
 					    	th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''">
@@ -88,9 +88,9 @@
 					</div>
 				</div>
 				<div class="card-footer text-end">
-					<a class="btn btn-secondary" th:href="@{/admin/facturas(cid=${casa.id})}">Facturas</a>
-					<a class="btn btn-secondary" th:href="@{/admin/cargos(cid=${casa.id})}">Cargos</a>
-					<a class="btn btn-secondary" th:href="@{/admin/pagos(cid=${casa.id})}">Pagos</a>
+					<a class="btn btn-secondary" th:href="@{/condominios/{cid}/casas/{id}/facturas(cid=${condominio.id},id=${casa.id})}">Facturas</a>
+					<a class="btn btn-secondary" th:href="@{/condominios/{cid}/casas/{id}/cargos(cid=${condominio.id},id=${casa.id})}">Cargos</a>
+					<a class="btn btn-secondary" th:href="@{/condominios/{cid}/casas/{id}/pagos(cid=${condominio.id},id=${casa.id})}">Pagos</a>
 					<button class="btn btn-primary">Guardar</button>
 				</div>
 			</div>
