@@ -32,10 +32,10 @@ public class CuotaEditarController {
 
         List<Breadcrum> x = new ArrayList<Breadcrum>();
         x.add(new Breadcrum("Inicio", "/panel", false));
-        x.add(new Breadcrum("Condominios", "/panel/condominios", false));
-        x.add(new Breadcrum(condominio.getNombre(), "/panel/condominios/" + condominio.getId() , false));
-        x.add(new Breadcrum("Cuotas", "/panel/condominios/" + condominio.getId() + "/cuotas", false));
-        x.add(new Breadcrum( cuota.getNombre(),"/panel/condominios/" + condominio.getId() + "/cuotas/" + cuota.getId(), true));
+        x.add(new Breadcrum("Condominios", "/condominios", false));
+        x.add(new Breadcrum(condominio.getNombre(), "/condominios/" + condominio.getId() , false));
+        x.add(new Breadcrum("Cuotas", "/condominios/" + condominio.getId() + "/cuotas", false));
+        x.add(new Breadcrum( cuota.getNombre(),"/condominios/" + condominio.getId() + "/cuotas/" + cuota.getId(), true));
 
         return x ;
     }

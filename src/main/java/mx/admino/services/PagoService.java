@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import mx.admino.models.entities.Casa;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,4 +33,5 @@ public interface PagoService {
 
 	List<Pago> findByFechaPagadoBetweenAndStatus(Date fechaInicio, Date fechaFinal, PagoEstatus estatus);
 
+    Page<Pago> findByCasa(Casa casa, Pageable pageable);
 }

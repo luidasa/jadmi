@@ -15,44 +15,43 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
 		</nav>
 
-		<div class="container mt-4">
+		<div class="container mt-2">
 			<header>
-				<h1>Cargos</h1>
+				<h1 class="text-muted fs-2"><span th:text="${condominio.nombre}"></span> <span th:text="${casa.interior}"> - Cargos</span></h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>				
 			</header>
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_casa('Cargos')"></ul>
 			<div class="card">
-				<div class="card-header py-3">
-					Listado de pagos generados
+				<div class="card-header bg-primary bg-gradient text-white">
+					Listado de cargos incurridos
 				</div>
-				<div class="card-body">
-					<div class="table-responsive">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th scope="col">Fecha de vencimiento</th>
-									<th scope="col">Interior</th>
-									<th scope="col">Dueño</th>
-									<th scope="col">Concepto</th>
-									<th scope="col">Estatus</th>
-									<th scope="col">Importe</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="cargo:${cargos}" th:if="${cargos.getTotalElements() > 0}">
-									<td th:text="${#dates.format(cargo.fechaVencimiento, 'dd/MM/yyyy')}">Mark</td>
-									<td th:text="${cargo.casa.interior}">Otto</td>
-									<td th:text="${cargo.casa.nombre}">@mdo</td>
-									<td th:utext="${cargo.concepto}">Mark</td>
-									<td th:text="${cargo.estatus}">Mark</td>
-									<td class="text-end" th:text="${#numbers.formatDecimal(cargo.importe, 3, 'COMMA', 2, 'POINT')}">@mdo</td>
-								</tr>
-								<tr th:if="${cargos.getTotalElements() == 0}">
-									<td colspan="6">No hay cargos registrados</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>		
+				<div class="card-body table-responsive p-0">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Fecha de vencimiento</th>
+								<th scope="col">Interior</th>
+								<th scope="col">Dueño</th>
+								<th scope="col">Concepto</th>
+								<th scope="col">Estatus</th>
+								<th scope="col">Importe</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="cargo:${cargos}" th:if="${cargos.getTotalElements() > 0}">
+								<td th:text="${#dates.format(cargo.fechaVencimiento, 'dd/MM/yyyy')}">Mark</td>
+								<td th:text="${cargo.casa.interior}">Otto</td>
+								<td th:text="${cargo.casa.nombre}">@mdo</td>
+								<td th:utext="${cargo.concepto}">Mark</td>
+								<td th:text="${cargo.estatus}">Mark</td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(cargo.importe, 3, 'COMMA', 2, 'POINT')}">@mdo</td>
+							</tr>
+							<tr th:if="${cargos.getTotalElements() == 0}">
+								<td colspan="6">No hay cargos registrados</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="card-footer">
 					<div class="row">

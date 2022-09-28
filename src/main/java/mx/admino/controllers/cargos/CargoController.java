@@ -6,11 +6,14 @@ import java.util.List;
 import javax.validation.Valid;
 
 import mx.admino.models.entities.Casa;
+import mx.admino.models.entities.Condominio;
+import mx.admino.services.CondominioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,18 +37,21 @@ public class CargoController {
 
 	@Autowired
     CasasService casasService;
-	
-	private List<Breadcrum> getBreadcrum(Cargo cargo) {
+
+	@Autowired
+	CondominioService condominioService;
+
+	private List<Breadcrum> getBreadcrum(Condominio condominio, Casa casa) {
+
+		DateFormatter format = new DateFormatter("dd/MM/yyyy");
 
 		List<Breadcrum> x = new ArrayList<Breadcrum>();
 		x.add(new Breadcrum("Inicio", "/panel", false));
-		x.add(new Breadcrum("Cargos", "/cargos", cargo == null));
-		if (cargo != null) {
-			x.add(new Breadcrum(
-					cargo.getId() !=null ? cargo.getConcepto() : "Nuevo", 
-					"/cargos/" + (cargo.getId() !=null ? cargo.getId() : "nuevo"),
-					true));
-		}
+		x.add(new Breadcrum("Condominios", "/condominios", false));
+		x.add(new Breadcrum(condominio.getNombre(), "/condominios/" + condominio.getId(), false));
+		x.add(new Breadcrum("Casas", "/condominios/" + condominio.getId() + "/casas", false));
+		x.add(new Breadcrum(casa.getInterior(), "/condominios/" + condominio.getId() + "/casas/" + casa.getId(), false));
+		x.add(new Breadcrum("Cargos", "/condominios/" + condominio.getId() + "/casas/" + casa.getId() + "/cargos", true));
 		return x ;
 	}
 	
@@ -55,31 +61,35 @@ public class CargoController {
 		model.addAttribute("condominos", casas);
 	}	
 	
-	@GetMapping("/condominios/{cid}/cargos")
-	public String index(Model model,
+	@GetMapping("/condominios/{cid}/casas/{id}/cargos")
+	public String index(
+			@PathVariable String cid,
+			@PathVariable String id,
+			Model model,
 			@RequestParam(required = false, defaultValue = "1") Integer page,
-			@RequestParam(required = false, defaultValue = "10") Integer rows,
-			@RequestParam(required = false) String cid) {
-		
+			@RequestParam(required = false, defaultValue = "10") Integer rows) {
+
+		var condominio = condominioService.findById(cid);
+		var casa = casasService.findById(id);
+
 		Sort ordenado = Sort.by("fechaVencimiento").descending();
 		Pageable pageable = PageRequest.of(page - 1, rows, ordenado);
-		Page<Cargo> cargos;
-		if (cid == null) {
-			cargos = cargoService.findAll(pageable);			
-		} else {
-			cargos = cargoService.findByCondominoId(cid, pageable);			
-		}
-		model.addAttribute("breadcrum", getBreadcrum(null));
+		Page<Cargo> cargos = cargoService.findByCasa(casa, pageable);
+		model.addAttribute("breadcrum", getBreadcrum(condominio, casa));
+		model.addAttribute("condominio", condominio);
+		model.addAttribute("casa", casa);
 		model.addAttribute("cargos", cargos);
 		return "cargos/index";
 	}
 
 	@GetMapping("/condominios/{cid}/cargos/{id}")
-	public String getEditar(@PathVariable String id,
-							Model model) {
+	public String getEditar(
+			@PathVariable String cid,
+			@PathVariable String id,
+			Model model) {
 		Cargo cargo = cargoService.findById(id);
 		model.addAttribute("cargo", cargo);
-		model.addAttribute("breadcrum", getBreadcrum(cargo));
+		model.addAttribute("breadcrum", getBreadcrum(null, null));
 		return "cargos/formulario";
 	}
 

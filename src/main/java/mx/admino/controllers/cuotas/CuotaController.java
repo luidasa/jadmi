@@ -51,7 +51,7 @@ public class CuotaController {
 		Pageable pageable = PageRequest.of(page - 1, rows, Sort.by("fechaInicio", "desc"));
 		model.addAttribute("breadcrum", getBreadcrum(condominio));
 		Page<Cuota> cuotas = cuotaService.findAll(pageable);
-		model.addAttribute("cuotas", cuotas );
+		model.addAttribute("pagina", cuotas );
 		model.addAttribute("condominio", condominio );
 
 		return "cuotas/index";

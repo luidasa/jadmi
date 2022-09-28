@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import mx.admino.models.entities.Casa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
@@ -72,6 +73,11 @@ public class PagoServiceImpl implements PagoService {
 						  	.is(estatus)), Pago.class);
 		//return pagoRepository.findByFechaPagadoGreaterThanAndLessThan(fechaCorte, fechaFinal);
 		return pagos;
+	}
+
+	@Override
+	public Page<Pago> findByCasa(Casa casa, Pageable pageable) {
+		return pagoRepository.findByCasa(casa, pageable);
 	}
 
 	@Override

@@ -41,9 +41,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="cuota:${cuotas}" th:if="${cuotas.getTotalElements() > 0}">
+								<tr th:each="cuota:${pagina}" th:if="${pagina.getTotalElements() > 0}">
 									<td>
-										<a th:href="@{${'/cuotas/' + cuota.id}}" th:text="${#dates.format(cuota.fechaInicio, 'dd/MM/yyyy')}"></a>
+										<a th:href="@{/condominios/{cid}/cuotas/{id}(cid=${condominio.id}, id=${cuota.id})}" th:text="${#dates.format(cuota.fechaInicio, 'dd/MM/yyyy')}"></a>
 									</td>
 									<td th:text="${#dates.format(cuota.fechaFin, 'dd/MM/yyyy')}">Otto</td>
 									<td th:text="${cuota.nombre}">@mdo</td>
@@ -51,19 +51,19 @@
 									<td th:text="${cuota.estatus}"></td>
 									<td class="text-end" th:text="${#numbers.formatDecimal(cuota.importe, 3, 'COMMA', 2, 'POINT')}">@mdo</td>
 								</tr>
-								<tr th:if="${cuotas.getTotalElements() == 0}">
+								<tr th:if="${pagina.getTotalElements() == 0}">
 									<td colspan="6">No hay cuotas registrados</td>
 								</tr>
 							</tbody>
 						</table>
-						<nav aria-label="Page navigation" th:if="${cuotas.totalPages > 0}">
+						<nav aria-label="Page navigation" th:if="${pagina.totalPages > 0}">
 							<ul class="pagination">
 								<li class="page-item">
 									<a class="page-link" href="#" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
 									</a>
 								</li>
-								<li class="page-item" th:each="i : ${#numbers.sequence( 1, cuotas.getTotalPages)}">
+								<li class="page-item" th:each="i : ${#numbers.sequence( 1, pagina.getTotalPages)}">
 									<a class="page-link"
 									   th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"
 									   th:href="@{/condominios/{cid}/cuotas(cid=${condominio.id}, page=${i}, size=10)}"

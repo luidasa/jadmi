@@ -21,6 +21,9 @@
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>				
 			</header>
+
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_casa('Generales')"></ul>
+
 			<form th:action="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${casa.id == null ? 'nuevo' : casa.id})}" method="post" th:object="${casa}">
 			<div class="card">
 				<div class="card-header bg-primary bg-gradient text-white">

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import mx.admino.models.entities.Casa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -88,5 +89,10 @@ public class CargoServiceImpl implements CargoService {
 						.and("estatus")
 						.is(estatus)), Cargo.class);
 		return cargos;
+	}
+
+	@Override
+	public Page<Cargo> findByCasa(Casa casa, Pageable pageable) {
+		return cargoRepository.findByCasa(casa, pageable);
 	}
 }

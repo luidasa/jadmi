@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import mx.admino.models.entities.Casa;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -31,4 +32,5 @@ public interface CargoService {
 
 	List<Cargo> findByFechaVencimientoBetweenAndEstatus(Date fechaInicio, Date fechaCorte, CargoEstatus pendiente);
 
+    Page<Cargo> findByCasa(Casa casa, Pageable pageable);
 }

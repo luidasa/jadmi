@@ -15,48 +15,49 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
 		</nav>
 
-		<div class="container mt-4">
+		<div class="container mt-2">
 			<header>
-				<h1>Pagos</h1>
+				<h1 class="text-muted fs-2"><span th:text="${condominio.nombre}"></span> <span th:text="${casa.interior}"> - Pagos</span></h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>
 			</header>
+
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_casa('Pagos')"></ul>
+
 			<div class="card">
-				<div class="card-header py-3">
+				<div class="card-header bg-primary bg-gradient text-white">
 					Listado de pagos realizados
 				</div>
-				<div class="card-body">
-					<div class="table-responsive">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th scope="col">Fecha de pago</th>
-									<th scope="col">Interior</th>
-									<th scope="col">Dueño</th>
-									<th scope="col">Estatus</th>
-									<th scope="col">Importe</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="pago:${pagos}" th:if="${pagos.getTotalElements() > 0}" >
-									<td>
-										<a th:href="@{'/pagos/' + ${pago.id}}" th:text="${#dates.format(pago.fechaPagado, 'dd/MM/yyyy')}"></a> 
-									</td>
-									<td>
-										<a th:href="@{'/casas/' + ${pago.casa?.id}}" th:text="${pago.casa?.Interior}" th:if="${pago.casa != null}"></a>
-										<span th:if="${pago.casa == null}">No identificado</span>
-									</td>
-									<td th:text="${pago.casa?.nombre}">Otto</td>
-									<td th:text="${pago.estatus}">Otto</td>
-									<td class="text-end" th:text="${#numbers.formatDecimal(pago.importe, 3, 'COMMA', 2, 'POINT')}">
-									</td>
-								</tr>
-								<tr th:if="${pagos.getTotalElements() == 0}" >
-									<td colspan="5">No hay pagos registrados</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>		
+				<div class="card-body table-responsive p-0">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Fecha de pago</th>
+								<th scope="col">Interior</th>
+								<th scope="col">Dueño</th>
+								<th scope="col">Estatus</th>
+								<th scope="col">Importe</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="pago:${pagos}" th:if="${pagos.getTotalElements() > 0}" >
+								<td>
+									<a th:href="@{/condominios/{cid}/casas/{id}/pagos/{pid}(cid=${condominio.id}, id=${casa.id}, pid=${pago.id})}" th:text="${#dates.format(pago.fechaPagado, 'dd/MM/yyyy')}"></a>
+								</td>
+								<td>
+									<a th:href="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${casa.id})}" th:text="${pago.casa?.Interior}" th:if="${pago.casa != null}"></a>
+									<span th:if="${pago.casa == null}">No identificado</span>
+								</td>
+								<td th:text="${pago.casa?.nombre}">Otto</td>
+								<td th:text="${pago.estatus}">Otto</td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(pago.importe, 3, 'COMMA', 2, 'POINT')}">
+								</td>
+							</tr>
+							<tr th:if="${pagos.getTotalElements() == 0}" >
+								<td colspan="5">No hay pagos registrados</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="card-footer">
 					<div class="row">
@@ -64,13 +65,13 @@
 							<nav aria-label="Page navigation" th:if="${pagos.getTotalElements() > 0}">
 								<ul class="pagination">
 									<li class="page-item">
-										<a class="page-link" th:href="@{/pagos}" aria-label="Previous">
+										<a class="page-link" th:href="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${casa.id}, pagina=1)}" aria-label="Previous">
 											<span aria-hidden="true">&laquo;</span>
 										</a>
 									</li>
 									<li class="page-item" th:each="pagina:${#numbers.sequence( 1, pagos.getTotalPages)}">
 										<a class="page-link" 
-										th:href="@{/pagos(page=${pagina})}"
+										th:href="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${casa.id}, pagina=${pagina-1})}"
 										th:text="${pagina}">1</a>
 									</li>
 									<li class="page-item">

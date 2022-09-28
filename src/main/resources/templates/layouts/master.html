@@ -16,6 +16,7 @@
 </head>
 
 <body>
+
   <nav class="navbar navbar-expand-lg" th:fragment="navbar">
     <div class="container">
       <a class="navbar-brand" th:href="@{/}">
@@ -35,7 +36,7 @@
                   Condominios
               </a>
               <ul class="dropdown-menu" aria-labelledby="condominiosDropdown">
-                  <li th:each="condominio: ${condominios}"><a class="dropdown-item" th:href="@{${'/condominios/' + condominio.id }}" th:text="${condominio.nombre}">FAQs</a></li>
+                  <li><a class="dropdown-item" th:href="@{/condominios}">Todos</a></li>
                   <li><a class="dropdown-item" th:href="@{/condominios/nuevo}">Nuevo</a></li>
               </ul>
           </li>
@@ -75,6 +76,7 @@
     </div>
   </nav>
 
+
   <ul class="nav mb-2" th:fragment="navbar_condominio(paso)">
       <li class="nav-item"
           th:classappend="${paso=='Generales' ?  'border-bottom border-primary': ''}">
@@ -106,6 +108,43 @@
       </li>
   </ul>
 
+  <ul class="nav mb-2" th:fragment="navbar_casa(paso)">
+      <li class="nav-item"
+          th:classappend="${paso=='Generales' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link" aria-current="page"
+             th:classappend="${paso=='Generales' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${casa.id})}"
+             th:if="${condominio.id != null}">Generales</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Pagos' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Pagos' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/casas/{id}/pagos(cid=${condominio.id}, id=${casa.id})}"
+             th:if="${condominio.id != null}">Pagos</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Cargos' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Cargos' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/casas/{id}/cargos(cid=${condominio.id}, id=${casa.id})}"
+             th:if="${condominio.id != null}">Cargos</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Facturas' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Facturas' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/casas/{id}/facturas(cid=${condominio.id}, id=${casa.id})}"
+             th:if="${condominio.id != null}">Facturas</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Expediente' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Expediente' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/casas/{id}/archivos(cid=${condominio.id}, id=${casa.id})}"
+             th:if="${condominio.id != null}">Expedientes</a>
+      </li>
+  </ul>
 
   <div th:fragment="alerts">
 	  <div class="alert alert-primary alert-dismissible fade show" role="alert" th:if="${alert_primary}">
