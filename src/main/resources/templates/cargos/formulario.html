@@ -37,8 +37,8 @@
 						    	th:if="${#fields.hasErrors('casa')}" th:errors="*{casa}">Condomino</div>
 						  </div>
 						  <div class="mb-3 col">
-						    <label for="concepto" class="form-label">Concepto</label>
-						    <select class="form-control" aria-describedby="condominoHelp" th:field="${cargo.concepto}" required>
+						    <label for="conceptos" class="form-label">Concepto</label>
+						    <select class="form-control" aria-describedby="condominoHelp" th:field="${cargo.conceptos}" required>
 						    <option value="Mantenimiento">Mantenimiento</option>
 						    <option value="Sancion A">Sancion A</option>
 						    <option value="Sancion B">Sancion B</option>
@@ -47,7 +47,7 @@
 						    <option value="Interes">Interes</option>
 						    </select>
 						    <div id="condominoHelp" class="form-text invalid-feedback"
-						    	th:if="${#fields.hasErrors('concepto')}" th:errors="*{concepto}">Condomino </div>
+						    	th:if="${#fields.hasErrors('conceptos')}" th:errors="*{conceptos}">Condomino </div>
 						  </div>
 						</div>
 						<div class="row">

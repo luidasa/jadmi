@@ -309,4 +309,9 @@ public class FacturaServiceImpl implements FacturaService {
 					.collect(Collectors.toList()));
 		return facturas;
 	}
+
+	@Override
+	public Page<Factura> findByCasa(Casa casa, Pageable pageable) {
+		return facturaRepository.findByCasa(casa, pageable);
+	}
 }

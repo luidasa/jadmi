@@ -52,7 +52,8 @@ public class CuotaEditarController {
         var cuota = cuotaService.findById(id);
 
         model.addAttribute("breadcrum", getBreadcrum(condominio, cuota));
-        model.addAttribute("cuota", cuota );
+        model.addAttribute("condominio", condominio);
+        model.addAttribute("cuota", cuota);
         return viewName ;
     }
 
@@ -70,12 +71,13 @@ public class CuotaEditarController {
         var cuotaDb = cuotaService.findById(id);
         if (binding.hasErrors()) {
             model.addAttribute("breadcrum", getBreadcrum(condominio, cuotaDb));
+            model.addAttribute("condominio", condominio);
             return viewName;
         }
 
         cuotaDb.merge(cuota);
         cuotaService.save(cuotaDb);
-        viewName = "redirect:/cuotas";
+        viewName = "redirect:/condominios/" + condominio.getId() + "/cuotas/" + cuota.getId();
         flash.addFlashAttribute("alert_success", "Se actualizo la cuota para todos los condominos");
         return viewName ;
     }

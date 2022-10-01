@@ -30,4 +30,6 @@ public interface FacturaService {
 	List<Factura> generate(Date fechaCorte, Date fechaVencimiento);
 
 	List<Factura> generate(@Valid CorteFactura facturaSolicitud);
+
+    Page<Factura> findByCasa(Casa casa, Pageable pageable);
 }

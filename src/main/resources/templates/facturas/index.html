@@ -15,57 +15,52 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
 		</nav>
 
-		<div class="container mt-4">
+		<div class="container mt-2">
 			<header>
-				<h1>Estados de cuenta</h1>
+				<h1 class="text-muted fs-2"><span th:text="${condominio.nombre}"></span> <span th:text="${casa.interior}"> - Facturas</span></h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>				
 			</header>
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_casa('Facturas')"></ul>
 			<div class="card">
-				<div class="card-header row">
-					<div class="col-md-6">
-					Estados de cuenta generados en el sistema
-					</div>
-					<div class="col-md-6 text-end">
-						<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#filtrarModal">
-						  Filtrar
-						</button>
-					</div>
+				<div class="card-header bg-primary bg-gradient text-white d-flex justify-content-between">
+					<span>Estados de cuenta generados en el sistema</span>
+					<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#filtrarModal">
+					  Filtrar
+					</button>
 				</div>
-				<div class="card-body">
-					<div class="table-responsive">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th scope="col">Fecha de corte</th>
-									<th scope="col">Fecha de vencimiento</th>
-									<th scope="col">Condominio</th>
-									<th scope="col">Dueño</th>
-									<th scope="col">Saldo inicial</th>
-									<th scope="col">Pagos</th>
-									<th scope="col">Cargos</th>
-									<th scope="col">Saldo</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="factura: ${facturas}" th:if="${facturas.getTotalElements() > 0}")>
-									<td>
-										<a th:href="@{/facturas/{id}(id=${factura.id})}" th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}"></a>
-									</td>
-									<td th:text="${#dates.format(factura.fechaVencimiento, 'dd/MM/yyyy')}"></td>
-									<td th:text="${factura.casa.interior}"></td>
-									<td th:text="${factura.casa.nombre}"></td>
-									<td class="text-end" th:text="${#numbers.formatDecimal(factura.saldoAnterior, 1, 'COMMA', 2, 'POINT')}"></td>
-									<td class="text-end" th:text="${#numbers.formatDecimal(factura.importePagos, 1, 'COMMA', 2, 'POINT')}"></td>
-									<td class="text-end" th:text="${#numbers.formatDecimal(factura.importeCargos, 1, 'COMMA', 2, 'POINT')}"></td>
-									<td class="text-end" th:text="${#numbers.formatDecimal(factura.saldo, 1, 'COMMA', 2, 'POINT')}"></td>
-								</tr>
-								<tr>
-									<td colspan="8" th:if="${facturas.getTotalElements() == 0}">No existen estados de corte</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>		
+				<div class="card-body table-responsive p-0">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Fecha de corte</th>
+								<th scope="col">Fecha de vencimiento</th>
+								<th scope="col">Condominio</th>
+								<th scope="col">Dueño</th>
+								<th scope="col">Saldo inicial</th>
+								<th scope="col">Pagos</th>
+								<th scope="col">Cargos</th>
+								<th scope="col">Saldo</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="factura: ${facturas}" th:if="${facturas.getTotalElements() > 0}")>
+								<td>
+									<a th:href="@{/facturas/{id}(id=${factura.id})}" th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}"></a>
+								</td>
+								<td th:text="${#dates.format(factura.fechaVencimiento, 'dd/MM/yyyy')}"></td>
+								<td th:text="${factura.casa.interior}"></td>
+								<td th:text="${factura.casa.nombre}"></td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(factura.saldoAnterior, 1, 'COMMA', 2, 'POINT')}"></td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(factura.importePagos, 1, 'COMMA', 2, 'POINT')}"></td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(factura.importeCargos, 1, 'COMMA', 2, 'POINT')}"></td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(factura.saldo, 1, 'COMMA', 2, 'POINT')}"></td>
+							</tr>
+							<tr>
+								<td colspan="8" th:if="${facturas.getTotalElements() == 0}">No existen estados de corte</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="card-footer">
 					<div class="row">
@@ -101,7 +96,7 @@
 			</div>
 		</div>
 		
-		<!-- Search Modal -->
+		<!-- Search Modal
 		<div class="modal fade" id="filtrarModal" tabindex="-1" aria-labelledby="buscarModalLabel" aria-hidden="true">
 		  <form th:action="@{/facturas}" method="get" th:object="${filtro}">
 			  <div class="modal-dialog">
@@ -157,7 +152,7 @@
 			  </div>
 	      </form>      
 		</div>
-		
+		-->
 		<!-- Generate Modal -->
 		<div class="modal fade" id="generarModal" tabindex="-1" aria-labelledby="generarModalLabel" aria-hidden="true">
 		  <form th:action="@{/facturas/generar}" method="post" th:object="${solicitud}">

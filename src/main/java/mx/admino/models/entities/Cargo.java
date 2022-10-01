@@ -61,7 +61,7 @@ public class Cargo implements Serializable {
 	private Float descuento;
 	
 	/**
-	 * Concepto por el cual se esta aplicando el cargo.
+	 * Conceptos por el cual se esta aplicando el cargo.
 	 */
 	@NotEmpty
 	@NotBlank

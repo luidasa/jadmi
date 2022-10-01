@@ -23,7 +23,7 @@
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>				
 			</header>
-			<form th:action="@{/cuotas/{id}(id=${cuota.id != null ? cuota.id : 'nuevo'})}" method="post" th:object="${cuota}">
+			<form th:action="@{/condominios/{cid}/cuotas/{id}(cid=${condominio.id}, id=${cuota.id != null ? cuota.id : 'nuevo'})}" method="post" th:object="${cuota}">
 				<div class="card">
 					<div class="card-header bg-primary bg-gradient text-white py-3">
 						Captura los datos del cuota acordada
@@ -33,16 +33,16 @@
 					    <label for="nombre" class="form-label">Nombre</label>
 					    <input type="text" class="form-control" id="nombre" aria-describedby="nombreHelp" 
 					    	th:field="${cuota.nombre}"
-					    	th:classappend="${#fields.hasErrors('nombre')} ? is-invalid : is-valid">						    	
-					    <div id="nombreHelp" class="form-text invalid-feedback"
+					    	th:classappend="${#fields.hasErrors('nombre')} ? is-invalid : ''">
+					    <div id="nombreHelp" class="fs-6 text-muted invalid-feedback"
 					    	th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Condomino</div>
 					  </div>
 					  <div class="mb-3">
 					    <label for="descripcion" class="form-label">Descripcion</label>
 					    <textarea class="form-control" id="descripcion" aria-describedby="descripcionHelp" 
 					    	th:field="${cuota.descripcion}"
-					    	th:classappend="${#fields.hasErrors('descripcion')} ? is-invalid : is-valid"></textarea>
-					    <div id="descripionHelp" class="form-text invalid-feedback"
+					    	th:classappend="${#fields.hasErrors('descripcion')} ? is-invalid : ''"></textarea>
+					    <div id="descripionHelp" class="fs-6 text-muted invalid-feedback"
 					    	th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Condomino </div>
 					  </div>
 						<div class="row">
@@ -50,32 +50,32 @@
 						    <label for="fechaInicio" class="form-label">Fecha Inicio</label>
 						    <input type="date" class="form-control" id="fechaInicio" aria-describedby="fechaInicioHelp" 
 						    	th:field="${cuota.fechaInicio}"
-						    	th:classappend="${#fields.hasErrors('fechaInicio')} ? is-invalid : is-valid">						    	
-						    <div id="fechaInicioHelp" class="form-text invalid-feedback"
+						    	th:classappend="${#fields.hasErrors('fechaInicio')} ? is-invalid : ''">
+						    <div id="fechaInicioHelp" class="fs-6 text-muted invalid-feedback"
 						    	th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}">Fecha vencimiento</div>
 						  </div>
 						  <div class="mb-3 col">
 						    <label for="fechaFin" class="form-label">Fecha Fin</label>
 						    <input type="date" class="form-control" id="fechaFin" aria-describedby="fechaFinHelp" 
 						    	th:field="${cuota.fechaFin}"
-						    	th:classappend="${#fields.hasErrors('fechaFin')} ? is-invalid : is-valid">						    	
-						    <div id="fechaFinHelp" class="form-text invalid-feedback"
+						    	th:classappend="${#fields.hasErrors('fechaFin')} ? is-invalid : ''">
+						    <div id="fechaFinHelp" class="fs-6 text-muted invalid-feedback"
 						    	th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}">Fecha vencimiento</div>
 						  </div>
 						  <div class="mb-3 col">
 						    <label for="importe" class="form-label">Importe</label>
 						    <input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp" 
 						    	th:field="${cuota.importe}"
-						    	th:classappend="${#fields.hasErrors('importe')} ? is-invalid : is-valid">						    	
-						    <div id="importeHelp" class="form-text invalid-feedback"
+						    	th:classappend="${#fields.hasErrors('importe')} ? is-invalid : ''">
+						    <div id="importeHelp" class="fs-6 text-muted invalid-feedback"
 						    	th:if="${#fields.hasErrors('importe')}" th:errors="*{importe}">Importe</div>
 						  </div>
 						  <div class="col">
 						    <label for="importe" class="form-label">Importe desocupado</label>
 						    <input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp" 
 						    	th:field="${cuota.importeDesocupado}"
-						    	th:classappend="${#fields.hasErrors('importeDesocupado')} ? is-invalid : is-valid">						    	
-						    <div id="importeHelp" class="form-text invalid-feedback"
+						    	th:classappend="${#fields.hasErrors('importeDesocupado')} ? is-invalid : ''">
+						    <div id="importeHelp" class="fs-6 text-muted invalid-feedback"
 						    	th:if="${#fields.hasErrors('importeDesocupado')}" th:errors="*{importeDesocupado}">Importe</div>
 						  </div>
 						</div>

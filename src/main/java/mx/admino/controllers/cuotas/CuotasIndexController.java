@@ -21,7 +21,7 @@ import mx.admino.models.entities.Cuota;
 import mx.admino.services.CuotaService;
 
 @Controller
-public class CuotaController {
+public class CuotasIndexController {
 
 	@Autowired
 	CondominioService condominioService;

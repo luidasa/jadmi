@@ -48,6 +48,7 @@ public class CuotaNuevaController {
 
         var condominio = condominioService.findById(cid);
         model.addAttribute("breadcrum", getBreadcrum(condominio));
+        model.addAttribute("condominio", condominio);
         return "cuotas/formulario";
     }
 
@@ -62,6 +63,7 @@ public class CuotaNuevaController {
         String viewName = "cuotas/formulario";
         var condominio = condominioService.findById(cid);
         if (binding.hasErrors()) {
+            model.addAttribute("condominio", condominio);
             model.addAttribute("breadcrum", getBreadcrum(condominio));
             return viewName;
         }
