@@ -27,27 +27,19 @@
 						Captura los datos del pago
 					</div>
 					<div class="card-body">
-						  <div class="mb-3 col">
-						    <label for="casa" class="form-label">Condomino</label>
-						    <select class="form-select" aria-describedby="condominoHelp" th:field="${pago.casa}">
-						    <option value="">No identificado</option>
-						    <option th:each="item: ${casas}" th:value="${item.id}" th:text="${item.interior}"></option>
-						    </select>
-						    <div id="condominoHelp" class="form-text">Condomino </div>
-						  </div>
 						  <div class="row">
 						  <div class="mb-3 col">
 						    <label for="fechaRealizado" class="form-label">Fecha realizado</label>
 						    <input type="date" class="form-control" id="fechaRealizado" aria-describedby="fechaHelp"
 						    	th:field="${pago.fechaPagado}"
-						    	th:classappend="${#fields.hasErrors('fechaPagado')} ? is-invalid : is-valid">
+						    	th:classappend="${#fields.hasErrors('fechaPagado')} ? is-invalid : ''">
 						    <div id="fechaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('fechaPagado')}" th:errors="*{fechaPagado}">Fecha realizado</div>
 						  </div>
 						  <div class="mb-3 col">
 						    <label for="importe" class="form-label">Importe</label>
 						    <input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp"
 								th:field="${pago.importe}"
-						    	th:classappend="${#fields.hasErrors('importe')} ? is-invalid : is-valid">
+						    	th:classappend="${#fields.hasErrors('importe')} ? is-invalid : ''">
 						    <div id="importeHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('importe')}" th:errors="*{importe}">Importe</div>
 						  </div>
 						  </div>

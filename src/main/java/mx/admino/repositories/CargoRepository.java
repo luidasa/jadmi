@@ -15,10 +15,6 @@ import mx.admino.models.entities.Cargo;
 @Repository
 public interface CargoRepository extends MongoRepository<Cargo, String> {
 
-	Page<Cargo> findByCondomino_Id(String id, Pageable pageable);
-
-	List<Cargo> findByCondomino_IdAndFechaVencimientoBetween(String cid, Date fechaCorte, Date fechaVencimiento);
-
 	List<Cargo> findByFechaVencimientoBeforeAndEstatus(Date fechaCorte, CargoEstatus estatus);
 
     Page<Cargo> findByCasa(Casa casa, Pageable pageable);

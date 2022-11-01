@@ -8,6 +8,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import mx.admino.models.PagoMetodo;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,6 +28,8 @@ public class Pago implements Serializable {
 	private String id;
 	
 	private Casa casa;
+
+	private PagoMetodo metodo;
 	
 	@NotNull
 	@DecimalMin("0.01") 
@@ -39,7 +42,12 @@ public class Pago implements Serializable {
 	@Past
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaPagado;
-	
+
+	public Pago(Casa casa) {
+		this.casa = casa;
+		this.estatus = PagoEstatus.PENDIENTE;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -80,9 +88,27 @@ public class Pago implements Serializable {
 		this.estatus = estatus;
 	}
 
+	public Casa getCasa() {
+		return casa;
+	}
+
+	public void setCasa(Casa casa) {
+		this.casa = casa;
+	}
+
+	public PagoMetodo getMetodo() {
+		return metodo;
+	}
+
+	public void setMetodo(PagoMetodo metodo) {
+		this.metodo = metodo;
+	}
+
 	@Override
 	public String toString() {
-		return "Pago [condomino=" + casa +
+		return "Pago [" +
+				"id=" + id +
+				", condomino=" + casa +
 				", importe=" + importe + 
 				", estatus=" + estatus + 
 				", fechaPagado=" + fechaPagado + "]";

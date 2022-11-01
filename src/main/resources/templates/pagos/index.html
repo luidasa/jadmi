@@ -36,6 +36,7 @@
 								<th scope="col">Interior</th>
 								<th scope="col">Dueño</th>
 								<th scope="col">Estatus</th>
+								<th scope="col">Forma</th>
 								<th scope="col">Importe</th>
 							</tr>
 						</thead>
@@ -50,47 +51,95 @@
 								</td>
 								<td th:text="${pago.casa?.nombre}">Otto</td>
 								<td th:text="${pago.estatus}">Otto</td>
+								<td th:text="${pago.metodo}">Otto</td>
 								<td class="text-end" th:text="${#numbers.formatDecimal(pago.importe, 3, 'COMMA', 2, 'POINT')}">
 								</td>
 							</tr>
 							<tr th:if="${pagos.getTotalElements() == 0}" >
-								<td colspan="5">No hay pagos registrados</td>
+								<td colspan="6">No hay pagos registrados</td>
 							</tr>
 						</tbody>
+						<tfoot>
+							<tr>
+								<th scope="col">Fecha de pago</th>
+								<th scope="col">Interior</th>
+								<th scope="col">Dueño</th>
+								<th scope="col">Estatus</th>
+								<th scope="col">Forma</th>
+								<th scope="col">Importe</th>
+							</tr>
+						</tfoot>
 					</table>
+
+					<nav aria-label="Page navigation" th:if="${pagos.getTotalElements() > 0}">
+						<ul class="pagination justify-content-center">
+							<li class="page-item">
+								<a class="page-link" th:href="@{/condominios/{cid}/casas/{id}/pagos(cid=${condominio.id}, id=${casa.id}, pagina=1)}" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li class="page-item" th:each="pagina:${#numbers.sequence( 1, pagos.getTotalPages)}">
+								<a class="page-link"
+								   th:href="@{/condominios/{cid}/casas/{id}/pagos(cid=${condominio.id}, id=${casa.id}, pagina=${pagina-1})}"
+								   th:text="${pagina}">1</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" th:href="@{/condominios/{cid}/casas/{id}/pagos(cid=${condominio.id}, id=${casa.id},pagina=${pagos.getTotalPages})}" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+
 				</div>
-				<div class="card-footer">
-					<div class="row">
-						<div class="col-md-6">
-							<nav aria-label="Page navigation" th:if="${pagos.getTotalElements() > 0}">
-								<ul class="pagination">
-									<li class="page-item">
-										<a class="page-link" th:href="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${casa.id}, pagina=1)}" aria-label="Previous">
-											<span aria-hidden="true">&laquo;</span>
-										</a>
-									</li>
-									<li class="page-item" th:each="pagina:${#numbers.sequence( 1, pagos.getTotalPages)}">
-										<a class="page-link" 
-										th:href="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${casa.id}, pagina=${pagina-1})}"
-										th:text="${pagina}">1</a>
-									</li>
-									<li class="page-item">
-										<a class="page-link" th:href="@{/pagos(page=${pagos.getTotalPages})}" aria-label="Next">
-											<span aria-hidden="true">&raquo;</span>
-										</a>
-									</li>
-								</ul>
-							</nav>		
-						</div>
-						<div class="col-md-6 text-end">
-							<a th:href="@{/pagos/nuevo(cid=${param.cid})}" class="btn btn-primary">Agregar</a>
-						</div>
-					</div>
+				<div class="card-footer text-end">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalForm">Nuevo</button>
 				</div>
 			</div>
 		</div>
 		<footer th:include="layouts/master::footer"></footer>
-		
+
+		<div class="modal fade" tabindex="-1" id="modalForm" data-bs-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form method="post" autocomplete="off" th:action="@{/condominios/{cid}/casas/{id}/pagos/nuevo(cid=${condominio.id}, id=${casa.id})}" th:object="${abono}">
+						<div class="modal-header">
+							<h5>Información del pago</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+
+						<div class="modal-body">
+							<div class="mb-3 form-group">
+								<label for="fechaRealizado" class="form-label">Fecha realizado</label>
+								<input type="date" class="form-control" id="fechaRealizado" aria-describedby="fechaHelp" required
+									   th:max="${tomorrow}"
+									   th:field="${abono.fechaPagado}"
+									   th:classappend="${#fields.hasErrors('fechaPagado')} ? is-invalid : ''">
+								<div id="fechaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('fechaPagado')}" th:errors="*{fechaPagado}">Fecha realizado</div>
+							</div>
+							<div class="mb-3 form-group">
+								<label for="metodoPago" class="form-label">Forma de pago</label>
+								<select id="metodoPago" class="form-select" th:field="${abono.metodo}" required>
+									<option th:value="${item}" th:each="item:${T(mx.admino.models.PagoMetodo).values()}" th:text="${item}"></option>
+								</select>
+							</div>
+							<div class="mb-3 form-group">
+								<label for="importe" class="form-label">Importe</label>
+								<input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp" required
+									   th:field="${abono.importe}"
+									   th:classappend="${#fields.hasErrors('importe')} ? is-invalid : ''">
+								<div id="importeHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('importe')}" th:errors="*{importe}">Importe</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+							<button type="submit" class="btn btn-primary">Guardar</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
 	</main>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
 		integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"

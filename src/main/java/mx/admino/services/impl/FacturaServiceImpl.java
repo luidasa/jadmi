@@ -98,7 +98,7 @@ public class FacturaServiceImpl implements FacturaService {
 						.collect(Collectors.toList()));
 			nuevaFactura.setCargos(
 					cargos.stream()
-						.filter(p -> p.getCondomino().getId().equals(c.getId()))
+						.filter(p -> p.getCasa().getId().equals(c.getId()))
 						.map(p -> {
 							p.setEstatus(CargoEstatus.FACTURADO);
 							return p;
@@ -206,7 +206,7 @@ public class FacturaServiceImpl implements FacturaService {
 						.collect(Collectors.toList()));
 			nuevaFactura.setCargos(
 					cargos.stream()
-						.filter(p -> p.getCondomino().getId().equals(c.getId()))
+						.filter(p -> p.getCasa().getId().equals(c.getId()))
 						.map(p -> {
 							p.setEstatus(CargoEstatus.FACTURADO);
 							return p;
@@ -270,7 +270,7 @@ public class FacturaServiceImpl implements FacturaService {
 						.collect(Collectors.toList()));
 			nuevaFactura.setCargos(
 					cargos.stream()
-						.filter(p -> p.getCondomino().getId().equals(c.getId()))
+						.filter(p -> p.getCasa().getId().equals(c.getId()))
 						.map(p -> {
 							p.setEstatus(CargoEstatus.FACTURADO);
 							return p;

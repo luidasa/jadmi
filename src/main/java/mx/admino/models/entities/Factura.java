@@ -163,7 +163,7 @@ public class Factura implements Serializable {
 		movimientos.addAll(this.cargos.stream().map(c -> {
 			MovimientoFactura m = new MovimientoFactura(
 					c.getFechaVencimiento(),
-					c.getConcepto(),
+					c.getConcepto().toString(),
 					c.getImporte());
 			return m;
 		}).collect(Collectors.toList()));

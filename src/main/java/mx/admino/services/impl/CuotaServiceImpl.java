@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import mx.admino.models.CargoConcepto;
 import mx.admino.models.entities.Casa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -69,7 +70,7 @@ public class CuotaServiceImpl implements CuotaService {
 		
 		Date fecha = cuota.getFechaInicio();
 		while(fecha.before(cuota.getFechaFin())) {
-			cargos.add(new Cargo(c, cuota.getImporte(), cuota.getImporteDesocupado(), cuota.getNombre(), fecha));				
+			cargos.add(new Cargo(c, cuota.getImporte(), cuota.getImporteDesocupado(), CargoConcepto.MANTENIMIENTO, fecha));
 			fecha = addMonths(fecha, 1);
 		}
 		

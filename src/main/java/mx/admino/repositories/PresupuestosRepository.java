@@ -1,7 +1,7 @@
 package mx.admino.repositories;
 
-import mx.admino.models.Presupuesto;
 import mx.admino.models.entities.Condominio;
+import mx.admino.models.entities.Presupuesto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;

@@ -21,10 +21,8 @@ public class AdminoUserDetailService implements UserDetailsService {
 		UserDetails adminoUser = service.findByUsername(username);
 		
 		if (adminoUser == null) {
-			System.out.println("No existe");
 			throw new UsernameNotFoundException(username + " no esta registrado");
 		}
-		System.out.println(adminoUser);
 		return adminoUser;
 	}
 }

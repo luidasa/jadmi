@@ -3,10 +3,9 @@ package mx.admino.models.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import mx.admino.models.CargoConcepto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,7 +19,7 @@ public class Cargo implements Serializable {
 		this.estatus = CargoEstatus.PENDIENTE;
 	}
 	
-	public Cargo(@NotNull Casa casa, @NotNull Float importe, Float descuento, @NotEmpty @NotBlank String concepto,
+	public Cargo(@NotNull Casa casa, @NotNull Float importe, Float descuento, CargoConcepto concepto,
                  @NotNull Date fechaVencimiento) {
 		this();
 		this.casa = casa;
@@ -34,7 +33,7 @@ public class Cargo implements Serializable {
 		this(casa,
 			cuota.getImporte(),
 			casa.getEstaDesocupada() && !cuota.getEsCompletaSiVacia() ? cuota.getImporteDesocupado(): 0,
-			cuota.getDescripcion(),
+			CargoConcepto.MANTENIMIENTO,
 			fechaVencimiento);
 	}
 
@@ -46,7 +45,6 @@ public class Cargo implements Serializable {
 	/**
 	 * Condomino que debe de aplicar el cargo
 	 */
-	@NotNull
 	private Casa casa;
 	
 	/**
@@ -63,9 +61,7 @@ public class Cargo implements Serializable {
 	/**
 	 * Conceptos por el cual se esta aplicando el cargo.
 	 */
-	@NotEmpty
-	@NotBlank
-	private String concepto;
+	private CargoConcepto concepto;
 	
 	/**
 	 * Estatus que tiene el cargo
@@ -93,11 +89,11 @@ public class Cargo implements Serializable {
 		this.importe = importe;
 	}
 
-	public String getConcepto() {
+	public CargoConcepto getConcepto() {
 		return concepto;
 	}
 
-	public void setConcepto(String concepto) {
+	public void setConcepto(CargoConcepto concepto) {
 		this.concepto = concepto;
 	}
 
@@ -109,11 +105,11 @@ public class Cargo implements Serializable {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
-	public Casa getCondomino() {
+	public Casa getCasa() {
 		return casa;
 	}
 
-	public void setCondomino(Casa casa) {
+	public void setCasa(Casa casa) {
 		this.casa = casa;
 	}
 

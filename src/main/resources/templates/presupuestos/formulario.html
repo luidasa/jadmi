@@ -63,11 +63,11 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="item:${T(mx.admino.models.entities.Presupuesto.Conceptos).values()}">
-										<td th:text="${item}"></td>
-										<td><input type="number" th:name="${item + '_fijo'}" class="form-control"></td>
-										<td><input type="number" th:name="${item + '_variables'}" class="form-control"></td>
-										<td><input type="number" th:name="${item + '_periodicos'}" class="form-control"></td>
+									<tr th:each="item, itemStat:*{conceptos}">
+										<td th:text="${item.tipo}"></td>
+										<td><input th:field="*{conceptos[__${itemStat.index}__].gastosFijos}" class="form-control"/></td>
+										<td><input th:field="*{conceptos[__${itemStat.index}__].gastosVariables}" class="form-control"/></td>
+										<td><input th:field="*{conceptos[__${itemStat.index}__].gastosPeriodicos}" class="form-control"/></td>
 									</tr>
 								</tbody>
 								<tfoot>

@@ -11,10 +11,7 @@ import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.admino.models.Breadcrum;
@@ -51,35 +48,42 @@ public class CreatePagosController {
 		model.addAttribute("condominos", casas);
 	}
 	
-	@GetMapping("/pagos/nuevo")
+	@GetMapping("/condominios/{cid}/casas/{id}/pagos/nuevo")
 	public String crear(
-			@RequestParam(required = false) String cid,
+			@PathVariable String cid,
+			@PathVariable String id,
 			Model model) {
 		
 		Pago pago = new Pago();
-		if ((cid != null) && (!cid.isBlank()) && (!cid.isEmpty())) {
-			Casa casa = casasService.findById(cid);
-			pago.setCondomino(casa);
-		}
+		Casa casa = casasService.findById(id);
+		pago.setCondomino(casa);
+
 		model.addAttribute("pago", pago  );
 		model.addAttribute("breadcrum", getBreadcrum(pago));
 		return "pagos/formulario";
 	}
 	
-	@PostMapping("/pagos/nuevo")
+	@PostMapping("/condominios/{cid}/casas/{pid}/pagos/nuevo")
 	public String postAdd(
-			@ModelAttribute @Valid Pago pago,
+			@PathVariable String cid,
+			@PathVariable String pid,
+			@ModelAttribute(name = "abono") @Valid Pago pago,
 			BindingResult binding,
 			RedirectAttributes flash,
 			Model model
 			) {
-		String viewName = "pagos/formulario";		
+		String viewName = "pagos/index";
+		var casa = casasService.findById(pid);
 		model.addAttribute("breadcrum", getBreadcrum(pago));
-		if (binding.hasErrors()) {			
+		if (binding.hasErrors()) {
+			binding.getAllErrors().stream().forEach(error -> {
+				System.out.println(error.getObjectName() +" - " + error.getDefaultMessage());
+			});
 			return viewName;
 		}
+		pago.setCasa(casa);
 		pagoService.save(pago);
-		viewName= "redirect:/pagos";
+		viewName= "redirect:/condominios/" + cid + "/casas/" + pid + "/pagos";
 		flash.addFlashAttribute("alert_success", "El pago ha quedado registrado");
 		return viewName;
 	}	

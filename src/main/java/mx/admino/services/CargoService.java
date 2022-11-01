@@ -16,13 +16,9 @@ public interface CargoService {
 	
 	Page<Cargo> findAll(Pageable pageable);
 
-	Page<Cargo> findByCondominoId(String id, Pageable pageable);
-
 	Cargo save(@Valid Cargo cargo);
 
 	Cargo findById(String id);
-
-	List<Cargo> findByCondomino_IdAdFechaVencimientoBetween(String cid, Date fechaCorte, Date fechaVencimiento);
 
 	List<Cargo> saveAll(List<Cargo> cargos);
 

@@ -35,11 +35,6 @@ public class CargoServiceImpl implements CargoService {
 	}
 
 	@Override
-	public Page<Cargo> findByCondominoId(String id, Pageable pageable) {
-		return cargoRepository.findByCondomino_Id(id, pageable);
-	}
-
-	@Override
 	public Cargo save(@Valid Cargo cargo) {
 		return cargoRepository.save(cargo);
 	}
@@ -47,11 +42,6 @@ public class CargoServiceImpl implements CargoService {
 	@Override
 	public Cargo findById(String id) {
 		return cargoRepository.findById(id).orElseThrow(() -> new CargoNotFound());
-	}
-
-	@Override
-	public List<Cargo> findByCondomino_IdAdFechaVencimientoBetween(String cid, Date fechaCorte, Date fechaVencimiento) {
-		return cargoRepository.findByCondomino_IdAndFechaVencimientoBetween(cid, fechaCorte, fechaVencimiento);
 	}
 
 	@Override

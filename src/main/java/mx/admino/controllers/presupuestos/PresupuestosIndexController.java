@@ -1,11 +1,8 @@
 package mx.admino.controllers.presupuestos;
 
 import mx.admino.models.Breadcrum;
-import mx.admino.models.Presupuesto;
 import mx.admino.models.entities.Condominio;
-import mx.admino.models.entities.Cuota;
-import mx.admino.repositories.CondominoReposity;
-import mx.admino.services.CargoService;
+import mx.admino.models.entities.Presupuesto;
 import mx.admino.services.CondominioService;
 import mx.admino.services.PresupuestosService;
 import org.springframework.beans.factory.annotation.Autowired;

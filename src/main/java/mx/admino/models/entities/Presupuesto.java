@@ -1,18 +1,35 @@
 package mx.admino.models.entities;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Document(collection = "presupuestos")
 public class Presupuesto {
 
+    public Presupuesto() {
+        this.conceptos = new ArrayList<>();
+        this.pagos = new ArrayList<>();
+        this.gastos = new ArrayList<>();
+
+        Arrays.stream(Concepto.Tipos.values()).sequential().forEach(item -> {
+            this.conceptos.add(new Concepto(item));
+        });
+    }
+
+    public Presupuesto(Condominio condominio) {
+        this();
+        this.condominio = condominio;
+    }
+
     private String id;
 
     private String mes;
 
-    private Conceptos concepto;
 
     private BigDecimal ingresos;
 
@@ -22,9 +39,16 @@ public class Presupuesto {
 
     private BigDecimal egresosReales;
 
+    private List<Concepto> conceptos;
+
+    @DBRef
     private List<Pago> pagos;
 
+    @DBRef
     private List<Gasto> gastos;
+
+    @DBRef
+    private Condominio condominio;
 
     public String getId() {
         return id;
@@ -40,14 +64,6 @@ public class Presupuesto {
 
     public void setMes(String mes) {
         this.mes = mes;
-    }
-
-    public Conceptos getConcepto() {
-        return concepto;
-    }
-
-    public void setConcepto(Conceptos conceptos) {
-        this.concepto = conceptos;
     }
 
     public BigDecimal getIngresos() {
@@ -98,17 +114,19 @@ public class Presupuesto {
         this.gastos = gastos;
     }
 
-    public enum Conceptos {
+    public List<Concepto> getConceptos() {
+        return conceptos;
+    }
 
-        CUENTA,
-        CONTADOR,
-        IMPUESTOS,
-        AGUA,
-        MANTENIMIENTO,
-        ALUMBRADO,
-        SEGURIDAD,
-        LIMPIEZA,
-        FONDO,
-        JARDINERIA;
+    public void setConceptos(List<Concepto> conceptos) {
+        this.conceptos = conceptos;
+    }
+
+    public Condominio getCondominio() {
+        return condominio;
+    }
+
+    public void setCondominio(Condominio condominio) {
+        this.condominio = condominio;
     }
 }

@@ -43,7 +43,7 @@
 								<td th:text="${#dates.format(cargo.fechaVencimiento, 'dd/MM/yyyy')}">Mark</td>
 								<td th:text="${cargo.casa.interior}">Otto</td>
 								<td th:text="${cargo.casa.nombre}">@mdo</td>
-								<td th:utext="${cargo.conceptos}">Mark</td>
+								<td th:utext="${cargo.concepto}">Mark</td>
 								<td th:text="${cargo.estatus}">Mark</td>
 								<td class="text-end" th:text="${#numbers.formatDecimal(cargo.importe, 3, 'COMMA', 2, 'POINT')}">@mdo</td>
 							</tr>
@@ -51,37 +51,43 @@
 								<td colspan="6">No hay cargos registrados</td>
 							</tr>
 						</tbody>
+						<tfoot>
+						<tr>
+							<th scope="col">Fecha de vencimiento</th>
+							<th scope="col">Interior</th>
+							<th scope="col">Dueño</th>
+							<th scope="col">Concepto</th>
+							<th scope="col">Estatus</th>
+							<th scope="col">Importe</th>
+						</tr>
+						</tfoot>
 					</table>
+					<nav aria-label="Page navigation" th:if="${cargos.getTotalElements() > 0}">
+						<ul class="pagination justify-content-center">
+							<li class="page-item">
+								<a class="page-link" th:href="@{/condominios/{cid}/casas/{uid}/cargos(cid=${condominio.id},uid=${casa.id}, page=1)}" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li class="page-item" th:each="i : ${#numbers.sequence( 1, cargos.getTotalPages)}">
+								<a class="page-link"
+								   th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"
+								   th:href="@{/condominios/{cid}/casas/{id}/cargos(cid=${condominio.id}, id=${casa.id}, pagina=${i})}"
+								   th:text="${pagina}">
+								</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link"
+								   th:href="@{/condominios/{cid}/casas/{id}/cargos(cid=${condominio.id}, id=${casa.id},pagina=${cargos.getTotalPages})}"
+								   aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
 				</div>
-				<div class="card-footer">
-					<div class="row">
-						<div class="col-md-6">
-							<nav aria-label="Page navigation" th:if="${cargos.getTotalElements() > 0}">
-								<ul class="pagination">
-									<li class="page-item">
-										<a class="page-link" href="#" aria-label="Previous">
-											<span aria-hidden="true">&laquo;</span>
-										</a>
-									</li>
-									<li class="page-item" th:each="i : ${#numbers.sequence( 1, cargos.getTotalPages)}">
-										<a class="page-link" 
-											th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"  
-											th:href="@{/cargos(cid=${param.cid}, page=${i}, size=10)}" 
-											th:text="${i}">1
-										</a>
-									</li>
-									<li class="page-item">
-										<a class="page-link" href="#" aria-label="Next">
-											<span aria-hidden="true">&raquo;</span>
-										</a>
-									</li>
-								</ul>
-							</nav>		
-						</div>
-						<div class="col-md-6 text-end">
-							<a th:href="@{/cargos/nuevo}" class="btn btn-primary">Agregar</a>
-						</div>
-					</div>
+				<div class="card-footer text-end">
+					<button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#modalForm">Nuevo</button>
 				</div>
 			</div>
 		</div>
@@ -95,5 +101,46 @@
 		integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
 		crossorigin="anonymous"></script>
 </body>
+
+<div class="modal fade" tabindex="-1" id="modalForm" data-bs-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form method="post" autocomplete="off" th:action="@{/condominios/{cid}/casas/{id}/cargos/nuevo(cid=${condominio.id}, id=${casa.id})}" th:object="${cargo}">
+				<div class="modal-header">
+					<h5>Información del cargo</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body">
+					<div class="mb-3 form-group">
+						<label for="fechaVencimiento" class="form-label">Fecha de vencimiento</label>
+						<input type="date"  class="form-control" id="fechaVencimiento" aria-describedby="fechaVecimientoHelp" required
+							   th:field="${cargo.fechaVencimiento}"
+							   th:classappend="${#fields.hasErrors('fechaVencimiento')} ? is-invalid : ''">
+						<div id="fechaVencimientoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('fechaVencimiento')}" th:errors="*{fechaVencimiento}">Fecha de vencimiento</div>
+					</div>
+					<div class="mb-3 form-group">
+						<label for="concepto" class="form-label">Concepto</label>
+						<select id="concepto" class="form-select" th:field="${cargo.concepto}" required>
+							<option th:value="${item}" th:each="item:${T(mx.admino.models.CargoConcepto).values()}" th:text="${item}"></option>
+						</select>
+					</div>
+					<div class="mb-3 form-group">
+						<label for="importe" class="form-label">Importe</label>
+						<input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp" required
+							   th:field="${cargo.importe}"
+							   th:classappend="${#fields.hasErrors('importe')} ? is-invalid : ''">
+						<div id="importeHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('importe')}" th:errors="*{importe}">Importe</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>
+		</div>
+		</form>
+	</div>
+</div>
+
 
 </html>

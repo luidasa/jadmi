@@ -54,23 +54,8 @@ public class CargoController {
 		x.add(new Breadcrum("Cargos", "/condominios/" + condominio.getId() + "/casas/" + casa.getId() + "/cargos", true));
 		return x ;
 	}
-	
-	@ModelAttribute
-	private void getCondominios(Model model) {
-		List<Casa> casas = casasService.findAll();
-		model.addAttribute("condominos", casas);
-	}	
-	
-	@GetMapping("/condominios/{cid}/casas/{id}/cargos")
-	public String index(
-			@PathVariable String cid,
-			@PathVariable String id,
-			Model model,
-			@RequestParam(required = false, defaultValue = "1") Integer page,
-			@RequestParam(required = false, defaultValue = "10") Integer rows) {
 
-		var condominio = condominioService.findById(cid);
-		var casa = casasService.findById(id);
+	private void addModel(Model model, Condominio condominio, Casa casa, Cargo cargo, Integer page, Integer rows) {
 
 		Sort ordenado = Sort.by("fechaVencimiento").descending();
 		Pageable pageable = PageRequest.of(page - 1, rows, ordenado);
@@ -79,19 +64,46 @@ public class CargoController {
 		model.addAttribute("condominio", condominio);
 		model.addAttribute("casa", casa);
 		model.addAttribute("cargos", cargos);
+		model.addAttribute("cargo", cargo);
+	}
+
+	@GetMapping("/condominios/{cid}/casas/{uid}/cargos")
+	public String index(
+			@PathVariable String cid,
+			@PathVariable String uid,
+			@RequestParam(required = false, defaultValue = "1") Integer page,
+			@RequestParam(required = false, defaultValue = "10") Integer rows,
+			Model model) {
+
+		var condominio = condominioService.findById(cid);
+		var casa = casasService.findById(uid);
+		var cargo = new Cargo();
+		cargo.setCasa(casa);
+		addModel(model, condominio, casa, cargo, page, rows);
 		return "cargos/index";
 	}
 
-	@GetMapping("/condominios/{cid}/cargos/{id}")
-	public String getEditar(
+	@PostMapping("/condominios/{cid}/casas/{uid}/cargos/nuevo")
+	public String postNuevo(
 			@PathVariable String cid,
-			@PathVariable String id,
+			@PathVariable String uid,
+			@ModelAttribute @Valid Cargo cargo,
+			BindingResult binding,
+			RedirectAttributes flash,
 			Model model) {
-		Cargo cargo = cargoService.findById(id);
-		model.addAttribute("cargo", cargo);
-		model.addAttribute("breadcrum", getBreadcrum(null, null));
-		return "cargos/formulario";
+		String viewName = "redirect:/condominios/"+ cid +"/casas/" + uid +"/cargos";;
+
+		var condominio = condominioService.findById(cid);
+		var casa = casasService.findById(uid);
+		cargo.setCasa(casa);
+		if (binding.hasErrors()) {
+			binding.getFieldErrors().stream().forEach(error -> System.out.println(error.getField() + " - " + error.getDefaultMessage()));
+			flash.addFlashAttribute("alert_danger", "Ocurrio un error en los datos registrados. Verifique y vuelva a intentar");
+			return viewName;
+		}
+		cargoService.save(cargo);
+		viewName = "redirect:/condominios/"+ cid +"/casas/" + uid +"/cargos";
+		flash.addFlashAttribute("alert_success", "Cargo registrado en el condomino.");
+		return viewName;
 	}
-
-
 }

@@ -1,7 +1,7 @@
 package mx.admino.services.impl;
 
-import mx.admino.models.Presupuesto;
 import mx.admino.models.entities.Condominio;
+import mx.admino.models.entities.Presupuesto;
 import mx.admino.repositories.PresupuestosRepository;
 import mx.admino.services.PresupuestosService;
 import org.springframework.beans.factory.annotation.Autowired;
