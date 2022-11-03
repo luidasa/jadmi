@@ -21,4 +21,6 @@ public interface CasasService {
 	List<Casa> findAll();
 
 	Page<Casa> findByCondominio(Condominio condominio, Pageable pageable);
+
+	List<Casa> findByCondominio(Condominio condominio);
 }

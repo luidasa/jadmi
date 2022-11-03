@@ -60,7 +60,7 @@ public class FacturaServiceImpl implements FacturaService {
 	public Page<Factura> findAll(Pageable pageable) {
 		return facturaRepository.findAll(pageable);
 	}
-	
+
 	@Override
 	public List<Factura> generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento) {
 		
@@ -91,7 +91,7 @@ public class FacturaServiceImpl implements FacturaService {
 			nuevaFactura.setSaldoAnterior(c.getSaldo());
 			nuevaFactura.setPagos(
 					pagos.stream()
-						.filter(p -> p.getCondomino().getId().equals(c.getId()))
+						.filter(p -> p.getCasa().getId().equals(c.getId()))
 						.map(p -> {
 							p.setEstatus(PagoEstatus.FACTURADO); 
 							return p;})
@@ -108,7 +108,7 @@ public class FacturaServiceImpl implements FacturaService {
 					nuevaFactura.getSaldoAnterior() +
 					nuevaFactura.getImporteCargos() -
 					nuevaFactura.getImportePagos());
-			nuevaFactura.setCondomino(c);
+			nuevaFactura.setCasa(c);
 			nuevaFactura.setFechaVencimiento(fechaVencimiento);
 			nuevaFactura.setFechaCorte(fechaCorte);
 			c.setSaldo(nuevaFactura.getSaldo());
@@ -138,22 +138,9 @@ public class FacturaServiceImpl implements FacturaService {
 	}
 
 	@Override
-	public Page<Factura> findByCondomino_Id(String cid, Pageable pageable) {
-		return facturaRepository.findByCondomino_Id(cid, pageable);
-	}
-
-	@Override
 	public Factura findById(String id) {
 		return facturaRepository.findById(id).orElseThrow(() -> new FacturaNotFound());
 	}
-
-
-	@Override
-	public Factura generate(Date fechaInicio, Date fechaCorte, Date fechaVencimiento, Casa casa) {
-		// TODO Debe de implementarse el metodo que genera la factura de un condominio.
-		return null;
-	}
-
 
 	@Override
 	public Page<Factura> search(FacturaFiltro filtro, Pageable pageable) {
@@ -199,7 +186,7 @@ public class FacturaServiceImpl implements FacturaService {
 			nuevaFactura.setSaldoAnterior(c.getSaldo());
 			nuevaFactura.setPagos(
 					pagos.stream()
-						.filter(p -> p.getCondomino().getId().equals(c.getId()))
+						.filter(p -> p.getCasa().getId().equals(c.getId()))
 						.map(p -> {
 							p.setEstatus(PagoEstatus.FACTURADO); 
 							return p;})
@@ -216,7 +203,7 @@ public class FacturaServiceImpl implements FacturaService {
 					nuevaFactura.getSaldoAnterior() +
 					nuevaFactura.getImporteCargos() -
 					nuevaFactura.getImportePagos());
-			nuevaFactura.setCondomino(c);
+			nuevaFactura.setCasa(c);
 			nuevaFactura.setFechaVencimiento(fechaVencimiento);
 			nuevaFactura.setFechaCorte(fechaCorte);
 			c.setSaldo(nuevaFactura.getSaldo());
@@ -250,7 +237,7 @@ public class FacturaServiceImpl implements FacturaService {
 
 		corteFacturaRepository.save(corte);
 		List<Factura> facturas = new ArrayList<>();
-		List<Casa> casas = casasService.findAll();
+		List<Casa> casas = casasService.findByCondominio(corte.getCondominio());
 		
 		// Buscamos los pagos realizados y que no hayan sido facturados con anterioridad.
 		List<Pago> pagos = pagosService.findByFechaPagadoBeforeAndEstatus(corte.getFechaCorte(), PagoEstatus.PENDIENTE);
@@ -260,13 +247,14 @@ public class FacturaServiceImpl implements FacturaService {
 		
 		casas.stream().forEach(c -> {
 			Factura nuevaFactura = new Factura();
+			nuevaFactura.setCondominio(corte.getCondominio());
 			nuevaFactura.setSaldoAnterior(c.getSaldo());
 			nuevaFactura.setPagos(
 					pagos.stream()
-						.filter(p -> p.getCondomino().getId().equals(c.getId()))
+						.filter(p -> p.getCasa().getId().equals(c.getId()))
 						.map(p -> {
 							p.setEstatus(PagoEstatus.FACTURADO); 
-							return p;})
+							return p; })
 						.collect(Collectors.toList()));
 			nuevaFactura.setCargos(
 					cargos.stream()
@@ -277,10 +265,10 @@ public class FacturaServiceImpl implements FacturaService {
 						})
 						.collect(Collectors.toList()));
 			nuevaFactura.setSaldo(
-					nuevaFactura.getSaldoAnterior() +
+					nuevaFactura.getSaldoAnterior() == null ? 0 : nuevaFactura.getSaldoAnterior()  +
 					nuevaFactura.getImporteCargos() -
 					nuevaFactura.getImportePagos());
-			nuevaFactura.setCondomino(c);
+			nuevaFactura.setCasa(c);
 			nuevaFactura.setFechaVencimiento(corte.getFechaVencimiento());
 			nuevaFactura.setFechaCorte(corte.getFechaCorte());
 			nuevaFactura.setCorte(corte);
@@ -314,4 +302,10 @@ public class FacturaServiceImpl implements FacturaService {
 	public Page<Factura> findByCasa(Casa casa, Pageable pageable) {
 		return facturaRepository.findByCasa(casa, pageable);
 	}
+
+	@Override
+	public Page<Factura> findByCondominio(Condominio condominio, Pageable pageable) {
+		return facturaRepository.findByCondominio(condominio, pageable);
+	}
+
 }

@@ -42,7 +42,7 @@ public class UpdatePagos {
 		x.add(new Breadcrum("Pagos", "/pagos", pago == null));
 		if (pago != null) {
 			x.add(new Breadcrum((pago.getId() !=null ?  
-					(pago.getCondomino() != null ? pago.getCondomino().getInterior() : "No identificado") + " del " + format.print(pago.getFechaPagado(), Locale.FRANCE)  : "Nuevo"), "/pagos/" + (pago.getId() !=null ?  pago.getId() : "nuevo"), true));			
+					(pago.getCasa() != null ? pago.getCasa().getInterior() : "No identificado") + " del " + format.print(pago.getFechaPagado(), Locale.FRANCE)  : "Nuevo"), "/pagos/" + (pago.getId() !=null ?  pago.getId() : "nuevo"), true));
 		}
 		return x ;
 	}

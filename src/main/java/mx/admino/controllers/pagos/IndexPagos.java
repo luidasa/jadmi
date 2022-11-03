@@ -46,9 +46,37 @@ public class IndexPagos {
 		x.add(new Breadcrum("Condominios", "/condominios", false));
 		x.add(new Breadcrum(condominio.getNombre(), "/condominios/" + condominio.getId(), false));
 		x.add(new Breadcrum("Casas", "/condominios/" + condominio.getId() + "/casas", false));
-		x.add(new Breadcrum(casa.getInterior(), "/condominios/" + condominio.getId() + "/casas/" + casa.getId(), false));
-		x.add(new Breadcrum("Pagos", "/condominios/" + condominio.getId() + "/casas/" + casa.getId() + "/pagos", true));
+		if (casa == null) {
+			x.add(new Breadcrum("Pagos", "/condominios/" + condominio.getId() + "/pagos", true));
+		} else {
+			x.add(new Breadcrum(casa.getInterior(), "/condominios/" + condominio.getId() + "/casas/" + casa.getId(), false));
+			x.add(new Breadcrum("Pagos", "/condominios/" + condominio.getId() + "/casas/" + casa.getId() + "/pagos", true));
+
+		}
 		return x ;
+	}
+
+	@GetMapping("/condominios/{cid}/ingresos")
+	public String index(Model model,
+						@PathVariable String cid,
+						@RequestParam(required = false, defaultValue = "1") Integer page,
+						@RequestParam(required = false, defaultValue = "10") Integer size) {
+
+		var condominio = condominioService.findById(cid);
+		var casas = casasService.findByCondominio(condominio);
+		var pago = new Pago(condominio);
+
+		Sort ordenado = Sort.by("fechaPagado").descending();
+		Pageable pageable = PageRequest.of(page - 1, size, ordenado);
+		Page<Pago> pagos = pagoService.findByCondominio(condominio, pageable);
+		model.addAttribute("condominio", condominio);
+		model.addAttribute("pagos", pagos);
+		model.addAttribute("casas", casas);
+		model.addAttribute("abono", pago);
+		String tomorrow  = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		model.addAttribute("tomorrow", tomorrow);
+		model.addAttribute("breadcrum", getBreadcrum(condominio, null));
+		return "pagos/indexCondominio";
 	}
 
 	@GetMapping("/condominios/{cid}/casas/{id}/pagos")

@@ -31,25 +31,4 @@ public class CreateFacturasController {
 	CondominioService condominioService;
 	
 	
-	@PostMapping("/generar")
-	public String postGenerar(
-			@ModelAttribute @Valid CorteFactura facturaSolicitud,
-			BindingResult binding,
-			RedirectAttributes flash,
-			Model model) {
-		
-		String viewName = "redirect:/facturas";
-		
-		if (binding.hasErrors()) {
-			flash.addFlashAttribute("alert_danger", "Favor de verificar los datos que introduciste");
-			return viewName;
-		}
-		
-		facturaService.generate(facturaSolicitud);
-		
-		flash.addFlashAttribute("alert_success","Se agregan generaron las facturas para el periodo indicado");
-		viewName = "redirect:/admin/facturas";
-		
-		return viewName;
-	}
 }

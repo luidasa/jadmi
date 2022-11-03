@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import mx.admino.models.entities.Casa;
+import mx.admino.models.entities.Condominio;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,9 +22,9 @@ public interface PagoService {
 
 	Pago save(@Valid Pago pago);
 
-	Page<Pago> findByCondominoId(String cid, Pageable pageable);
+	Page<Pago> findByCasa(Casa casa, Pageable pageable);
 
-	List<Pago> findByCondomino_IdAndFechaPagadoBetween(String cid, Date fechaInicial, Date fechaFinal);
+	List<Pago> findByCasaAndFechaPagadoBetween(Casa casa, Date fechaInicial, Date fechaFinal);
 
 	List<Pago> saveAll(List<Pago> pagos);
 
@@ -33,5 +34,7 @@ public interface PagoService {
 
 	List<Pago> findByFechaPagadoBetweenAndStatus(Date fechaInicio, Date fechaFinal, PagoEstatus estatus);
 
-    Page<Pago> findByCasa(Casa casa, Pageable pageable);
+    List<Pago> findByCasa(Casa casa);
+
+	Page<Pago> findByCondominio(Condominio condominio, Pageable pageable);
 }

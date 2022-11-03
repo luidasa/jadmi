@@ -49,4 +49,9 @@ public class CondominoServiceImpl implements CasasService {
 	public Page<Casa> findByCondominio(Condominio condominio, Pageable pageable) {
 		return condominoRepository.findByCondominio(condominio, pageable);
 	}
+
+	@Override
+	public List<Casa> findByCondominio(Condominio condominio) {
+		return condominoRepository.findByCondominio(condominio);
+	}
 }

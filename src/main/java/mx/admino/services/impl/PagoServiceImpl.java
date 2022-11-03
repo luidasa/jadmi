@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import mx.admino.models.entities.Casa;
+import mx.admino.models.entities.Condominio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
@@ -45,14 +46,14 @@ public class PagoServiceImpl implements PagoService {
 	}
 
 	@Override
-	public Page<Pago> findByCondominoId(String id, Pageable pageable) {
-		return pagoRepository.findByCondomino_Id(id, pageable);
+	public Page<Pago> findByCasa(Casa casa, Pageable pageable) {
+		return pagoRepository.findByCasa(casa, pageable);
 	}
 
 	@Override
-	public List<Pago> findByCondomino_IdAndFechaPagadoBetween(String cid, Date fechaInicial, Date fechaFinal) {
+	public List<Pago> findByCasaAndFechaPagadoBetween(Casa casa, Date fechaInicial, Date fechaFinal) {
 		
-		return pagoRepository.findByCondomino_idAndFechaPagadoBetween(cid, fechaInicial, fechaFinal);
+		return pagoRepository.findByCasaAndFechaPagadoBetween(casa, fechaInicial, fechaFinal);
 	}
 
 	@Override
@@ -76,8 +77,13 @@ public class PagoServiceImpl implements PagoService {
 	}
 
 	@Override
-	public Page<Pago> findByCasa(Casa casa, Pageable pageable) {
-		return pagoRepository.findByCasa(casa, pageable);
+	public List<Pago> findByCasa(Casa casa) {
+		return pagoRepository.findByCasa(casa);
+	}
+
+	@Override
+	public Page<Pago> findByCondominio(Condominio condominio, Pageable pageable) {
+		return pagoRepository.findByCondominio(condominio, pageable);
 	}
 
 	@Override

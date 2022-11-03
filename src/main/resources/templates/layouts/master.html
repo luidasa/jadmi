@@ -17,18 +17,19 @@
 
 <body>
 
-  <nav class="navbar navbar-expand-lg" th:fragment="navbar">
-    <div class="container">
-      <a class="navbar-brand" th:href="@{/}">
-        <img src="/img/brand/jadmino.png" alt="Administra tu condominio" width="30" height="24"
-          class="d-inline-block align-text-top">
-        JAdmino
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse d-flex bd-highlight" id="navbarSupportedContent">
+    <!-- Barra de menu principal -->
+    <nav class="navbar navbar-expand-lg" th:fragment="navbar">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <img src="/img/brand/jadmino.png" alt="Administra tu condominio" width="30" height="24"
+                    class="d-inline-block align-text-top">
+                    JAdmino
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="collapse navbar-collapse d-flex bd-highlight" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-grow-1 bd-highlight">
           <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="condominiosDropdown" role="button" data-bs-toggle="dropdown"
@@ -98,6 +99,20 @@
              th:classappend="${paso=='Cuotas' ?  'active': ''}"
              th:href="@{/condominios/{cid}/cuotas(cid=${condominio.id})}"
              th:if="${condominio.id != null}">Cuotas</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Ingresos' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Ingresos' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/ingresos(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Ingresos</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Facturas' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Facturas' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/facturas(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Estados de cuenta</a>
       </li>
       <li class="nav-item"
           th:classappend="${paso=='Presupuestos' ?  'border-bottom border-primary': ''}">

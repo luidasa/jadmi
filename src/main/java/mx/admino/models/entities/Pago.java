@@ -26,6 +26,9 @@ public class Pago implements Serializable {
 	
 	@Id
 	private String id;
+
+	@NotNull
+	private Condominio condominio;
 	
 	private Casa casa;
 
@@ -44,8 +47,15 @@ public class Pago implements Serializable {
 	private Date fechaPagado;
 
 	public Pago(Casa casa) {
+		this();
 		this.casa = casa;
 		this.estatus = PagoEstatus.PENDIENTE;
+	}
+
+	public Pago(Condominio condominio) {
+		this();
+		this.estatus = PagoEstatus.PENDIENTE;
+		this.condominio = condominio;
 	}
 
 	public String getId() {
@@ -56,11 +66,11 @@ public class Pago implements Serializable {
 		this.id = id;
 	}
 
-	public Casa getCondomino() {
+	public Casa getCasa() {
 		return casa;
 	}
 
-	public void setCondomino(Casa casa) {
+	public void setCasa(Casa casa) {
 		this.casa = casa;
 	}
 
@@ -88,20 +98,20 @@ public class Pago implements Serializable {
 		this.estatus = estatus;
 	}
 
-	public Casa getCasa() {
-		return casa;
-	}
-
-	public void setCasa(Casa casa) {
-		this.casa = casa;
-	}
-
 	public PagoMetodo getMetodo() {
 		return metodo;
 	}
 
 	public void setMetodo(PagoMetodo metodo) {
 		this.metodo = metodo;
+	}
+
+	public Condominio getCondominio() {
+		return condominio;
+	}
+
+	public void setCondominio(Condominio condominio) {
+		this.condominio = condominio;
 	}
 
 	@Override
@@ -116,7 +126,7 @@ public class Pago implements Serializable {
 
 	public Pago merge(@Valid Pago pago) {
 
-		this.setCondomino(pago.getCondomino());
+		this.setCasa(pago.getCasa());
 		this.setFechaPagado(pago.getFechaPagado());
 		this.setImporte(pago.getImporte());
 		this.setEstatus(pago.getEstatus());

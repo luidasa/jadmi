@@ -17,11 +17,11 @@
 
 		<div class="container mt-2">
 			<header>
-				<h1 class="text-muted fs-2"><span th:text="${condominio.nombre}"></span> <span th:text="${casa.interior}"> - Facturas</span></h1>
+				<h1 class="text-muted fs-2"><span th:text="${condominio.nombre}"></span> - Facturas</span></h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>				
 			</header>
-			<ul class="nav mb-2" th:replace="layouts/master::navbar_casa('Facturas')"></ul>
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_condominio('Facturas')"></ul>
 			<div class="card">
 				<div class="card-header bg-primary bg-gradient text-white">
 					Estados de cuenta
@@ -32,7 +32,7 @@
 							<tr>
 								<th scope="col">Fecha de corte</th>
 								<th scope="col">Fecha de vencimiento</th>
-								<th scope="col">Condominio</th>
+								<th scope="col">Casa</th>
 								<th scope="col">Dueño</th>
 								<th scope="col">Saldo inicial</th>
 								<th scope="col">Pagos</th>
@@ -43,7 +43,7 @@
 						<tbody>
 							<tr th:each="factura: ${facturas}" th:if="${facturas.getTotalElements() > 0}")>
 								<td>
-									<a th:href="@{/condominios/{cid}/casas/{uid}/facturas/{id}(cid=${condominio.id}, uid=${casa.id}, id=${factura.id})}" th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}"></a>
+									<a th:href="@{/condominios/{cid}/casas/{uid}/facturas/{id}(cid=${condominio.id}, uid=${factura.casa.id}, id=${factura.id})}" th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}"></a>
 								</td>
 								<td th:text="${#dates.format(factura.fechaVencimiento, 'dd/MM/yyyy')}"></td>
 								<td th:text="${factura.casa.interior}"></td>
@@ -61,7 +61,7 @@
 							<tr>
 								<th scope="col">Fecha de corte</th>
 								<th scope="col">Fecha de vencimiento</th>
-								<th scope="col">Condominio</th>
+								<th scope="col">Casa</th>
 								<th scope="col">Dueño</th>
 								<th scope="col">Saldo inicial</th>
 								<th scope="col">Pagos</th>
@@ -73,27 +73,70 @@
 					<nav aria-label="Page navigation" th:if="${facturas.getTotalElements() > 0}">
 						<ul class="pagination justify-content-center">
 							<li class="page-item">
-								<a class="page-link" th:href="@{/condominios/{cid}/casas/{uid}/facturas(page=1)}" aria-label="Previous">
+								<a class="page-link" th:href="@{/condominios/{cid}/facturas(cid=${condominio.id}, page=1)}" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
-							<li class="page-item" th:each="i : ${#numbers.sequence( 1, facturas.getTotalPages)}">
+							<li class="page-item" th:each="i : ${#numbers.sequence( 1, facturas.totalPages)}">
 								<a class="page-link"
 								   th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"
-								   th:href="@{/condominios/{cid}/casas/{uid}/facturas(cid=${condominio.id}, uid=${casa.id}, page=${i}, size=10)},fechaCorte=${#request.getParameter('fechaCorte')},saldoMinimo=${#request.getParameter('saldoMinimo')},saldoMaximo=${#request.getParameter('saldoMaximo')})}"
+								   th:href="@{/condominios/{cid}/facturas(cid=${condominio.id}, page=${i}, size=10)}"
 								   th:text="${i}">1</a>
 							</li>
 							<li class="page-item">
-								<a class="page-link" th:href="@{/condominios/{cid}/casas/{uid}/facturas(cid=${condominio.id}, uid=${casa.id}, page=${facturas.totalPages})}" aria-label="Next">
+								<a class="page-link" th:href="@{/condominios/{cid}/facturas(cid=${condominio.id}, page=${facturas.totalPages})}" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>
 						</ul>
 					</nav>
 				</div>
+				<div class="card-footer text-end">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#generarModal">
+					  Generar
+					</button>
+				</div>
 			</div>
 		</div>
 
+		<!-- Generate Modal -->
+		<div class="modal fade" id="generarModal" tabindex="-1" aria-labelledby="generarModalLabel" aria-hidden="true">
+		  <form th:action="@{/condominios/{cid}/facturas/generar(cid=${condominio.id})}" method="post" th:object="${solicitud}">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="generarModalLabel">Generar los estados de cuenta</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			      	<div class="row">
+					  <div class="mb-3">
+					    <label for="fechaCorte" class="form-label">Fecha Corte</label>
+					    <input type="date" class="form-control" id="fechaCorte" aria-describedby="fechaCorteHelp" required
+					    	th:field="${solicitud.fechaCorte}"
+					    	>						    	
+					    <div id="fechaHelp" class="form-text invalid-feedback"
+					    	th:if="${#fields.hasErrors('fechaCorte')}" th:errors="*{fechaCorte}">Fecha corte</div>
+					  </div>
+					  <div class="mb-3">
+					    <label for="fechaVencimiento" class="form-label">Fecha Vencimiento</label>
+					    <input type="date" class="form-control" id="fechaVencimiento" aria-describedby="fechaHelp" required
+					    	th:field="${solicitud.fechaVencimiento}"
+					    	th:classappend="${#fields.hasErrors('fechaVencimiento')} ? is-invalid">	
+					    <div id="fechaHelp" class="form-text invalid-feedback"
+					    	th:if="${#fields.hasErrors('fechaVencimiento')}" th:errors="*{fechaVencimiento}">Fecha vencimiento</div>
+					  </div>      	
+			      	</div>	
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+			        <button type="submit" class="btn btn-primary">Generar</button>
+			      </div>
+			    </div>
+			  </div>
+	      </form>      
+		</div>
+		
 		<footer th:include="layouts/master::footer"></footer>
 		
 	</main>

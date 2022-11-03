@@ -6,6 +6,9 @@ import java.util.Locale;
 
 import javax.validation.Valid;
 
+import mx.admino.models.entities.Condominio;
+import mx.admino.services.CargoService;
+import mx.admino.services.CondominioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
@@ -27,7 +30,10 @@ public class CreatePagosController {
 	
 	@Autowired
     CasasService casasService;
-	
+
+	@Autowired
+	CondominioService condominioService;
+
 	private List<Breadcrum> getBreadcrum(Pago pago) {
 
 		DateFormatter format = new DateFormatter("dd/MM/yyyy");
@@ -37,7 +43,7 @@ public class CreatePagosController {
 		x.add(new Breadcrum("Pagos", "/pagos", pago == null));
 		if (pago != null) {
 			x.add(new Breadcrum((pago.getId() !=null ?  
-					(pago.getCondomino() != null ? pago.getCondomino().getInterior() : "No identificado") + " del " + format.print(pago.getFechaPagado(), Locale.FRANCE)  : "Nuevo"), "/pagos/" + (pago.getId() !=null ?  pago.getId() : "nuevo"), true));			
+					(pago.getCasa() != null ? pago.getCasa().getInterior() : "No identificado") + " del " + format.print(pago.getFechaPagado(), Locale.FRANCE)  : "Nuevo"), "/pagos/" + (pago.getId() !=null ?  pago.getId() : "nuevo"), true));
 		}
 		return x ;
 	}
@@ -55,9 +61,9 @@ public class CreatePagosController {
 			Model model) {
 		
 		Pago pago = new Pago();
+		Condominio condominio = condominioService.findById(cid);
 		Casa casa = casasService.findById(id);
-		pago.setCondomino(casa);
-
+		pago.setCasa(casa);
 		model.addAttribute("pago", pago  );
 		model.addAttribute("breadcrum", getBreadcrum(pago));
 		return "pagos/formulario";

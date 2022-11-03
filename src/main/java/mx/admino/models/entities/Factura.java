@@ -25,8 +25,10 @@ public class Factura implements Serializable {
 
 	@Id
 	private String id;
-	
+
 	private Casa casa;
+
+	private Condominio condominio;
 	
 	@NotNull
 	@Valid
@@ -94,6 +96,22 @@ public class Factura implements Serializable {
 		});
 	}
 
+	public Casa getCasa() {
+		return casa;
+	}
+
+	public void setCasa(Casa casa) {
+		this.casa = casa;
+	}
+
+	public Condominio getCondominio() {
+		return condominio;
+	}
+
+	public void setCondominio(Condominio condominio) {
+		this.condominio = condominio;
+	}
+
 	public Factura getFacturaAnteriorFactura() {
 		return facturaAnteriorFactura;
 	}
@@ -132,14 +150,6 @@ public class Factura implements Serializable {
 
 	public void setSaldo(Float saldo) {
 		this.saldo = saldo;
-	}
-
-	public Casa getCondomino() {
-		return casa;
-	}
-
-	public void setCondomino(Casa casa) {
-		this.casa = casa;
 	}
 
 	public Date getFechaVencimiento() {
@@ -191,6 +201,4 @@ public class Factura implements Serializable {
 	public void setCorte(CorteFactura corte) {
 		this.corte = corte;
 	}
-	
-	
 }

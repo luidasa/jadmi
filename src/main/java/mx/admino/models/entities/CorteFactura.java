@@ -14,7 +14,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Document(collection = "corte-facturas")
 public class CorteFactura implements Serializable {
 
-
 	public CorteFactura() {
 
 		this.fechaCorte = Date.from(
@@ -29,6 +28,8 @@ public class CorteFactura implements Serializable {
 		
 	@Id
 	private String id;
+
+	private Condominio condominio;
 
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -60,6 +61,14 @@ public class CorteFactura implements Serializable {
 
 	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
+	}
+
+	public Condominio getCondominio() {
+		return condominio;
+	}
+
+	public void setCondominio(Condominio condominio) {
+		this.condominio = condominio;
 	}
 
 	private static final long serialVersionUID = 1L;
