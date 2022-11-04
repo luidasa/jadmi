@@ -33,7 +33,6 @@ public class CondominosHandlerInterceptor implements HandlerInterceptor {
             throws Exception {
 
         if (request.getUserPrincipal() != null) {
-            logger.info("postHandler: " + request.getUserPrincipal().getName());
             /// TODO. Falta obtener los  condominos (maximo 5) donde soy administrador y agregarlos al modelo.
         }
     }
@@ -41,6 +40,6 @@ public class CondominosHandlerInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
-        logger.info("afterCompletion");
+        //logger.info("afterCompletion");
     }
 }

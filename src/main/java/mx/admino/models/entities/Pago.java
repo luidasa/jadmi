@@ -27,7 +27,6 @@ public class Pago implements Serializable {
 	@Id
 	private String id;
 
-	@NotNull
 	private Condominio condominio;
 	
 	private Casa casa;

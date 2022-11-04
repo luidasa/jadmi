@@ -32,7 +32,7 @@ public class RecoverListener implements ApplicationListener<OnUserRecoverEvent> 
                 = event.getUrlBase() + "/reset/" + newToken.getCode();
         /// TODO. Falta a implementación del codigo en base a un template de thymeleaf y tomar los valores de un archivo de propiedades o del ambiente.
         String message = "Copia y pega esta liga " + confirmationUrl;
-        System.out.println(confirmationUrl);
+        ///System.out.println(confirmationUrl);
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("contacto@luidasa.com");
         email.setTo(recipientAddress);

@@ -55,11 +55,22 @@
 									<td colspan="6">No hay cuotas registrados</td>
 								</tr>
 							</tbody>
+							<tfoot>
+							<tr>
+								<th scope="col">Fecha de inicio</th>
+								<th scope="col">Fecha de fin</th>
+								<th scope="col">Nombre</th>
+								<th scope="col">Concepto</th>
+								<th scope="col">Estatus</th>
+								<th scope="col">Importe</th>
+							</tr>
+							</tfoot>
 						</table>
 						<nav aria-label="Page navigation" th:if="${pagina.totalPages > 0}">
-							<ul class="pagination">
+							<ul class="pagination justify-content-center">
 								<li class="page-item">
-									<a class="page-link" href="#" aria-label="Previous">
+									<a class="page-link"
+									   th:href="@{/condominios/{cid}/cuotas(cid=${condominio.id}, page=1, size=10)}" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
 									</a>
 								</li>
@@ -71,7 +82,9 @@
 									</a>
 								</li>
 								<li class="page-item">
-									<a class="page-link" th:href="@{/condominios/{cid}/cuotas(cid=${condominio.id}, page=1)}" aria-label="Next">
+									<a class="page-link"
+									   th:href="@{/condominios/{cid}/cuotas(cid=${condominio.id}, page=${pagina.totalPages})}"
+									   aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 									</a>
 								</li>
@@ -79,14 +92,8 @@
 						</nav>
 					</div>
 				</div>
-				<div class="card-footer ">
-					<div class="row">
-						<div class="col-md-6">
-						</div>
-						<div class="col-md-6 text-end">
-							<a th:href="@{/condominios/{cid}/cuotas/nuevo(cid=${condominio.id})}" class="btn btn-primary">Agregar</a>
-						</div>
-					</div>
+				<div class="card-footer text-end">
+					<a th:href="@{/condominios/{cid}/cuotas/nuevo(cid=${condominio.id})}" class="btn btn-primary">Nuevo</a>
 				</div>
 			</div>
 		</div>

@@ -45,7 +45,7 @@ public class Presupuesto {
     private List<Pago> pagos;
 
     @DBRef
-    private List<Gasto> gastos;
+    private List<Egreso> gastos;
 
     @DBRef
     private Condominio condominio;
@@ -106,11 +106,11 @@ public class Presupuesto {
         this.pagos = pagos;
     }
 
-    public List<Gasto> getGastos() {
+    public List<Egreso> getGastos() {
         return gastos;
     }
 
-    public void setGastos(List<Gasto> gastos) {
+    public void setGastos(List<Egreso> gastos) {
         this.gastos = gastos;
     }
 

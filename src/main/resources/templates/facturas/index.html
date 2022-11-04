@@ -80,7 +80,7 @@
 							<li class="page-item" th:each="i : ${#numbers.sequence( 1, facturas.getTotalPages)}">
 								<a class="page-link"
 								   th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"
-								   th:href="@{/condominios/{cid}/casas/{uid}/facturas(cid=${condominio.id}, uid=${casa.id}, page=${i}, size=10)},fechaCorte=${#request.getParameter('fechaCorte')},saldoMinimo=${#request.getParameter('saldoMinimo')},saldoMaximo=${#request.getParameter('saldoMaximo')})}"
+								   th:href="@{/condominios/{cid}/casas/{uid}/facturas(cid=${condominio.id}, uid=${casa.id}, page=${i}, size=10)}"
 								   th:text="${i}">1</a>
 							</li>
 							<li class="page-item">

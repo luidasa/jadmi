@@ -17,53 +17,50 @@
 
 		<div class="container mt-2">
 			<header>
-				<h1 class="text-muted fs-2">Pagos</span></h1>
+				<h1 class="text-muted fs-2">Gastos y egresos</span></h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>
 			</header>
 
-			<ul class="nav mb-2" th:replace="layouts/master::navbar_condominio('Pagos')"></ul>
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_condominio('Egresos')"></ul>
 
 			<div class="card">
 				<div class="card-header bg-primary bg-gradient text-white">
-					Listado de pagos realizados
+					Listado de gastos ejercidos
 				</div>
 				<div class="card-body table-responsive p-0">
 					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th scope="col">Fecha de pago</th>
-								<th scope="col">Interior</th>
-								<th scope="col">Dueño</th>
+								<th scope="col">Concepto</th>
+								<th scope="col">Proveedor</th>
 								<th scope="col">Estatus</th>
 								<th scope="col">Forma</th>
 								<th scope="col">Importe</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="pago:${pagos}" th:if="${pagos.getTotalElements() > 0}" >
+							<tr th:each="egreso:${egresos}" th:if="${egresos.getTotalElements() > 0}" >
 								<td>
-									<a th:href="@{/condominios/{cid}/pagos/{pid}(cid=${condominio.id}, pid=${pago.id})}" th:text="${#dates.format(pago.fechaPagado, 'dd/MM/yyyy')}"></a>
+									<a th:href="@{/condominios/{cid}/egresos/{pid}(cid=${condominio.id}, pid=${egreso.id})}" th:text="${#dates.format(egreso.fechaPagado, 'dd/MM/yyyy')}"></a>
 								</td>
-								<td>
-									<a th:if="${pago.casa != null}" th:href="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${pago.casa?.id})}" th:text="${pago.casa?.Interior}"></a>
-									<span th:if="${pago.casa == null}">No identificado</span>
-								</td>
-								<td th:text="${pago.casa?.nombre}">Otto</td>
-								<td th:text="${pago.estatus}">Otto</td>
-								<td th:text="${pago.metodo}">Otto</td>
-								<td class="text-end" th:text="${#numbers.formatDecimal(pago.importe, 3, 'COMMA', 2, 'POINT')}">
+								<td th:text="${egreso.concepto}"></td>
+								<td th:text="${egreso.receptor}">Otto</td>
+								<td th:text="${egreso.estatus}">Otto</td>
+								<td th:text="${egreso.metodo}">Otto</td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(egreso.importe, 3, 'COMMA', 2, 'POINT')}">
 								</td>
 							</tr>
-							<tr th:if="${pagos.getTotalElements() == 0}" >
-								<td colspan="6">No hay pagos registrados</td>
+							<tr th:if="${egresos.getTotalElements() == 0}" >
+								<td colspan="6">No hay Egresos registrados</td>
 							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
 								<th scope="col">Fecha de pago</th>
-								<th scope="col">Interior</th>
-								<th scope="col">Dueño</th>
+								<th scope="col">Concepto</th>
+								<th scope="col">Proveedor</th>
 								<th scope="col">Estatus</th>
 								<th scope="col">Forma</th>
 								<th scope="col">Importe</th>
@@ -71,20 +68,20 @@
 						</tfoot>
 					</table>
 
-					<nav aria-label="Page navigation" th:if="${pagos.getTotalElements() > 0}">
+					<nav aria-label="Page navigation" th:if="${egresos.getTotalElements() > 0}">
 						<ul class="pagination justify-content-center">
 							<li class="page-item">
-								<a class="page-link" th:href="@{/condominios/{cid}/pagos(cid=${condominio.id}, pagina=1)}" aria-label="Previous">
+								<a class="page-link" th:href="@{/condominios/{cid}/egresos(cid=${condominio.id}, pagina=1)}" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
-							<li class="page-item" th:each="pagina:${#numbers.sequence( 1, pagos.getTotalPages)}">
+							<li class="page-item" th:each="pagina:${#numbers.sequence( 1, egresos.getTotalPages)}">
 								<a class="page-link"
-								   th:href="@{/condominios/{cid}/pagos(cid=${condominio.id}, pagina=${pagina})}"
+								   th:href="@{/condominios/{cid}/egresos(cid=${condominio.id}, pagina=${pagina})}"
 								   th:text="${pagina}">1</a>
 							</li>
 							<li class="page-item">
-								<a class="page-link" th:href="@{/condominios/{cid}/pagos(cid=${condominio.id}, pagina=${pagos.getTotalPages})}" aria-label="Next">
+								<a class="page-link" th:href="@{/condominios/{cid}/egresos(cid=${condominio.id}, pagina=${egresos.getTotalPages})}" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</li>
@@ -102,7 +99,9 @@
 		<div class="modal fade" tabindex="-1" id="modalForm" data-bs-backdrop="static">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<form method="post" autocomplete="off" th:action="@{/condominios/{cid}/pagos/nuevo(cid=${condominio.id})}" th:object="${abono}">
+					<form method="post" autocomplete="off"
+						  th:action="@{/condominios/{cid}/egresos/nuevo(cid=${condominio.id})}"
+						  th:object="${gasto}">
 						<div class="modal-header">
 							<h5>Información del pago</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -110,31 +109,33 @@
 
 						<div class="modal-body">
 							<div class="mb-3 form-group">
-								<label for="casa" class="form-label">Casa</label>
-								<select id="casa" class="form-select" th:field="${abono.casa}">
-									<option value="">No identificado</option>
-									<option th:each="casa:${casas}" th:value="${casa.id}" th:text="${casa.interior}"></option>
-								</select>
-								<div id="casaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('casa')}" th:errors="*{casa}"></div>
+								<label for="receptor" class="form-label">Proveedor</label>
+								<input id="receptor" class="form-control" th:field="${gasto.receptor}" required>
 							</div>
 							<div class="mb-3 form-group">
-								<label for="fechaRealizado" class="form-label">Fecha realizado</label>
-								<input type="date" class="form-control" id="fechaRealizado" aria-describedby="fechaHelp" required
+								<label for="concepto" class="form-label">Concepto</label>
+								<select id="concepto" class="form-select" th:field="${gasto.concepto}" required>
+									<option th:each="item:${T(mx.admino.models.entities.Concepto.Tipos).values()}" th:value="${item}" th:text="${item}"></option>
+								</select>
+							</div>
+							<div class="mb-3 form-group">
+								<label for="fechaPagado" class="form-label">Fecha pagado</label>
+								<input type="date" class="form-control" id="fechaPagado" aria-describedby="fechaHelp" required
 									   th:max="${tomorrow}"
-									   th:field="${abono.fechaPagado}"
+									   th:field="${gasto.fechaPagado}"
 									   th:classappend="${#fields.hasErrors('fechaPagado')} ? is-invalid : ''">
 								<div id="fechaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('fechaPagado')}" th:errors="*{fechaPagado}">Fecha realizado</div>
 							</div>
 							<div class="mb-3 form-group">
 								<label for="metodoPago" class="form-label">Forma de pago</label>
-								<select id="metodoPago" class="form-select" th:field="${abono.metodo}" required>
+								<select id="metodoPago" class="form-select" th:field="${gasto.metodo}" required>
 									<option th:value="${item}" th:each="item:${T(mx.admino.models.PagoMetodo).values()}" th:text="${item}"></option>
 								</select>
 							</div>
 							<div class="mb-3 form-group">
 								<label for="importe" class="form-label">Importe</label>
 								<input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp" required
-									   th:field="${abono.importe}"
+									   th:field="${gasto.importe}"
 									   th:classappend="${#fields.hasErrors('importe')} ? is-invalid : ''">
 								<div id="importeHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('importe')}" th:errors="*{importe}">Importe</div>
 							</div>

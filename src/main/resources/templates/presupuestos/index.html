@@ -17,7 +17,7 @@
 
 		<div class="container mt-2">
 			<header>
-				<h1 class="text-muted fs-2">Cuotas</h1>
+				<h1 class="text-muted fs-2">Presupuestos</h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
 				<div th:replace="layouts/master::alerts"></div>				
 			</header>
@@ -56,12 +56,22 @@
 									<td colspan="6">No hay cuotas registrados</td>
 								</tr>
 							</tbody>
+							<tfoot>
+							<tr>
+								<th scope="col">Fecha de inicio</th>
+								<th scope="col">Fecha de fin</th>
+								<th scope="col">Ingresos esperados</th>
+								<th scope="col">Egresos esperados</th>
+								<th scope="col">Ingresos reales</th>
+								<th scope="col">Egresos reales</th>
+							</tr>
+							</tfoot>
 						</table>
 						<div class="row">
 							<nav aria-label="Page navigation" th:if="${pagina.totalPages > 0}">
-								<ul class="pagination">
+								<ul class="pagination justify-content-center">
 									<li class="page-item">
-										<a class="page-link" href="#" aria-label="Previous">
+										<a class="page-link" th:href="@{/condominios/{cid}/presupuestos(cid=${condominio.id}, page=1, size=10)}" aria-label="Previous">
 											<span aria-hidden="true">&laquo;</span>
 										</a>
 									</li>
@@ -73,7 +83,8 @@
 										</a>
 									</li>
 									<li class="page-item">
-										<a class="page-link" th:href="@{/condominios/{cid}/presupuestos(cid=${condominio.id}, page=1)}" aria-label="Next">
+										<a class="page-link"
+										   th:href="@{/condominios/{cid}/presupuestos(cid=${condominio.id}, page=${presupuestos.totalPages})}" aria-label="Next">
 											<span aria-hidden="true">&raquo;</span>
 										</a>
 									</li>
@@ -83,14 +94,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="card-footer ">
-					<div class="row">
-						<div class="col-md-6">
-						</div>
-						<div class="col-md-6 text-end">
-							<a th:href="@{/condominios/{cid}/presupuestos/nuevo(cid=${condominio.id})}" class="btn btn-primary">Agregar</a>
-						</div>
-					</div>
+				<div class="card-footer text-end">
+					<a th:href="@{/condominios/{cid}/presupuestos/nuevo(cid=${condominio.id})}" class="btn btn-primary">Agregar</a>
 				</div>
 			</div>
 		</div>

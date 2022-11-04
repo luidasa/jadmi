@@ -4,5 +4,6 @@ public enum PagoMetodo {
 
     DEPOSITO,
     TRANSFERENCIA,
+    CHEQUE,
     EFECTIVO;
 }

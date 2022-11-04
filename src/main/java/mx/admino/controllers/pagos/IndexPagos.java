@@ -45,10 +45,10 @@ public class IndexPagos {
 		x.add(new Breadcrum("Inicio", "/panel", false));
 		x.add(new Breadcrum("Condominios", "/condominios", false));
 		x.add(new Breadcrum(condominio.getNombre(), "/condominios/" + condominio.getId(), false));
-		x.add(new Breadcrum("Casas", "/condominios/" + condominio.getId() + "/casas", false));
 		if (casa == null) {
 			x.add(new Breadcrum("Pagos", "/condominios/" + condominio.getId() + "/pagos", true));
 		} else {
+			x.add(new Breadcrum("Casas", "/condominios/" + condominio.getId() + "/casas", false));
 			x.add(new Breadcrum(casa.getInterior(), "/condominios/" + condominio.getId() + "/casas/" + casa.getId(), false));
 			x.add(new Breadcrum("Pagos", "/condominios/" + condominio.getId() + "/casas/" + casa.getId() + "/pagos", true));
 

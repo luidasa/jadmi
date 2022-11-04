@@ -50,6 +50,15 @@
 							<tr th:if="casas.totalPages == 0"><td colspan="5" class="text-center">No hay casas registradas. Generamos los registros con datos ficticios.
 								<a th:href="@{/condominios/{cid}/casas/generar(cid=${condominio.id})}">Oprime aqui.</a></td></tr>
 						</tbody>
+						<tfoot>
+						<tr>
+							<th scope="col">Interior</th>
+							<th scope="col">Dueño</th>
+							<th scope="col">Telefono</th>
+							<th scope="col">Correo</th>
+							<th scope="col">Saldo</th>
+						</tr>
+						</tfoot>
 					</table>
 					<nav class="d-flex justify-content-center mr-2" aria-label="Page navigation">
 						<ul class="pagination" th:if="${casas.totalPages > 0}">
@@ -86,8 +95,7 @@
 				</div>
 				<div class="card-footer">
 					<div class="text-end">
-						<a th:href="@{/condominios/{cid}/casas/facturas(cid=${condominio.id})}" class="btn btn-outline-secondary">Facturas</a>
-						<a th:href="@{/condominios/{cid}/casas/nuevo(cid=${condominio.id})}" class="btn btn-outline-primary">Agregar</a>
+						<a th:href="@{/condominios/{cid}/casas/nuevo(cid=${condominio.id})}" class="btn btn-primary">Nuevo</a>
 					</div>
 				</div>
 			</div>

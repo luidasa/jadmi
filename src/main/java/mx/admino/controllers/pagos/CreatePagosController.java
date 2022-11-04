@@ -78,19 +78,44 @@ public class CreatePagosController {
 			RedirectAttributes flash,
 			Model model
 			) {
-		String viewName = "pagos/index";
+		String viewName = "redirect:/condominios/" + cid + "/casas/" + pid + "/pagos";
 		var casa = casasService.findById(pid);
+		var condominio = condominioService.findById(cid);
 		model.addAttribute("breadcrum", getBreadcrum(pago));
 		if (binding.hasErrors()) {
+			flash.addFlashAttribute("alert_danger", "Los datos del pago son incorrectos. Favor de corregir y volver a intentar");
 			binding.getAllErrors().stream().forEach(error -> {
 				System.out.println(error.getObjectName() +" - " + error.getDefaultMessage());
 			});
 			return viewName;
 		}
 		pago.setCasa(casa);
+		pago.setCondominio(condominio);
 		pagoService.save(pago);
-		viewName= "redirect:/condominios/" + cid + "/casas/" + pid + "/pagos";
 		flash.addFlashAttribute("alert_success", "El pago ha quedado registrado");
 		return viewName;
-	}	
+	}
+
+	@PostMapping("/condominios/{cid}/pagos/nuevo")
+	public String postAdd(
+			@PathVariable String cid,
+			@ModelAttribute(name = "abono") @Valid Pago pago,
+			BindingResult binding,
+			RedirectAttributes flash,
+			Model model
+	) {
+		var viewName = "redirect:/condominios/" + cid + "/ingresos";
+		var condominio = condominioService.findById(cid);
+		if (binding.hasErrors()) {
+			binding.getFieldErrors().stream().forEach(error -> {
+				System.out.println(error.getField() +" - " + error.getDefaultMessage());
+			});
+			flash.addFlashAttribute("alert_danger", "Los datos del pago son incorrectos. Favor de corregir y volver a intentar");
+			return viewName;
+		}
+		pago.setCondominio(condominio);
+		pagoService.save(pago);
+		flash.addFlashAttribute("alert_success", "El pago ha quedado registrado");
+		return viewName;
+	}
 }

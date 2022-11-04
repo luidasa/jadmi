@@ -108,6 +108,13 @@
              th:if="${condominio.id != null}">Ingresos</a>
       </li>
       <li class="nav-item"
+          th:classappend="${paso=='Egresos' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Egresos' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/egresos(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Egresos</a>
+      </li>
+      <li class="nav-item"
           th:classappend="${paso=='Facturas' ?  'border-bottom border-primary': ''}">
           <a class="nav-link"
              th:classappend="${paso=='Facturas' ?  'active': ''}"
@@ -196,7 +203,7 @@
 	  </div>
   </div>
   
-  <nav class="bg-light my-2 py-1" aria-label="breadcrumb" th:fragment="breadcrum">
+  <nav class="bg-light py-1 rounded" aria-label="breadcrumb" th:fragment="breadcrum">
     <ol class="breadcrumb">
       <li class="breadcrumb-item" th:each="breadcrumItem: ${breadcrum}">
       	<a th:href="@{${breadcrumItem.url}}" th:text="${breadcrumItem.etiqueta}" th:classappend="${breadcrumItem.activo} ? 'active' : ''">Home</a></li>
