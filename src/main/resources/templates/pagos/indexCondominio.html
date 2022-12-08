@@ -43,7 +43,7 @@
 						<tbody>
 							<tr th:each="pago:${pagos}" th:if="${pagos.getTotalElements() > 0}" >
 								<td>
-									<a th:href="@{/condominios/{cid}/pagos/{pid}(cid=${condominio.id}, pid=${pago.id})}" th:text="${#dates.format(pago.fechaPagado, 'dd/MM/yyyy')}"></a>
+									<a  th:href="@{/condominios/{cid}/pagos/{pid}(cid=${condominio.id}, pid=${pago.id})}" th:text="${#dates.format(pago.fechaPagado, 'dd/MM/yyyy')}"></a>
 								</td>
 								<td>
 									<a th:if="${pago.casa != null}" th:href="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${pago.casa?.id})}" th:text="${pago.casa?.Interior}"></a>

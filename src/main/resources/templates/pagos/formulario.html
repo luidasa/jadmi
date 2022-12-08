@@ -15,34 +15,58 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
 		</nav>
 
+
 		<div class="container mt-4">
 			<header>
 				<h1>Registro de pagos</h1>
 				<nav th:replace="layouts/master::breadcrum"></nav>
-				<div th:replace="layouts/master::alerts"></div>				
+				<div th:replace="layouts/master::alerts"></div>
 			</header>
-			<form method="post" autocomplete="off" th:action="@{${pago.id == null ? '/pagos/nuevo':'/pagos/' + pago.id}}" th:object="${pago}">
-				<div class="card">
-					<div class="card-header py-3">
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_condominio('Pagos')"></ul>
+
+			<form method="post" autocomplete="off"
+				th:action="@{/condominios/{uid}/pagos/{id}(uid=${condominio.id}, id=${pago.id})}" th:object="${pago}">
+				<div class="card col-md-8 offset-md-2">
+					<div class="card-header bg-primary bg-gradient text-white">
 						Captura los datos del pago
 					</div>
 					<div class="card-body">
-						  <div class="row">
-						  <div class="mb-3 col">
-						    <label for="fechaRealizado" class="form-label">Fecha realizado</label>
-						    <input type="date" class="form-control" id="fechaRealizado" aria-describedby="fechaHelp"
-						    	th:field="${pago.fechaPagado}"
-						    	th:classappend="${#fields.hasErrors('fechaPagado')} ? is-invalid : ''">
-						    <div id="fechaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('fechaPagado')}" th:errors="*{fechaPagado}">Fecha realizado</div>
-						  </div>
-						  <div class="mb-3 col">
-						    <label for="importe" class="form-label">Importe</label>
-						    <input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp"
-								th:field="${pago.importe}"
-						    	th:classappend="${#fields.hasErrors('importe')} ? is-invalid : ''">
-						    <div id="importeHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('importe')}" th:errors="*{importe}">Importe</div>
-						  </div>
-						  </div>
+						<div class="mb-3 form-group">
+							<label for="casa" class="form-label">Casa</label>
+							<select id="casa" class="form-select" th:field="${pago.casa}">
+								<option value="">No identificado</option>
+								<option th:each="casa:${casas}" th:value="${casa.id}" th:text="${casa.interior}">
+								</option>
+							</select>
+							<div id="casaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('casa')}" th:errors="*{casa}"></div>
+						</div>
+						<div class="mb-3 form-group">
+							<label for="fechaRealizado" class="form-label">Fecha realizado</label>
+							<input type="date" class="form-control" id="fechaRealizado" aria-describedby="fechaHelp" required
+								   th:max="${tomorrow}"
+								   th:field="${pago.fechaPagado}"
+								   th:classappend="${#fields.hasErrors('fechaPagado')} ? is-invalid : ''">
+							<div id="fechaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('fechaPagado')}" th:errors="*{fechaPagado}">Fecha realizado</div>
+						</div>
+						<div class="mb-3 form-group">
+							<label for="metodoPago" class="form-label">Forma de pago</label>
+							<select id="metodoPago" class="form-select" th:field="${pago.metodo}" required>
+								<option th:value="${item}" th:each="item:${T(mx.admino.models.PagoMetodo).values()}" th:text="${item}"></option>
+							</select>
+						</div>
+						<div class="mb-3 form-group">
+							<label for="importe" class="form-label">Importe</label>
+							<input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp" required
+								   th:field="${pago.importe}"
+								   th:classappend="${#fields.hasErrors('importe')} ? is-invalid : ''">
+							<div id="importeHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('importe')}" th:errors="*{importe}">Importe</div>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" th:field="${pago.conciliado}">
+							<label class="form-check-label" for="flexCheckDefault">
+								Esta conciliado
+							</label>
+						</div>						
 					</div>
 					<div class="card-footer text-end">
 						  <button type="submit" class="btn btn-primary">Guardar</button>

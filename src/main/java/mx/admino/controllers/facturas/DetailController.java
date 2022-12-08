@@ -1,22 +1,16 @@
 package mx.admino.controllers.facturas;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import mx.admino.models.entities.Casa;
 import mx.admino.services.CondominioService;
 import mx.admino.services.CasasService;
 import mx.admino.services.FacturaService;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin/facturas")
 public class DetailController {
 
 	@Autowired
@@ -28,19 +22,17 @@ public class DetailController {
 	@Autowired
 	CondominioService condominioService;
 	
-	@ModelAttribute
-	private void getCondominios(Model model) {
-		List<Casa> casas = casasService.findAll();
-		model.addAttribute("condominos", casas);
-	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/condominios/{cid}/casas/{uid}/facturas/{fid}")
 	public String getFactura(
-			@PathVariable String id,
+			@PathVariable String cid,
+			@PathVariable String uid,
+			@PathVariable String fid,
 			Model model) {
 		
-		model.addAttribute("factura", facturaService.findById(id));
-		model.addAttribute("condominio", condominioService.findFirst());
+		model.addAttribute("factura", facturaService.findById(fid));
+		model.addAttribute("casa", casasService.findById(uid));
+		model.addAttribute("condominio", condominioService.findById(cid));
 		return "facturas/factura";
 	}
 }

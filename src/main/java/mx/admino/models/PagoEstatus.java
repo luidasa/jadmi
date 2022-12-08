@@ -4,6 +4,6 @@ public enum PagoEstatus {
 	
 	PENDIENTE,
 	FACTURADO,
-	CANCELADO;
+	CANCELADO, CONCILIADO;
 
 }

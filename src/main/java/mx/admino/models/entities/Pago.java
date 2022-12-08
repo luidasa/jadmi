@@ -44,9 +44,12 @@ public class Pago implements Serializable {
 	@Past
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaPagado;
+	
+	private Boolean conciliado;
 
 	public Pago(Casa casa) {
 		this();
+		this.setConciliado(false);
 		this.casa = casa;
 		this.estatus = PagoEstatus.PENDIENTE;
 	}
@@ -113,6 +116,14 @@ public class Pago implements Serializable {
 		this.condominio = condominio;
 	}
 
+	public Boolean getConciliado() {
+		return conciliado;
+	}
+
+	public void setConciliado(Boolean conciliado) {
+		this.conciliado = conciliado;
+	}
+
 	@Override
 	public String toString() {
 		return "Pago [" +
@@ -129,6 +140,7 @@ public class Pago implements Serializable {
 		this.setFechaPagado(pago.getFechaPagado());
 		this.setImporte(pago.getImporte());
 		this.setEstatus(pago.getEstatus());
+		this.setConciliado(pago.getConciliado());
 		
 		return this;
 	}

@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +25,7 @@ import mx.admino.services.CasasService;
 import mx.admino.services.PagoService;
 
 @Controller
-public class IndexPagos {
+public class IndexPagosController {
 
 	@Autowired
 	PagoService pagoService;
@@ -37,16 +36,14 @@ public class IndexPagos {
 	@Autowired
 	CondominioService condominioService;
 
-	private List<Breadcrum> getBreadcrum(Condominio condominio, Casa casa) {
+	public static List<Breadcrum> getBreadcrum(Condominio condominio, Casa casa) {
 
-		DateFormatter format = new DateFormatter("dd/MM/yyyy");
-		
 		List<Breadcrum> x = new ArrayList<Breadcrum>();
 		x.add(new Breadcrum("Inicio", "/panel", false));
 		x.add(new Breadcrum("Condominios", "/condominios", false));
 		x.add(new Breadcrum(condominio.getNombre(), "/condominios/" + condominio.getId(), false));
 		if (casa == null) {
-			x.add(new Breadcrum("Pagos", "/condominios/" + condominio.getId() + "/pagos", true));
+			x.add(new Breadcrum("Pagos", "/condominios/" + condominio.getId() + "/ingresos", true));
 		} else {
 			x.add(new Breadcrum("Casas", "/condominios/" + condominio.getId() + "/casas", false));
 			x.add(new Breadcrum(casa.getInterior(), "/condominios/" + condominio.getId() + "/casas/" + casa.getId(), false));

@@ -108,4 +108,15 @@ public class PagoServiceImpl implements PagoService {
 						  	.and("estatus").is(estatus)), Pago.class);
 		return pagos;
 	}
+
+	@Override
+	public Pago update(Pago pagodb) {
+		
+		// Si ya esta conciliado y esta registrado el pago. Entonces movemos el estatus.
+		if (pagodb.getConciliado() && (pagodb.getEstatus().equals(PagoEstatus.PENDIENTE))) {
+			pagodb.setEstatus(PagoEstatus.CONCILIADO);
+		}
+		
+		return this.save(pagodb);
+	}
 }

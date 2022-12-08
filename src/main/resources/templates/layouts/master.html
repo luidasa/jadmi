@@ -121,13 +121,15 @@
              th:href="@{/condominios/{cid}/facturas(cid=${condominio.id})}"
              th:if="${condominio.id != null}">Estados de cuenta</a>
       </li>
-      <li class="nav-item"
+<!--
+        <li class="nav-item"
           th:classappend="${paso=='Presupuestos' ?  'border-bottom border-primary': ''}">
           <a class="nav-link"
              th:classappend="${paso=='Presupuestos' ?  'active': ''}"
              th:href="@{/condominios/{cid}/presupuestos(cid=${condominio.id})}"
              th:if="${condominio.id != null}">Presupuestos</a>
       </li>
+-->
   </ul>
 
   <ul class="nav mb-2" th:fragment="navbar_casa(paso)">

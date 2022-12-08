@@ -13,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,8 +52,6 @@ public class IndexController {
 	}
 
 	private List<Breadcrum> getBreadcrum(Condominio condominio, Casa casa) {
-
-		DateFormatter format = new DateFormatter("dd/MM/yyyy");
 
 		List<Breadcrum> x = new ArrayList<Breadcrum>();
 		x.add(new Breadcrum("Inicio", "/panel", false));

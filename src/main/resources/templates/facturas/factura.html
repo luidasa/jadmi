@@ -12,10 +12,6 @@
 
 <body>
 	<main>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
-		</nav>
-
-		<br>
 		<div class="container-fluid py-4 bg-ligth">
 		    <div class="container">
 		
@@ -45,16 +41,16 @@
 					</div>
 					<div class="col-sm-6 text-end">
 						<span>Saldo inicial</span>
-						<strong th:text="${#numbers.formatDecimal(factura.saldoAnterior, 3, 'COMMA', 2, 'POINT')}">$312.00</strong>
+						<strong th:text="${#numbers.formatDecimal(factura.saldoAnterior, 1, 'COMMA', 2, 'POINT')}">$312.00</strong>
 						<br>
 						<span>Pagos realizados</span>
-						<strong th:text="${#numbers.formatDecimal(factura.getImportePagos, 3, 'COMMA', 2, 'POINT')}">$312.00</strong>
+						<strong th:text="${#numbers.formatDecimal(factura.getImportePagos, 1, 'COMMA', 2, 'POINT')}">$312.00</strong>
 						<br>
 						<span>Cuotas a pagar</span>
-						<strong th:text="${#numbers.formatDecimal(factura.getImporteCargos, 3, 'COMMA', 2, 'POINT')}">$312.00</strong>
+						<strong th:text="${#numbers.formatDecimal(factura.getImporteCargos, 1, 'COMMA', 2, 'POINT')}">$312.00</strong>
 						<br>
 						<span>Saldo final</span>
-						<strong th:text="${#numbers.formatDecimal(factura.saldo, 3, 'COMMA', 2, 'POINT')}">$312.00</strong>
+						<strong th:text="${#numbers.formatDecimal(factura.saldo, 1, 'COMMA', 2, 'POINT')}">$312.00</strong>
 						<br>
 						<span>Fecha de corte</span>
 						<strong th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}">Jul 09, 2014 - 12:20 pm</strong>
@@ -85,16 +81,16 @@
 								<tr th:each="items:${factura.movimientos}">
 									<td th:text="${#dates.format(items.fecha, 'dd/MM/yyyy')}"></td>
 									<td th:utext="${items.descripcion}"></td>
-									<td class="text-end" th:text="${items.importe > 0 ? #numbers.formatDecimal(items.importe, 3, 'COMMA', 2, 'POINT'): ''}"></td>
-									<td class="text-end" th:text="${items.importe < 0 ? #numbers.formatDecimal(items.importe, 3, 'COMMA', 2, 'POINT') : ''}"></td>
+									<td class="text-end" th:text="${items.importe > 0 ? #numbers.formatDecimal(items.importe, 1, 'COMMA', 2, 'POINT'): ''}"></td>
+									<td class="text-end" th:text="${items.importe < 0 ? #numbers.formatDecimal(items.importe, 1, 'COMMA', 2, 'POINT') : ''}"></td>
 								</tr>
 								</tbody>
 								<tfoot class="total text-right">
 									<tr class="field">
 										<th class="col-md-2 text-center"></th>
 										<th class="col-md-6 text-center"></th>
-										<th class="col-md-2 text-end" th:text="${#numbers.formatDecimal(factura.getImporteCargos, 3, 'COMMA', 2, 'POINT')}"></th>
-										<th class="col-md-2 text-end" th:text="${#numbers.formatDecimal(factura.getImportePagos, 3, 'COMMA', 2, 'POINT')}"></th>
+										<th class="col-md-2 text-end" th:text="${#numbers.formatDecimal(factura.getImporteCargos, 1, 'COMMA', 2, 'POINT')}"></th>
+										<th class="col-md-2 text-end" th:text="${#numbers.formatDecimal(factura.getImportePagos, 1, 'COMMA', 2, 'POINT')}"></th>
 									</tr>
 								</tfoot>
 							</table>
@@ -105,13 +101,13 @@
 			</div>
 			
 			<div class="text-center">
-				<a class="btn btn-default" href="#"><i data-feather="printer"></i>Imprimir</a>
+				<button onClick="window.print();" class="btn btn-primary">
+					<i data-feather="printer"></i>Imprimir
+				</button>
 			</div>
 			
 		</div>
-		
-		<footer th:include="layouts/master::footer"></footer>
-		
+				
 	</main>
 	
 	<style>
