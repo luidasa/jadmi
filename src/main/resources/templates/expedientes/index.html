@@ -61,7 +61,7 @@
 					<nav aria-label="Page navigation" th:if="${archivos.getTotalElements() > 0}">
 						<ul class="pagination justify-content-center">
 							<li class="page-item">
-								<a class="page-link" th:href="@{/condominios/{cid}/casas/{uid}/archivos(page=1)}" aria-label="Previous">
+								<a class="page-link" target="_blank" th:href="@{/condominios/{cid}/casas/{uid}/archivos(page=1)}" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
