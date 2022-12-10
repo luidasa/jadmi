@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es-MX" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admino - Administración de condominios</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+
+<body>
+	<main>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
+		</nav>
+
+		<div class="container mt-2">
+			<header>
+				<h1 class="text-muted fs-2"><span th:text="${condominio.nombre}"></span> <span th:text="${casa.interior}"> - Archivos</span></h1>
+				<nav th:replace="layouts/master::breadcrum"></nav>
+				<div th:replace="layouts/master::alerts"></div>				
+			</header>
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_casa('Expediente')"></ul>
+			<div class="card">
+				<div class="card-header bg-primary bg-gradient text-white">
+					Expediente digital de la casa
+				</div>
+				<div class="card-body table-responsive p-0">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Nombre</th>
+								<th scope="col">Clasificación</th>
+								<th scope="col">Descripcion</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item: ${archivos}" th:if="${archivos.getTotalElements() > 0}")>
+								<td>
+									<a th:href="@{/condominios/{cid}/casas/{uid}/archivos/{aid}(cid=${condominio.id}, uid=${casa.id}, aid=${item.id})}" th:text="${item.nombreOriginal}"></a>
+								</td>
+								<td th:text="${item.clasificacion}"></td>
+								<td th:text="${item.descripcion}"></td>
+								<td><a th:href="@{/condominios/{cid}/casas/{uid}/archivos/{aid}/borrar(cid=${condominio.id}, uid=${casa.id}, aid=${item.id})}" class="btn btn-outline-primary">Borrar</a></td>
+							</tr>
+							<tr>
+								<td colspan="4" th:if="${archivos.getTotalElements() == 0}">No existen archivos</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th scope="col">Nombre</th>
+								<th scope="col">Clasificación</th>
+								<th scope="col">Descripcion</th>
+								<th></th>
+							</tr>
+						</tfoot>
+					</table>
+					<nav aria-label="Page navigation" th:if="${archivos.getTotalElements() > 0}">
+						<ul class="pagination justify-content-center">
+							<li class="page-item">
+								<a class="page-link" th:href="@{/condominios/{cid}/casas/{uid}/archivos(page=1)}" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li class="page-item" th:each="i : ${#numbers.sequence( 1, archivos.getTotalPages)}">
+								<a class="page-link"
+								   th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"
+								   th:href="@{/condominios/{cid}/casas/{uid}/archivos(cid=${condominio.id}, uid=${casa.id}, page=${i}, size=10)}"
+								   th:text="${i}">1</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" th:href="@{/condominios/{cid}/casas/{uid}/archivos(cid=${condominio.id}, uid=${casa.id}, page=${archivos.totalPages})}" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+				<div class="card-footer text-end">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalForm">Nuevo</button>
+				</div>
+			</div>
+		</div>
+
+		<footer th:include="layouts/master::footer"></footer>
+
+		<div class="modal fade" tabindex="-1" id="modalForm" data-bs-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form method="post" autocomplete="off" enctype="multipart/form-data"
+						  th:action="@{/condominios/{cid}/casas/{uid}/archivos/nuevo(cid=${condominio.id},uid=${casa.id})}"
+						  th:object="${narchivo}">
+						<div class="modal-header">
+							<h5>Información del archivo a adjuntar</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+
+						<div class="modal-body">
+							<div class="mb-3 form-group">
+								<label for="descripcion" class="form-label">Descripción</label>
+								<textarea id="descripcion" class="form-control" th:field="${narchivo.descripcion}"></textarea>
+							</div>
+							<div class="mb-3 form-group">
+								<label for="clasificacion" class="form-label">Clasificación</label>
+								<select id="clasificacion" class="form-select" th:field="${narchivo.clasificacion}" required>
+									<option th:each="item:${T(mx.admino.models.Clasificacion).values()}" th:value="${item}" th:text="${item}"></option>
+								</select>
+							</div>
+							<div class="mb-3">
+								<label for="formFile" class="form-label">Archivo</label>
+								<input class="form-control" type="file" id="formFile" name="documento" required>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+							<button type="submit" class="btn btn-primary">Guardar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+	</main>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+		integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+		integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
