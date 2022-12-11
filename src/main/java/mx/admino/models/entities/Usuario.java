@@ -192,6 +192,16 @@ public class Usuario implements Serializable, UserDetails {
 		return "Usuario [username=" + username + ", name=" + name + ", phone=" + phone + ", email=" + email
 				+ ", enabled=" + enabled + "]";
 	}
-	
-	
+
+
+	public Usuario merge(Usuario usuario) {
+
+		this.name = usuario.getName();
+		this.username = usuario.getUsername();
+		this.email = usuario.getEmail();
+		this.phone = usuario.getPhone();
+		this.password = usuario.getPassword();
+
+		return this;
+	}
 }

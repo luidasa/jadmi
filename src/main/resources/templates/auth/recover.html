@@ -14,12 +14,10 @@
 <body>
 	<div class="container mt-5">
 		<div class="row">
-			<div th:if="${info}" class="col-md-6 offset-md-3 alert alert-info" th:text="${info}">
-				Invalid username and password.
-			</div>
+			<div th:replace="layouts/master::alerts"></div>
 
 			<div class="col-md-4 offset-md-4">
-				<form class="form-signin" name="f" th:action="@{/recover}" method="post">
+				<form id="recover-form" class="form-signin" name="f" th:action="@{/recover}" method="post">
 					<div class="text-center mb-4">
 						<img class="mb-4" src="/img/brand/jadmino.png" alt="" width="72"
 							height="72">
@@ -55,7 +53,7 @@
 </body>
 <script>
 	function onSubmit(token) {
-		document.getElementById("demo-form").submit();
+		document.getElementById("recover-form").submit();
 	}
 </script>
 </html>

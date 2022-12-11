@@ -39,12 +39,13 @@ public class RecoverController {
 
 		Usuario usuariodb = usuarioSrv.findByEmail(email);
 		if (usuariodb == null) {
-			model.addAttribute("info", "El correo que ingresado no lo tenemos registrado. Favor de verificarlo.");
+			System.out.println("No se encontro el email");
+			model.addAttribute("alert_info", "El correo que ingresado no lo tenemos registrado. Favor de verificarlo.");
 			return "auth/recover";
 		}
 
 		eventPublisher.publishEvent(new OnUserRecoverEvent(usuariodb, "http://localhost:8080"));
-		flash.addAttribute("info", "Hemos enviado un correo con las instrucciones para recuperar su contraseña.");
+		flash.addFlashAttribute("alert_info", "Hemos enviado un correo con las instrucciones para recuperar su contraseña.");
 		return "redirect:/login";
 	}
 

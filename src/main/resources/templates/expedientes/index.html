@@ -39,11 +39,11 @@
 						<tbody>
 							<tr th:each="item: ${archivos}" th:if="${archivos.getTotalElements() > 0}")>
 								<td>
-									<a th:href="@{/condominios/{cid}/casas/{uid}/archivos/{aid}(cid=${condominio.id}, uid=${casa.id}, aid=${item.id})}" th:text="${item.nombreOriginal}"></a>
+									<a target="_blank" th:href="@{/condominios/{cid}/casas/{uid}/archivos/{aid}(cid=${condominio.id}, uid=${casa.id}, aid=${item.id})}" th:text="${item.nombreOriginal}"></a>
 								</td>
 								<td th:text="${item.clasificacion}"></td>
 								<td th:text="${item.descripcion}"></td>
-								<td><a th:href="@{/condominios/{cid}/casas/{uid}/archivos/{aid}/borrar(cid=${condominio.id}, uid=${casa.id}, aid=${item.id})}" class="btn btn-outline-primary">Borrar</a></td>
+								<td class="text-right"><a th:href="@{/condominios/{cid}/casas/{uid}/archivos/{aid}/borrar(cid=${condominio.id}, uid=${casa.id}, aid=${item.id})}" class="btn btn-outline-primary">Borrar</a></td>
 							</tr>
 							<tr>
 								<td colspan="4" th:if="${archivos.getTotalElements() == 0}">No existen archivos</td>
@@ -61,7 +61,7 @@
 					<nav aria-label="Page navigation" th:if="${archivos.getTotalElements() > 0}">
 						<ul class="pagination justify-content-center">
 							<li class="page-item">
-								<a class="page-link" target="_blank" th:href="@{/condominios/{cid}/casas/{uid}/archivos(page=1)}" aria-label="Previous">
+								<a class="page-link"  th:href="@{/condominios/{cid}/casas/{uid}/archivos(page=1)}" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 								</a>
 							</li>
