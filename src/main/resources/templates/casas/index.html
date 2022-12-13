@@ -40,6 +40,11 @@
 							</tr>
 						</thead>
 						<tbody>
+							<tr th:if="${casas.totalElements == 0}">
+								<td colspan="5" class="text-center">No hay casas registradas. Generamos los registros con datos ficticios.
+									<a th:href="@{/condominios/{cid}/casas/generar(cid=${condominio.id})}">Oprime aqui.</a>
+								</td>
+							</tr>
 							<tr th:each="casa: ${casas}">
 								<th><a th:href="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${casa.id})}" th:text="${casa.interior}"></a></th>
 								<td th:text="${casa.nombre}">Mark</td>
@@ -47,8 +52,6 @@
 								<td th:text="${casa.correo}">@mdo</td>
 								<td class="text-end" th:text="${#numbers.formatDecimal(casa.saldo, 1, 'COMMA', 2, 'POINT')}">@mdo</td>
 							</tr>
-							<tr th:if="casas.totalPages == 0"><td colspan="5" class="text-center">No hay casas registradas. Generamos los registros con datos ficticios.
-								<a th:href="@{/condominios/{cid}/casas/generar(cid=${condominio.id})}">Oprime aqui.</a></td></tr>
 						</tbody>
 						<tfoot>
 						<tr>

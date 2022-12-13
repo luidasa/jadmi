@@ -42,9 +42,11 @@ public class CasasController {
 
 		Pageable pageable = PageRequest.of(page - 1, size);
 		Page<Casa> casas = casasService.findByCondominio(condominio, pageable);
+
 		model.addAttribute("condominio", condominio);
 		model.addAttribute("casas", casas);
 		model.addAttribute("breadcrum", BreadcrumFactory.getBreadcrum(condominio, null));
+
 		return "casas/index";
 	}
 
