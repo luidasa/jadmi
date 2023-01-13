@@ -2,8 +2,10 @@ package mx.admino.models.entities;
 
 import java.io.Serializable;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import mx.admino.models.Persona;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,6 +18,7 @@ public class Casa implements Serializable {
 	public Casa() {
 		this.estaDesocupada = false;
 		this.estaRentada = false;
+		this.inquilino = new Persona();
 	}
 
 	public Casa(Condominio condominio) {
@@ -59,6 +62,8 @@ public class Casa implements Serializable {
 
 	@DBRef(lazy = true)
 	private Condominio condominio;
+
+ 	private Persona inquilino;
 
 	public String getId() {
 		return id;
@@ -143,13 +148,27 @@ public class Casa implements Serializable {
 		this.duenio = duenio;
 	}
 
+	public Persona getInquilino() {
+		return inquilino;
+	}
+
+	public void setInquilino(Persona inquilino) {
+		this.inquilino = inquilino;
+	}
+
 	public void merge(Casa casa) {
 
 		this.setNombre(casa.getNombre());
 		this.setInterior(casa.getInterior());
 		this.setTelefono(casa.getTelefono());
 		this.setCorreo(casa.getCorreo());
+		this.setEstaRentada(casa.getEstaRentada());
 		this.setEstaDesocupada(casa.getEstaDesocupada());
+		if (this.getEstaRentada()) {
+			this.setInquilino(casa.getInquilino());
+		} else {
+			this.setInquilino(new Persona());
+		}
 	}
 
 	@Override

@@ -67,7 +67,7 @@
 					  </div>
 					  <div class="mb-3 col">
 					    <label for="saldo" class="form-label">Saldo</label>
-					    <input type="text" class="form-control" id="saldo" aria-describedby="saldoHelp"
+					    <input type="text" class="form-control disabled" id="saldo" aria-describedby="saldoHelp" disabled
 					    	th:field="${casa.saldo}"
 					    	th:classappend="${#fields.hasErrors('saldo')} ? 'is-invalid' : ''">
 					    <div id="saldoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('saldo')}" th:errors="*{saldo}">Correo</div>
@@ -83,11 +83,37 @@
 					  </div>
 					  <div class="form-group col">
 					    <label for="estaRentada" class="form-label">Esta rentada</label>
-					    <input type="checkbox" id="estaRentada" area-describedby="estaRentadaHelp" 
+					    <input type="checkbox" id="estaRentada" area-describedby="estaRentadaHelp"
+							   onclick="toogleDatosInquilino()"
 					    	th:field="${casa.estaRentada}"
 							th:classappend="${#fields.hasErrors('estaRentada')} ? 'is-invalid' : ''"/>
 					    <div id="estaRentadaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('estaRentada')}" th:errors="*{estaRentada}">Nombre</div>
 					  </div>
+					</div>
+					<div class="row" th:classappend="${casa.estaRentada} ? 'visible' : 'invisible'" id="datos-inquilino">
+						<hr>
+						<h5 class="text-muted">Datos del inquilino</h5>
+						<div class="form-group col">
+							<label for="nombre-inquilino" class="form-label">Nombre</label>
+							<input type="text" class="form-control" id="nombre-inquilino"
+								th:field="${casa.inquilino.nombre}">
+							<div class="form-text invalid-feedback"
+								 th:if="${#fields.hasErrors('inquilino.nombre')}" th:errors="*{inquilino.nombre}">Nombre</div>
+						</div>
+						<div class="form-group col">
+							<label for="telefono-inquilino" class="form-label">Teléfono</label>
+							<input type="text" class="form-control" id="telefono-inquilino"
+								   th:field="${casa.inquilino.telefono}">
+							<div id="telefono-inquilino-help" class="form-text invalid-feedback"
+								 th:if="${#fields.hasErrors('inquilino.telefono')}" th:errors="*{inquilino.telefono}"></div>
+						</div>
+						<div class="form-group col">
+							<label for="email-inquilino" class="form-label">Correo</label>
+							<input type="email" class="form-control" id="email-inquilino"
+								   th:field="${casa.inquilino.email}">
+							<div id="email-inquilino-help" class="form-text invalid-feedback"
+								 th:if="${#fields.hasErrors('inquilino.email')}" th:errors="*{inquilino.email}"></div>
+						</div>
 					</div>
 				</div>
 				<div class="card-footer text-end">
@@ -100,6 +126,17 @@
 	</main>
 
 	<div th:replace="layouts/master::scripts"></div>
+
+	<script>
+
+function toogleDatosInquilino() {
+
+  var x = document.getElementById("datos-inquilino");
+  x.classList.toggle("visible")
+  x.classList.toggle("invisible")
+}
+
+	</script>
 </body>
 
 </html>

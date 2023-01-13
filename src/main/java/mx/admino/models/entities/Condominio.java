@@ -1,6 +1,7 @@
 package mx.admino.models.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -160,6 +161,20 @@ public class Condominio implements Serializable {
 		this.domicilio = condominio.getDomicilio();
 
 		return this;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Condominio that = (Condominio) o;
+		return id.equals(that.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, nombre);
 	}
 
 	public Condominio(String nombre, Usuario administrador, String telefono, String correo, String domicilio, Float saldo, Integer unidades) {
