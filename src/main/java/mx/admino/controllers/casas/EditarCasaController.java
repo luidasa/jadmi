@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -69,9 +71,13 @@ public class EditarCasaController {
         Condominio condominio = condominioService.findById(cid);
         Casa itemdb = casasService.findById(id);
 
+        if (!cid.equals(itemdb.getCondominio().getId())) {
+            binding.addError(new ObjectError("casa", "La casa no pertenece a este condominio"));
+        }
+
         if (binding.hasErrors()) {
             binding.getAllErrors().stream().forEach(x -> System.out.println(x));
-            model.addAttribute("alert_warning", "Los datos sons inorrectos. Favor de verificar y vovler a intentar");
+            model.addAttribute("alert_warning", "Los datos son inorrectos. Favor de verificar y vovler a intentar");
             model.addAttribute("condominio", condominio);
             model.addAttribute("breadcrum", BreadcrumFactory.getBreadcrum(condominio, casa));
             return "casas/formulario";
