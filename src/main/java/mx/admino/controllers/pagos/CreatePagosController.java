@@ -108,13 +108,14 @@ public class CreatePagosController {
 		var condominio = condominioService.findById(cid);
 		if (binding.hasErrors()) {
 			binding.getFieldErrors().stream().forEach(error -> {
-				System.out.println(error.getField() +" - " + error.getDefaultMessage());
+				System.out.println(error.getField() + " - " + error.getDefaultMessage());
 			});
 			flash.addFlashAttribute("alert_danger", "Los datos del pago son incorrectos. Favor de corregir y volver a intentar");
 			return viewName;
 		}
 		pago.setCondominio(condominio);
 		pagoService.save(pago);
+
 		flash.addFlashAttribute("alert_success", "El pago ha quedado registrado");
 		return viewName;
 	}

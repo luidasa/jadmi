@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import mx.admino.models.entities.Casa;
 import mx.admino.models.entities.Condominio;
+import mx.admino.services.CondominioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,8 @@ import mx.admino.models.PagoEstatus;
 import mx.admino.models.entities.Pago;
 import mx.admino.repositories.PagoRepository;
 import mx.admino.services.PagoService;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PagoServiceImpl implements PagoService {
@@ -29,6 +32,9 @@ public class PagoServiceImpl implements PagoService {
 	
 	@Autowired
 	PagoRepository pagoRepository;
+
+	@Autowired
+	CondominioService condominioService;
 	
 	@Override
 	public Pago findById(String id) throws NotFoundException {
@@ -118,5 +124,17 @@ public class PagoServiceImpl implements PagoService {
 		}
 		
 		return this.save(pagodb);
+	}
+
+	@Override
+	@Transactional(isolation = Isolation.DEFAULT)
+	public Pago aplicarPago(Condominio condominio, Pago pago) {
+
+		if (pago.getConciliado()) {
+			condominio.ingreso(pago);
+		}
+
+		this.condominioService.save(condominio);
+		return this.save(pago);
 	}
 }

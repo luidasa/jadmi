@@ -13,30 +13,26 @@
   <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="row align-items-center g-lg-5 py-5">
       <div class="col-lg-7 text-center text-lg-start">
-        <h1 class="display-4 fw-bold lh-1 mb-3">Administración de condominio</h1>
+        <h1 class="display-4 text-muted lh-1 mb-3">Administración de condominio</h1>
         <p class="col-lg-10 fs-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc laoreet, leo in porttitor vulputate, purus enim tincidunt orci, eu lobortis magna mauris vel nisi. Ut facilisis finibus pharetra. Cras auctor, neque sit amet ornare tempor, lacus nunc consequat erat, ac dignissim metus libero at lacus. Nulla vel nunc sit amet dolor faucibus sagittis. Integer tempus nulla est, in pretium ipsum mattis sit amet.</p>
       </div>
       <div class="col-md-10 mx-auto col-lg-5">
-        <form class="p-4 p-md-5 border rounded-3 bg-light" th:action="@{/login}" method="POST">
-          <div class="form-floating mb-3">
-            <input name="username" type="text" class="form-control" id="floatingInput" placeholder="Nombre de usuario">
-            <label for="floatingInput">Username</label>
+          <div class="card">
+              <div class="card-body">
+
+              <small class="text-muted">Ya tienes una cuenta </small><br>
+              <a class="w-50 btn btn-lg btn-primary" th:href="@{/login}">Iniciar</a>
+              <p>
+              <small class="text-muted">Aun no te has registrado</small><br>
+              <a class="w-50 btn btn-lg btn-outline-primary" th:href="@{/signup}">Registre</a>
+              <p>
+              <small class="text-muted">Olvidaste tu contraseña </small><br>
+              <a class="w-50 btn btn-lg btn-outline-primary" th:href="@{/recover}">Recuperarla</a>
+              <hr>
+              <small class="text-muted">Al iniciar sesión acepta los <a th:href="@{/pages/terms}">términos y condiciones.</a></small>
+              </div>
+
           </div>
-          <div class="form-floating mb-3">
-            <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Contraseña de usuario">
-            <label for="floatingPassword">Contraseña</label>
-          </div>
-          <div class="checkbox mb-3">
-            <label>
-              <input type="checkbox" value="remember-me"> Recuerdame en este equipo
-            </label>
-          </div>
-          <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar</button>
-          <hr class="my-4">
-          <small class="text-muted">No tienes usuario <a th:href="@{/signup}">Registrate</a></small><br>
-          <small class="text-muted">Olvidaste tu contraseña <a th:href="@{/recover}">Recuperarla</a></small><br>
-          <small class="text-muted">Al iniciar sesión acepta los <a th:href="@{/pages/terms}">términos y condiciones.</a></small>
-        </form>
       </div>
     </div>
   </div>

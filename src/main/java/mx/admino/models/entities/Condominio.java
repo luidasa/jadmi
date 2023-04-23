@@ -186,4 +186,10 @@ public class Condominio implements Serializable {
 		this.saldo = saldo;
 		this.unidades = unidades;
 	}
+
+    public Condominio ingreso(Pago pago) {
+
+		this.saldo += pago.getImporte();
+		return this;
+    }
 }

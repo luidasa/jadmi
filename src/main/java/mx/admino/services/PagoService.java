@@ -39,4 +39,6 @@ public interface PagoService {
 	Page<Pago> findByCondominio(Condominio condominio, Pageable pageable);
 
 	Pago update(Pago pagodb);
+
+    Pago aplicarPago(Condominio condominio, Pago pago);
 }

@@ -12,17 +12,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import mx.admino.security.CustomizeAuthenticationSuccessHandler;
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserDetailsService adminoUserDetails;
-    
-    @Autowired
-    CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
@@ -56,10 +51,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/perfil", "/condominios/**", "/condominos/**", "/pagos/**","/cuotas/**", "/").authenticated()
-                .antMatchers("/login", "/signup", "/restore", "/change").permitAll()
-                .and()
-            .csrf().disable()
+                .antMatchers("/perfil", "/condominios/**", "/condominos/**", "/pagos/**","/cuotas/**").authenticated()
+                .antMatchers("/login", "/signup", "/restore", "/change", "/").permitAll()
+            .and()
                 .formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
                 .usernameParameter("username")
@@ -69,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/")
                 .permitAll();
     }
 }
