@@ -2,7 +2,7 @@ package mx.admino.services;
 
 import java.util.List;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import mx.admino.models.entities.Condominio;
 import org.springframework.data.domain.Page;

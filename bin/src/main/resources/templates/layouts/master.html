@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es-MX" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admino - Administración de condominios</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+  <script src="https://unpkg.com/feather-icons"></script>    
+</head>
+
+<body>
+
+    <!-- Barra de menu principal -->
+    <nav class="navbar navbar-expand-lg" th:fragment="navbar">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <img src="/img/brand/jadmino.png" alt="Administra tu condominio" width="30" height="24"
+                    class="d-inline-block align-text-top">
+                    JAdmino
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="collapse navbar-collapse d-flex bd-highlight" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-grow-1 bd-highlight">
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="condominiosDropdown" role="button" data-bs-toggle="dropdown"
+                 aria-expanded="false">
+                  Condominios
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="condominiosDropdown">
+                  <li><a class="dropdown-item" th:href="@{/condominios}">Todos</a></li>
+                  <li><a class="dropdown-item" th:href="@{/condominios/nuevo}">Nuevo</a></li>
+              </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/paginas/caracteristicas}">Caracteristicas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/paginas/precio}">Precio</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Ayuda
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" th:href="@{/paginas/faqs}">FAQs</a></li>
+              <li><a class="dropdown-item" th:href="@{/paginas/about}">Acerca</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 bd-highlight"  th:if="${#authentication.isAuthenticated()}">
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="usuarioDropdown" role="button" data-bs-toggle="dropdown"
+                 aria-expanded="false" th:text="${#authentication.name}">
+                  Nombre
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="usuarioDropdown">
+                  <li><a class="dropdown-item" th:href="@{/perfil}">Perfil</a></li>
+                  <li>
+                      <form th:action="@{/logout}"><button class="dropdown-item">Salir</button></form>
+                  </li>
+              </ul>
+          </li>
+
+      </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <ul class="nav mb-2" th:fragment="navbar_condominio(paso)">
+      <li class="nav-item"
+          th:classappend="${paso=='Generales' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link" aria-current="page"
+             th:classappend="${paso=='Generales' ?  'active': ''}"
+             th:href="@{/condominios/{cid}(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Generales</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Casas' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Casas' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/casas(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Casas</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Cuotas' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Cuotas' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/cuotas(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Cuotas</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Ingresos' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Ingresos' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/ingresos(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Ingresos</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Egresos' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Egresos' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/egresos(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Egresos</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Facturas' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Facturas' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/facturas(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Estados de cuenta</a>
+      </li>
+<!--
+        <li class="nav-item"
+          th:classappend="${paso=='Presupuestos' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Presupuestos' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/presupuestos(cid=${condominio.id})}"
+             th:if="${condominio.id != null}">Presupuestos</a>
+      </li>
+-->
+  </ul>
+
+  <ul class="nav mb-2" th:fragment="navbar_casa(paso)">
+      <li class="nav-item"
+          th:classappend="${paso=='Generales' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link" aria-current="page"
+             th:classappend="${paso=='Generales' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${casa.id})}"
+             th:if="${condominio.id != null}">Generales</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Pagos' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Pagos' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/casas/{id}/pagos(cid=${condominio.id}, id=${casa.id})}"
+             th:if="${condominio.id != null}">Pagos</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Cargos' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Cargos' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/casas/{id}/cargos(cid=${condominio.id}, id=${casa.id})}"
+             th:if="${condominio.id != null}">Cargos</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Facturas' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Facturas' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/casas/{id}/facturas(cid=${condominio.id}, id=${casa.id})}"
+             th:if="${condominio.id != null}">Facturas</a>
+      </li>
+      <li class="nav-item"
+          th:classappend="${paso=='Expediente' ?  'border-bottom border-primary': ''}">
+          <a class="nav-link"
+             th:classappend="${paso=='Expediente' ?  'active': ''}"
+             th:href="@{/condominios/{cid}/casas/{id}/archivos(cid=${condominio.id}, id=${casa.id})}"
+             th:if="${condominio.id != null}">Expedientes</a>
+      </li>
+  </ul>
+
+  <div th:fragment="alerts">
+	  <div class="alert alert-primary alert-dismissible fade show" role="alert" th:if="${alert_primary}">
+	  	<span th:text="${alert_primary}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-secondary alert-dismissible fade show" role="alert" th:if="${alert_secondary}">
+	  	<span th:text="${alert_secondary}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${alert_success}">
+	  	<span th:text="${alert_success}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${alert_danger}">
+	  	<span th:text="${alert_danger}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${alert_warning}">
+	  	<span th:text="${alert_warning}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-info alert-dismissible fade show" role="alert" th:if="${alert_info}">
+	  	<span th:text="${alert_info}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-light alert-dismissible fade show" role="alert" th:if="${alert_light}">
+	  	<span th:text="${alert_light}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+	  <div class="alert alert-dark alert-dismissible fade show" role="alert" th:if="${alert_dark}">
+	  	<span th:text="${alert_dark}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	  </div>
+  </div>
+  
+  <nav class="bg-light py-1 rounded" aria-label="breadcrumb" th:fragment="breadcrum">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" th:each="breadcrumItem: ${breadcrum}">
+      	<a th:href="@{${breadcrumItem.url}}" th:text="${breadcrumItem.etiqueta}" th:classappend="${breadcrumItem.activo} ? 'active' : ''">Home</a></li>
+    </ol>
+  </nav>
+
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top" th:fragment="footer">
+
+    <a href="/"
+      class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+      <svg class="bi me-2" width="40" height="32">
+        <use xlink:href="#bootstrap"></use>
+      </svg>
+    </a>
+
+    <ul class="nav col-md-4 justify-content-end">
+      <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-muted">© 2021 admino</a></li>
+      <li class="nav-item"><a th:href="@{/pages/features}" class="nav-link px-2 text-muted">Caracteristicas</a></li>
+      <li class="nav-item"><a th:href="@{/pages/price}" class="nav-link px-2 text-muted">Precio</a></li>
+      <li class="nav-item"><a th:href="@{/pages/faqs}" class="nav-link px-2 text-muted">FAQs</a></li>
+      <li class="nav-item"><a th:href="@{/pages/about}" class="nav-link px-2 text-muted">Acerca</a></li>
+    </ul>
+  </footer>
+
+  <div th:fragment="scripts">
+  	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+    	integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+    	crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+    	integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+    	crossorigin="anonymous"></script>
+	</div>
+	<script src="https://unpkg.com/feather-icons"></script>
+    <script>
+      feather.replace()
+    </script>	
+</body>
+
+</html>

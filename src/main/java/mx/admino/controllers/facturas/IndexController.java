@@ -3,7 +3,7 @@ package mx.admino.controllers.facturas;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import mx.admino.models.entities.Condominio;
 import mx.admino.services.CondominioService;

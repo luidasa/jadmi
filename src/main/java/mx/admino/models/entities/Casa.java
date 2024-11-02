@@ -2,7 +2,7 @@ package mx.admino.models.entities;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;

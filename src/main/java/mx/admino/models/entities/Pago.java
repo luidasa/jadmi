@@ -3,10 +3,10 @@ package mx.admino.models.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.Valid;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 
 import mx.admino.models.PagoMetodo;
 import org.springframework.data.annotation.Id;

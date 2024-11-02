@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es-MX" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admino - Administración de condominios</title>
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+</head>
+
+<body>
+	<main>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
+		</nav>
+
+		<div class="container mt-2">
+			<header>
+				<h1>Registro de cuota condominal</h1>
+				<nav th:replace="layouts/master::breadcrum"></nav>
+				<div th:replace="layouts/master::alerts"></div>				
+			</header>
+			<form th:action="@{/condominios/{cid}/cuotas/{id}(cid=${condominio.id}, id=${cuota.id != null ? cuota.id : 'nuevo'})}" method="post" th:object="${cuota}">
+				<div class="card">
+					<div class="card-header bg-primary bg-gradient text-white py-3">
+						Captura los datos del cuota acordada
+					</div>
+					<div class="card-body ">
+					  <div class="mb-3">
+					    <label for="nombre" class="form-label">Nombre</label>
+					    <input type="text" class="form-control" id="nombre" aria-describedby="nombreHelp" 
+					    	th:field="${cuota.nombre}"
+					    	th:classappend="${#fields.hasErrors('nombre')} ? is-invalid : ''">
+					    <div id="nombreHelp" class="fs-6 text-muted invalid-feedback"
+					    	th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Condomino</div>
+					  </div>
+					  <div class="mb-3">
+					    <label for="descripcion" class="form-label">Descripcion</label>
+					    <textarea class="form-control" id="descripcion" aria-describedby="descripcionHelp" 
+					    	th:field="${cuota.descripcion}"
+					    	th:classappend="${#fields.hasErrors('descripcion')} ? is-invalid : ''"></textarea>
+					    <div id="descripionHelp" class="fs-6 text-muted invalid-feedback"
+					    	th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Condomino </div>
+					  </div>
+						<div class="row">
+						  <div class="mb-3 col">
+						    <label for="fechaInicio" class="form-label">Fecha Inicio</label>
+						    <input type="date" class="form-control" id="fechaInicio" aria-describedby="fechaInicioHelp" 
+						    	th:field="${cuota.fechaInicio}"
+						    	th:classappend="${#fields.hasErrors('fechaInicio')} ? is-invalid : ''">
+						    <div id="fechaInicioHelp" class="fs-6 text-muted invalid-feedback"
+						    	th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}">Fecha vencimiento</div>
+						  </div>
+						  <div class="mb-3 col">
+						    <label for="fechaFin" class="form-label">Fecha Fin</label>
+						    <input type="date" class="form-control" id="fechaFin" aria-describedby="fechaFinHelp" 
+						    	th:field="${cuota.fechaFin}"
+						    	th:classappend="${#fields.hasErrors('fechaFin')} ? is-invalid : ''">
+						    <div id="fechaFinHelp" class="fs-6 text-muted invalid-feedback"
+						    	th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}">Fecha vencimiento</div>
+						  </div>
+						  <div class="mb-3 col">
+						    <label for="importe" class="form-label">Importe</label>
+						    <input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp" 
+						    	th:field="${cuota.importe}"
+						    	th:classappend="${#fields.hasErrors('importe')} ? is-invalid : ''">
+						    <div id="importeHelp" class="fs-6 text-muted invalid-feedback"
+						    	th:if="${#fields.hasErrors('importe')}" th:errors="*{importe}">Importe</div>
+						  </div>
+						  <div class="col">
+						    <label for="importe" class="form-label">Importe desocupado</label>
+						    <input type="number" step="1.00"  class="form-control" id="importe" aria-describedby="importeHelp" 
+						    	th:field="${cuota.importeDesocupado}"
+						    	th:classappend="${#fields.hasErrors('importeDesocupado')} ? is-invalid : ''">
+						    <div id="importeHelp" class="fs-6 text-muted invalid-feedback"
+						    	th:if="${#fields.hasErrors('importeDesocupado')}" th:errors="*{importeDesocupado}">Importe</div>
+						  </div>
+						</div>
+						<div class="row mb-3">
+						  <div class="col">
+							<div class="form-check">
+							  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" th:field="${cuota.esCompletaSiVacia}">
+							  <label class="form-check-label" for="flexCheckDefault">
+							    Cuota especial si esta vacía
+							  </label>
+							</div>
+						  </div>
+						  <div class="col"></div>
+						</div>
+					</div>
+					<div class="card-footer text-end">
+						<a class="btn btn-danger" th:href="@{/cuotas/delete/{id}(id=${cuota.id})}">Borrar</a>
+						<a class="btn btn-warning" th:href="@{/cuotas/cancel/{id}(id=${cuota.id})}">Cancelar</a>
+						<a class="btn btn-secondary" th:href="@{/cuotas/schedule/{id}(id=${cuota.id})}" th:if="${cuota.estatus == T(mx.admino.models.CuotaEstatus).REGISTRADO}">Planificar</a>
+						<button type="submit" class="btn btn-primary" th:if="${cuota.estatus == T(mx.admino.models.CuotaEstatus).REGISTRADO}">Guardar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<footer th:include="layouts/master::footer"></footer>		
+	</main>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+		integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+		integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.2/tinymce.min.js" integrity="sha512-MbhLUiUv8Qel+cWFyUG0fMC8/g9r+GULWRZ0axljv3hJhU6/0B3NoL6xvnJPTYZzNqCQU3+TzRVxhkE531CLKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>		
+	<script type="text/javascript">
+	  tinymce.init({
+	    selector: '#descripcion'
+	  });
+	</script>
+</body>
+
+</html>

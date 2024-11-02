@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es-MX" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admino - Administración de condominios</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+
+<body>
+	<main>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
+		</nav>
+
+		<div class="container mt-2">
+			<header>
+				<h1 class="text-muted fs-2">Presupuestos</h1>
+				<nav th:replace="layouts/master::breadcrum"></nav>
+				<div th:replace="layouts/master::alerts"></div>				
+			</header>
+
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_condominio('Presupuestos')"></ul>
+			<div class="card">
+				<div class="card-header  bg-primary bg-gradient text-white">
+					Presupuestos acordadas del condominio
+				</div>
+				<div class="card-body p-0">
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th scope="col">Fecha de inicio</th>
+									<th scope="col">Fecha de fin</th>
+									<th scope="col">Ingresos esperados</th>
+									<th scope="col">Egresos esperados</th>
+									<th scope="col">Ingresos reales</th>
+									<th scope="col">Egresos reales</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="item:${pagina}" th:if="${pagina.getTotalElements() > 0}">
+									<td>
+										<a th:href="@{/condominios/{cid}/presupuestos/{id}(cid=${condominio.id}, id=${item.id})}" th:text="${#dates.format(cuota.fechaInicio, 'dd/MM/yyyy')}"></a>
+									</td>
+									<td th:text="${#dates.format(item.fechaInicio, 'dd/MM/yyyy')}">Otto</td>
+									<td th:text="${#dates.format(item.fechaFin, 'dd/MM/yyyy')}">Otto</td>
+									<td th:text="${item.ingresos}">@mdo</td>
+									<td th:utext="${item.egresos}">Mark</td>
+									<td th:text="${item.ingresosReales}"></td>
+									<td th:text="${item.egresosReales}">@mdo</td>
+								</tr>
+								<tr th:if="${pagina.getTotalElements() == 0}">
+									<td colspan="6">No hay cuotas registrados</td>
+								</tr>
+							</tbody>
+							<tfoot>
+							<tr>
+								<th scope="col">Fecha de inicio</th>
+								<th scope="col">Fecha de fin</th>
+								<th scope="col">Ingresos esperados</th>
+								<th scope="col">Egresos esperados</th>
+								<th scope="col">Ingresos reales</th>
+								<th scope="col">Egresos reales</th>
+							</tr>
+							</tfoot>
+						</table>
+						<div class="row">
+							<nav aria-label="Page navigation" th:if="${pagina.totalPages > 0}">
+								<ul class="pagination justify-content-center">
+									<li class="page-item">
+										<a class="page-link" th:href="@{/condominios/{cid}/presupuestos(cid=${condominio.id}, page=1, size=10)}" aria-label="Previous">
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									<li class="page-item" th:each="i : ${#numbers.sequence( 1, pagina.getTotalPages)}">
+										<a class="page-link"
+										   th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"
+										   th:href="@{/condominios/{cid}/presupuestos(cid=${condominio.id}, page=${i}, size=10)}"
+										   th:text="${i}">1
+										</a>
+									</li>
+									<li class="page-item">
+										<a class="page-link"
+										   th:href="@{/condominios/{cid}/presupuestos(cid=${condominio.id}, page=${presupuestos.totalPages})}" aria-label="Next">
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+
+						</div>
+					</div>
+				</div>
+				<div class="card-footer text-end">
+					<a th:href="@{/condominios/{cid}/presupuestos/nuevo(cid=${condominio.id})}" class="btn btn-primary">Agregar</a>
+				</div>
+			</div>
+		</div>
+		<footer th:include="layouts/master::footer"></footer>
+		
+	</main>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+		integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+		integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
