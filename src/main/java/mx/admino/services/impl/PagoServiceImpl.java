@@ -11,9 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import mx.admino.models.PagoEstatus;
@@ -24,14 +21,12 @@ import mx.admino.services.PagoService;
 @Service
 public class PagoServiceImpl implements PagoService {
 
-	@Autowired
-	MongoTemplate template;
 	
 	@Autowired
 	PagoRepository pagoRepository;
 	
 	@Override
-	public Pago findById(String id) throws NotFoundException {
+	public Pago findById(Long id) throws NotFoundException {
 		return pagoRepository.findById(id).orElseThrow(() -> new NotFoundException());
 	}
 
@@ -64,16 +59,7 @@ public class PagoServiceImpl implements PagoService {
 	@Override
 	public List<Pago> findByFechaPagadoBetweenAndStatus(Date fechaInicio, Date fechaFinal, PagoEstatus estatus) {
 
-		List<Pago> pagos = template.find(
-				  Query.query(
-						  Criteria
-						  	.where("FechaPagado")
-						  	.gte(fechaInicio)
-						  	.lte(fechaFinal)
-						  	.and("estatus")
-						  	.is(estatus)), Pago.class);
-		//return pagoRepository.findByFechaPagadoGreaterThanAndLessThan(fechaCorte, fechaFinal);
-		return pagos;
+		return pagoRepository.findByFechaPagadoGreaterThanAndLessThanAndEstatus(fechaInicio, fechaFinal, estatus);
 	}
 
 	@Override
@@ -89,24 +75,12 @@ public class PagoServiceImpl implements PagoService {
 	@Override
 	public List<Pago> findByFechaPagadoBetween(Date fechaInicio, Date fechaFinal) {
 
-		List<Pago> pagos = template.find(
-				  Query.query(
-						  Criteria
-						  	.where("FechaPagado")
-						  	.gte(fechaInicio)
-						  	.lte(fechaFinal)), Pago.class);
-		//return pagoRepository.findByFechaPagadoGreaterThanAndLessThan(fechaCorte, fechaFinal);
-		return pagos;
+		return pagoRepository.findByFechaPagadoGreaterThanAndLessThan(fechaInicio, fechaFinal);
 	}
 
 	@Override
 	public List<Pago> findByFechaPagadoBeforeAndEstatus(Date fechaFinal, PagoEstatus estatus) {
-		List<Pago> pagos = template.find(
-				  Query.query(
-						  Criteria
-						  	.where("FechaPagado").lte(fechaFinal)
-						  	.and("estatus").is(estatus)), Pago.class);
-		return pagos;
+		return pagoRepository.findByFechaPagadoGraterThanAndEstatus(fechaFinal, estatus);
 	}
 
 	@Override

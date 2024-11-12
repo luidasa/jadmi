@@ -5,13 +5,15 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Document(collection = "corte-facturas")
+@Entity
+@Table(name = "corte-facturas")
 public class CorteFactura implements Serializable {
 
 	public CorteFactura() {
@@ -27,7 +29,7 @@ public class CorteFactura implements Serializable {
 	}
 		
 	@Id
-	private String id;
+	private Long id;
 
 	private Condominio condominio;
 
@@ -39,11 +41,11 @@ public class CorteFactura implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaVencimiento;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

@@ -25,7 +25,7 @@ public class EgresoCrearController {
 
     @PostMapping("/condominios/{cid}/egresos/nuevo")
     public String postCrear(
-            @PathVariable String cid,
+            @PathVariable Long cid,
             @ModelAttribute @Valid Egreso egreso,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,

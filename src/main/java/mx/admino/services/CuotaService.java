@@ -14,9 +14,9 @@ public interface CuotaService {
 
 	Cuota save(Cuota cuota);
 
-	Cuota findById(String id);
+	Cuota findById(Long id);
 
-	void deleteById(String id);
+	void deleteById(Long id);
 
 	void schedule(Cuota cuota);
 

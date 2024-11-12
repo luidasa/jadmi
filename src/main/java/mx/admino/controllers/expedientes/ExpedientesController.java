@@ -1,6 +1,6 @@
 package mx.admino.controllers.expedientes;
 
-import mx.admino.models.Archivo;
+import mx.admino.models.entities.Archivo;
 import mx.admino.models.Breadcrum;
 import mx.admino.models.entities.Casa;
 import mx.admino.models.entities.Condominio;
@@ -49,8 +49,8 @@ public class ExpedientesController {
 
     @GetMapping("/condominios/{cid}/casas/{uid}/archivos")
     public String getExpedientes (
-            @PathVariable String cid,
-            @PathVariable String uid,
+            @PathVariable Long cid,
+            @PathVariable Long uid,
             @RequestParam(required = false, defaultValue = "1") Integer page,
             @RequestParam(required = false, defaultValue = "10") Integer size,
             Model model) {

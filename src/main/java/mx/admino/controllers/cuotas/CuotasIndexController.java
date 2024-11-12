@@ -41,7 +41,7 @@ public class CuotasIndexController {
 	
 	@GetMapping("/condominios/{cid}/cuotas")
 	public String index(
-			@PathVariable String cid,
+			@PathVariable Long cid,
 			@RequestParam(required = false, defaultValue = "1") Integer page,
 			@RequestParam(required = false, defaultValue = "10") Integer rows,
 			Model model) {
@@ -59,7 +59,7 @@ public class CuotasIndexController {
 
 	@PostMapping("/condominios/{cid}/cuotas/{id}/borrar")
 	public String getDelete(
-			@PathVariable String id,
+			@PathVariable Long id,
 			RedirectAttributes flash,
 			Model model) {
 		
@@ -70,7 +70,7 @@ public class CuotasIndexController {
 	
 	@GetMapping("/condominios/{cid}/cuotas/{id}/planear")
 	public String getSchedule(
-			@PathVariable String id,
+			@PathVariable Long id,
 			RedirectAttributes flash,
 			Model model) {
 		Cuota cuota = cuotaService.findById(id);

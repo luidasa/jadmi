@@ -45,12 +45,12 @@ public class CuotaServiceImpl implements CuotaService {
 	}
 
 	@Override
-	public Cuota findById(String id) {
+	public Cuota findById(Long id) {
 		return cuotaRepository.findById(id).orElseThrow(() -> new CuotaNotFound());
 	}
 
 	@Override
-	public void deleteById(String id) {
+	public void deleteById(Long id) {
 		cuotaRepository.deleteById(id);
 	}
 

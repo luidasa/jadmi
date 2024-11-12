@@ -56,8 +56,8 @@ public class CreatePagosController {
 	
 	@GetMapping("/condominios/{cid}/casas/{id}/pagos/nuevo")
 	public String crear(
-			@PathVariable String cid,
-			@PathVariable String id,
+			@PathVariable Long cid,
+			@PathVariable Long id,
 			Model model) {
 		
 		Pago pago = new Pago();
@@ -71,8 +71,8 @@ public class CreatePagosController {
 	
 	@PostMapping("/condominios/{cid}/casas/{pid}/pagos/nuevo")
 	public String postAdd(
-			@PathVariable String cid,
-			@PathVariable String pid,
+			@PathVariable Long cid,
+			@PathVariable Long pid,
 			@ModelAttribute(name = "abono") @Valid Pago pago,
 			BindingResult binding,
 			RedirectAttributes flash,
@@ -98,7 +98,7 @@ public class CreatePagosController {
 
 	@PostMapping("/condominios/{cid}/pagos/nuevo")
 	public String postAdd(
-			@PathVariable String cid,
+			@PathVariable Long cid,
 			@ModelAttribute(name = "abono") @Valid Pago pago,
 			BindingResult binding,
 			RedirectAttributes flash,

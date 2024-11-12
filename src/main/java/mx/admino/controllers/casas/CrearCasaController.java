@@ -29,7 +29,7 @@ public class CrearCasaController {
 
     @GetMapping("/condominios/{cid}/casas/nuevo")
     public String getCreate(
-            @PathVariable String cid,
+            @PathVariable Long cid,
             Model model) {
 
         var condominio = condominioService.findById(cid);
@@ -43,7 +43,7 @@ public class CrearCasaController {
 
     @PostMapping("/condominios/{cid}/casas/nuevo")
     public String postEdit(
-            @PathVariable String cid,
+            @PathVariable Long cid,
             @ModelAttribute @Valid Casa casa,
             BindingResult binding,
             RedirectAttributes flash,

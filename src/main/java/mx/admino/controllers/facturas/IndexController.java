@@ -69,8 +69,8 @@ public class IndexController {
 
 	@GetMapping("/condominios/{cid}/casas/{id}/facturas")
 	public String getIndex(
-			@PathVariable String cid,
-			@PathVariable String id,
+			@PathVariable Long cid,
+			@PathVariable Long id,
 			@RequestParam(required = false, defaultValue = "1") Integer page,
 			@RequestParam(required = false, defaultValue = "10") Integer rows,
 			Model model) {
@@ -90,7 +90,7 @@ public class IndexController {
 
 	@GetMapping("/condominios/{cid}/facturas")
 	public String getIndexCondominio(
-			@PathVariable String cid,
+			@PathVariable Long cid,
 			@RequestParam(required = false, defaultValue = "1") Integer page,
 			@RequestParam(required = false, defaultValue = "10") Integer rows,
 			Model model) {
@@ -108,7 +108,7 @@ public class IndexController {
 
 	@PostMapping("/condominios/{cid}/facturas/generar")
 	public String postGenerar(
-			@PathVariable String cid,
+			@PathVariable Long cid,
 			@ModelAttribute @Valid CorteFactura facturaSolicitud,
 			BindingResult binding,
 			RedirectAttributes flash,

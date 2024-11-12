@@ -1,16 +1,19 @@
 package mx.admino.models.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "resumenes")
+@Entity
+@Table(name = "resumenes")
 public class Resumen implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
 	private LocalDate fecha;
 	
@@ -38,11 +41,11 @@ public class Resumen implements Serializable {
 	
 	private Integer condominosAtrasados;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

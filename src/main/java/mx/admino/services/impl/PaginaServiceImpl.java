@@ -3,7 +3,7 @@ package mx.admino.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import mx.admino.models.Pagina;
+import mx.admino.models.entities.Pagina;
 import mx.admino.repositories.PaginaRepository;
 import mx.admino.services.PaginaService;
 

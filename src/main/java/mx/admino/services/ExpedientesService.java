@@ -1,6 +1,6 @@
 package mx.admino.services;
 
-import mx.admino.models.Archivo;
+import mx.admino.models.entities.Archivo;
 import mx.admino.models.entities.Casa;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +11,7 @@ public interface ExpedientesService {
 
     Archivo insert(Archivo archivo);
 
-    Archivo findById(String aid);
+    Archivo findById(Long aid);
 
-    void deleteById(String aid);
+    void deleteById(Long aid);
 }

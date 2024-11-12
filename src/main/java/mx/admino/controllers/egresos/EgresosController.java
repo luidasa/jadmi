@@ -47,7 +47,7 @@ public class EgresosController {
 
     @GetMapping("/condominios/{cid}/egresos")
     public String index(
-        @PathVariable String cid,
+        @PathVariable Long cid,
         @RequestParam(required = false, defaultValue = "1") Integer page,
         @RequestParam(required = false, defaultValue = "10") Integer size,
         Model model) {

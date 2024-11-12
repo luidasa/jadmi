@@ -16,7 +16,7 @@ public interface CasasService {
 
 	Casa findByInterior(String interior);
 
-	Casa findById(String id);
+	Casa findById(Long id);
 
 	List<Casa> findAll();
 

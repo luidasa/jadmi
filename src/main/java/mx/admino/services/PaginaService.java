@@ -1,6 +1,6 @@
 package mx.admino.services;
 
-import mx.admino.models.Pagina;
+import mx.admino.models.entities.Pagina;
 
 public interface PaginaService {
 		

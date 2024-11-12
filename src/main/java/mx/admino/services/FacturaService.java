@@ -20,7 +20,7 @@ public interface FacturaService {
 
 	List<Factura> generate(Date fechaInicioCorte, Date fechaCorte, Date fechaVencimiento);
 
-	Factura findById(String id);
+	Factura findById(Long id);
 
 	Page<Factura> search(FacturaFiltro facturaFormulario, Pageable pageable);
 

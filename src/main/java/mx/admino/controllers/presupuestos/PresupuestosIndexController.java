@@ -40,7 +40,7 @@ public class PresupuestosIndexController {
 
     @GetMapping("/condominios/{cid}/presupuestos")
     public String index(
-            @PathVariable String cid,
+            @PathVariable Long cid,
             @RequestParam(required = false, defaultValue = "1") Integer page,
             @RequestParam(required = false, defaultValue = "10") Integer rows,
             Model model) {

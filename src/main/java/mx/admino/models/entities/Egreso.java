@@ -1,14 +1,12 @@
 package mx.admino.models.entities;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import mx.admino.models.EgresoEstatus;
 import mx.admino.models.PagoMetodo;
-import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -16,7 +14,8 @@ import java.util.Date;
 public class Egreso {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Condominio condominio;
 
@@ -39,11 +38,11 @@ public class Egreso {
 
     private EgresoEstatus estatus;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

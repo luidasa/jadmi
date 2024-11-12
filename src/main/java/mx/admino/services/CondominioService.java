@@ -1,7 +1,6 @@
 package mx.admino.services;
 
-import javax.validation.Valid;
-
+import jakarta.validation.Valid;
 import mx.admino.models.entities.Condominio;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,5 +15,5 @@ public interface CondominioService {
 
     Condominio findByNombre(String nombre);
 
-	Condominio findById(String condominioId);
+	Condominio findById(Long condominioId);
 }

@@ -33,8 +33,8 @@ public class UpdatePagosController {
 		
 	@GetMapping("/condominios/{uid}/pagos/{id}")
 	public String editar(
-			@PathVariable String uid,
-			@PathVariable String id, 
+			@PathVariable Long uid,
+			@PathVariable Long id,
 			Model model) throws NotFoundException {
 		
 		var pago = pagoService.findById(id);
@@ -49,8 +49,8 @@ public class UpdatePagosController {
 	
 	@PostMapping("/condominios/{uid}/pagos/{id}")
 	public String actualizar(
-			@PathVariable String uid,
-			@PathVariable String id,
+			@PathVariable Long uid,
+			@PathVariable Long id,
 			@ModelAttribute @Valid Pago pago,
 			BindingResult binding,
 			RedirectAttributes flash,

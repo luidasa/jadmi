@@ -1,6 +1,6 @@
 package mx.admino.repositories;
 
-import mx.admino.models.Archivo;
+import mx.admino.models.entities.Archivo;
 import mx.admino.models.entities.Casa;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

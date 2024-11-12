@@ -2,11 +2,8 @@ package mx.admino.models.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.*;
-
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name="casas")
@@ -31,7 +28,8 @@ public class Casa implements Serializable {
 	}
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@NotEmpty
 	@NotBlank
@@ -55,17 +53,15 @@ public class Casa implements Serializable {
 
 	private String nombre;
 
-	@DBRef(lazy = true)
 	private Usuario duenio;
 
-	@DBRef(lazy = true)
 	private Condominio condominio;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -30,7 +30,7 @@ public class EditarCondominioController {
 
     @GetMapping("/condominios/{id}")
     public String getEditar(
-            @PathVariable String id,
+            @PathVariable Long id,
             Model model) {
 
         var condominio = condominioService.findById(id);
@@ -41,7 +41,7 @@ public class EditarCondominioController {
 
     @PostMapping("/condominios/{id}")
     public String postEditar(
-            @PathVariable String id,
+            @PathVariable Long id,
             @ModelAttribute @Valid Condominio condominio,
             BindingResult binding,
             RedirectAttributes flash,

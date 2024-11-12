@@ -55,7 +55,7 @@ public class IndexPagosController {
 
 	@GetMapping("/condominios/{cid}/ingresos")
 	public String index(Model model,
-						@PathVariable String cid,
+						@PathVariable Long cid,
 						@RequestParam(required = false, defaultValue = "1") Integer page,
 						@RequestParam(required = false, defaultValue = "10") Integer size) {
 
@@ -78,8 +78,8 @@ public class IndexPagosController {
 
 	@GetMapping("/condominios/{cid}/casas/{id}/pagos")
 	public String index(Model model,
-			@PathVariable String cid,
-			@PathVariable String id,
+			@PathVariable Long cid,
+			@PathVariable Long id,
 			@RequestParam(required = false, defaultValue = "1") Integer page,
 			@RequestParam(required = false, defaultValue = "10") Integer size) {
 

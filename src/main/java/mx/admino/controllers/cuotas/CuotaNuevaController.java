@@ -42,7 +42,7 @@ public class CuotaNuevaController {
 
     @GetMapping("/condominios/{cid}/cuotas/nuevo")
     public String getNuevo(
-            @PathVariable String cid,
+            @PathVariable Long cid,
             @ModelAttribute Cuota cuota,
             Model model) {
 
@@ -54,7 +54,7 @@ public class CuotaNuevaController {
 
     @PostMapping("/condominios/{cid}/cuotas/nuevo")
     public String postNuevo(
-            @PathVariable String cid,
+            @PathVariable Long cid,
             @ModelAttribute @Valid Cuota cuota,
             BindingResult binding,
             RedirectAttributes flash,

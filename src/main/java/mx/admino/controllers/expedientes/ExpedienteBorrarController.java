@@ -28,9 +28,9 @@ public class ExpedienteBorrarController {
 
     @GetMapping("/condominios/{cid}/casas/{uid}/archivos/{aid}/borrar")
     public String borrarArchivo(
-            @PathVariable String cid,
-            @PathVariable String uid,
-            @PathVariable String aid,
+            @PathVariable Long cid,
+            @PathVariable Long uid,
+            @PathVariable Long aid,
             RedirectAttributes redirectAttributes,
             Model model) {
 

@@ -16,7 +16,7 @@ public interface CondominioRepository extends JpaRepository<Condominio, Long> {
 
 	List<Condominio> findByNombre(String nombre);
 
-	Page<Condominio> findByAdministrador(String id, Pageable pageable);
+	Page<Condominio> findByAdministrador(Long id, Pageable pageable);
 
     Condominio findFirstByNombre(String nombre);
 }

@@ -27,9 +27,9 @@ public class ExpedienteDetailController {
 
     @GetMapping("/condominios/{cid}/casas/{uid}/archivos/{aid}")
     public void getArchivo(
-        @PathVariable String cid,
-        @PathVariable String uid,
-        @PathVariable String aid,
+        @PathVariable Long cid,
+        @PathVariable Long uid,
+        @PathVariable Long aid,
         HttpServletResponse response
     ) {
         var archivo = archivoService.findById(aid);

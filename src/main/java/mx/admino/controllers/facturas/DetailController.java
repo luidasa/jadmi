@@ -25,9 +25,9 @@ public class DetailController {
 
 	@GetMapping("/condominios/{cid}/casas/{uid}/facturas/{fid}")
 	public String getFactura(
-			@PathVariable String cid,
-			@PathVariable String uid,
-			@PathVariable String fid,
+			@PathVariable Long cid,
+			@PathVariable Long uid,
+			@PathVariable Long fid,
 			Model model) {
 		
 		model.addAttribute("factura", facturaService.findById(fid));

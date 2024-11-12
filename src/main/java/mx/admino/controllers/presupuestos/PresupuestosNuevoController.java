@@ -42,7 +42,7 @@ public class PresupuestosNuevoController {
 
     @GetMapping("/condominios/{cid}/presupuestos/nuevo")
     public String getNuevo(
-            @PathVariable String cid,
+            @PathVariable Long cid,
             Model model
     ) {
         var condominio = condominioService.findById(cid);
@@ -56,7 +56,7 @@ public class PresupuestosNuevoController {
 
     @PostMapping("/condominios/{cid}/presupuestos/nuevo")
     public String postNuevo(
-            @PathVariable String cid,
+            @PathVariable Long cid,
             @ModelAttribute @Valid Presupuesto presupuesto,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,

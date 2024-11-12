@@ -1,8 +1,16 @@
 package mx.admino.models.entities;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "conceptos_presupuesto")
 public class Concepto {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Tipos tipo;
 
@@ -18,6 +26,14 @@ public class Concepto {
         this.gastosFijos = new BigDecimal("0.0");
         this.gastosPeriodicos = new BigDecimal("0.0");
         this.gastosVariables = new BigDecimal("0.0");
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Tipos getTipo() {

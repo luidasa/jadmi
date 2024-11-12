@@ -1,7 +1,7 @@
 package mx.admino.services.impl;
 
 import mx.admino.exceptions.ArchivoNotFound;
-import mx.admino.models.Archivo;
+import mx.admino.models.entities.Archivo;
 import mx.admino.models.entities.Casa;
 import mx.admino.repositories.ExpedientesRepository;
 import mx.admino.services.ExpedientesService;
@@ -23,16 +23,16 @@ public class ExpedientesServiceImpl implements ExpedientesService {
 
     @Override
     public Archivo insert(Archivo archivo) {
-        return expedientesRepository.insert(archivo);
+        return expedientesRepository.save(archivo);
     }
 
     @Override
-    public Archivo findById(String aid) {
+    public Archivo findById(Long aid) {
         return expedientesRepository.findById(aid).orElseThrow(() -> new ArchivoNotFound());
     }
 
     @Override
-    public void deleteById(String aid) {
+    public void deleteById(Long aid) {
         expedientesRepository.deleteById(aid);
     }
 }

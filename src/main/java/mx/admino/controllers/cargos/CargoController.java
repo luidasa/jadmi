@@ -69,8 +69,8 @@ public class CargoController {
 
 	@GetMapping("/condominios/{cid}/casas/{uid}/cargos")
 	public String index(
-			@PathVariable String cid,
-			@PathVariable String uid,
+			@PathVariable Long cid,
+			@PathVariable Long uid,
 			@RequestParam(required = false, defaultValue = "1") Integer page,
 			@RequestParam(required = false, defaultValue = "10") Integer rows,
 			Model model) {
@@ -85,8 +85,8 @@ public class CargoController {
 
 	@PostMapping("/condominios/{cid}/casas/{uid}/cargos/nuevo")
 	public String postNuevo(
-			@PathVariable String cid,
-			@PathVariable String uid,
+			@PathVariable Long cid,
+			@PathVariable Long uid,
 			@ModelAttribute @Valid Cargo cargo,
 			BindingResult binding,
 			RedirectAttributes flash,

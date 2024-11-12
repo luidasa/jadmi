@@ -23,4 +23,10 @@ public interface PagoRepository extends JpaRepository<Pago, Long> {
     List<Pago> findByCasa(Casa casa);
 
     Page<Pago> findByCondominio(Condominio condominio, Pageable pageable);
+
+    List<Pago> findByFechaPagadoGreaterThanAndLessThanAndEstatus(Date fechaInicio, Date fechaFinal, PagoEstatus estatus);
+
+    List<Pago> findByFechaPagadoGreaterThanAndLessThan(Date fechaInicio, Date fechaFinal);
+
+    List<Pago> findByFechaPagadoGraterThanAndEstatus(Date fechaFinal, PagoEstatus estatus);
 }

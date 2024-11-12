@@ -3,16 +3,16 @@ package mx.admino.models.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import mx.admino.models.CargoConcepto;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import mx.admino.models.CargoEstatus;
 
-@Document(collection="cargos")
+@Entity
+@Table(name="cargos")
 public class Cargo implements Serializable {
 
 	public Cargo() {
@@ -40,7 +40,8 @@ public class Cargo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
 	/**
 	 * Condomino que debe de aplicar el cargo
@@ -73,11 +74,11 @@ public class Cargo implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaVencimiento;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

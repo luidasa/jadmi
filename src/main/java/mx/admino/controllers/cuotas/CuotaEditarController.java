@@ -42,8 +42,8 @@ public class CuotaEditarController {
 
     @GetMapping("/condominios/{cid}/cuotas/{id}")
     public String getEdit(
-            @PathVariable String cid,
-            @PathVariable String id,
+            @PathVariable Long cid,
+            @PathVariable Long id,
             Model model) {
 
         String viewName = "cuotas/formulario";
@@ -59,8 +59,8 @@ public class CuotaEditarController {
 
     @PostMapping("/condominios/{cid}/cuotas/{id}")
     public String postEdit(
-            @PathVariable String cid,
-            @PathVariable String id,
+            @PathVariable Long cid,
+            @PathVariable Long id,
            @ModelAttribute @Valid Cuota cuota,
            BindingResult binding,
            RedirectAttributes flash,

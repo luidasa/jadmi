@@ -1,7 +1,7 @@
 package mx.admino.models.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +26,9 @@ public class Presupuesto {
         this.condominio = condominio;
     }
 
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String mes;
 
@@ -39,22 +41,22 @@ public class Presupuesto {
 
     private BigDecimal egresosReales;
 
+    @OneToMany
     private List<Concepto> conceptos;
 
-    @DBRef
+    @OneToMany
     private List<Pago> pagos;
 
-    @DBRef
+    @OneToMany
     private List<Egreso> gastos;
 
-    @DBRef
     private Condominio condominio;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

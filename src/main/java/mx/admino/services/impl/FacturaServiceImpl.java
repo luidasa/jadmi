@@ -2,19 +2,20 @@ package mx.admino.services.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
 
 import mx.admino.models.entities.*;
+import org.hibernate.sql.Template;
 import org.joda.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +43,7 @@ public class FacturaServiceImpl implements FacturaService {
 	FacturaRepository facturaRepository;
 	
 	@Autowired
-	MongoTemplate template;
+	Template template;
 
 	@Autowired
     CasasService casasService;
@@ -138,13 +139,14 @@ public class FacturaServiceImpl implements FacturaService {
 	}
 
 	@Override
-	public Factura findById(String id) {
+	public Factura findById(Long id) {
 		return facturaRepository.findById(id).orElseThrow(() -> new FacturaNotFound());
 	}
 
 	@Override
 	public Page<Factura> search(FacturaFiltro filtro, Pageable pageable) {
-		
+
+		/*
 		Criteria criterios = Criteria.where("fechaCorte").is(filtro.getFechaCorte());
 		
 		if (filtro.hasCondomino()) {
@@ -166,8 +168,92 @@ public class FacturaServiceImpl implements FacturaService {
 		return PageableExecutionUtils.getPage(
 				facturas, 
 		        pageable,
-		        () -> template.count(Query.of(query).limit(-1).skip(-1), Factura.class));	
-		}
+		        () -> template.count(Query.of(query).limit(-1).skip(-1), Factura.class));
+
+		 */
+		//TODO. Falta implementar el filtro de facturas.
+		return new Page<Factura>() {
+			@Override
+			public int getTotalPages() {
+				return 0;
+			}
+
+			@Override
+			public long getTotalElements() {
+				return 0;
+			}
+
+			@Override
+			public <U> Page<U> map(Function<? super Factura, ? extends U> converter) {
+				return null;
+			}
+
+			@Override
+			public int getNumber() {
+				return 0;
+			}
+
+			@Override
+			public int getSize() {
+				return 0;
+			}
+
+			@Override
+			public int getNumberOfElements() {
+				return 0;
+			}
+
+			@Override
+			public List<Factura> getContent() {
+				return List.of();
+			}
+
+			@Override
+			public boolean hasContent() {
+				return false;
+			}
+
+			@Override
+			public Sort getSort() {
+				return null;
+			}
+
+			@Override
+			public boolean isFirst() {
+				return false;
+			}
+
+			@Override
+			public boolean isLast() {
+				return false;
+			}
+
+			@Override
+			public boolean hasNext() {
+				return false;
+			}
+
+			@Override
+			public boolean hasPrevious() {
+				return false;
+			}
+
+			@Override
+			public Pageable nextPageable() {
+				return null;
+			}
+
+			@Override
+			public Pageable previousPageable() {
+				return null;
+			}
+
+			@Override
+			public Iterator<Factura> iterator() {
+				return null;
+			}
+		};
+	}
 
 	@Override
 	public List<Factura> generate(Date fechaCorte, Date fechaVencimiento) {

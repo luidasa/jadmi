@@ -6,14 +6,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Document(collection="facturas")
+@Entity
+@Table(name="facturas")
 public class Factura implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -24,7 +24,8 @@ public class Factura implements Serializable {
 	}
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	private Casa casa;
 
@@ -64,11 +65,11 @@ public class Factura implements Serializable {
 		this.fechaCorte = fechaCorte;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

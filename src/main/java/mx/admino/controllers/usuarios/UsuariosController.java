@@ -26,7 +26,7 @@ public class UsuariosController {
 
     @GetMapping("/condominios/{cid}/usuarios")
     public String getIndex(
-            @PathVariable String cid,
+            @PathVariable Long cid,
             @RequestParam(required = false, defaultValue = "1") Integer page,
             @RequestParam(required = false, defaultValue = "20") Integer rows,
             Principal auth,

@@ -1,18 +1,12 @@
-package mx.admino.models;
+package mx.admino.models.entities;
 
-import mx.admino.models.entities.Casa;
-import mx.admino.models.entities.Condominio;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
+import mx.admino.models.Clasificacion;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 
-@Document(collection = "archivos")
+@Entity
+@Table(name = "archivos")
 public class Archivo {
 
     public Archivo() {
@@ -20,16 +14,15 @@ public class Archivo {
     }
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String nombreOriginal;
 
     private String contentType;
 
-    @DBRef
     private Casa casa;
 
-    @DBRef
     private Condominio condominio;
 
     private String ruta;
@@ -39,11 +32,11 @@ public class Archivo {
 
     private String descripcion;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

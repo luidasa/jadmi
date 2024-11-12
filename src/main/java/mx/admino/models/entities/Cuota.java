@@ -3,18 +3,18 @@ package mx.admino.models.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import mx.admino.models.CuotaEstatus;
 
-@Document(collection ="cuotas")
+@Entity
+@Table(name = "cuotas")
 public class Cuota implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -24,7 +24,8 @@ public class Cuota implements Serializable {
 	}
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
 	@NotNull
 	@NotEmpty
@@ -53,11 +54,11 @@ public class Cuota implements Serializable {
 	@NotNull
 	private CuotaEstatus estatus;
 	
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

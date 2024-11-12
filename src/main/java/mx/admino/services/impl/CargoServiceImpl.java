@@ -9,9 +9,6 @@ import mx.admino.models.entities.Casa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import mx.admino.exceptions.CargoNotFound;
@@ -22,9 +19,6 @@ import mx.admino.services.CargoService;
 
 @Service
 public class CargoServiceImpl implements CargoService {
-	
-	@Autowired
-	MongoTemplate template;
 	
 	@Autowired
 	CargoRepository cargoRepository;
@@ -40,7 +34,7 @@ public class CargoServiceImpl implements CargoService {
 	}
 
 	@Override
-	public Cargo findById(String id) {
+	public Cargo findById(Long id) {
 		return cargoRepository.findById(id).orElseThrow(() -> new CargoNotFound());
 	}
 
@@ -53,14 +47,7 @@ public class CargoServiceImpl implements CargoService {
 
 	@Override
 	public List<Cargo> findByFechaVencimientoBetween(Date fechaCorte, Date fechaFinal) {
-		List<Cargo> cargos = template.find(
-				Query.query(Criteria.where("FechaVencimiento")
-						.gte(fechaCorte)
-						.lte(fechaFinal)
-						.and("estatus")
-						.is(CargoEstatus.PENDIENTE)), Cargo.class);
-		//return cargoRepository.findByFechaVencimientoBetween(fechaCorte, fechaFinal);
-		return cargos;
+		return cargoRepository.findByFechaVencimientoBetweenAndEstatus(fechaCorte, fechaFinal, CargoEstatus.PENDIENTE);
 	}
 
 	@Override
@@ -72,13 +59,7 @@ public class CargoServiceImpl implements CargoService {
 	public List<Cargo> findByFechaVencimientoBetweenAndEstatus(Date fechaInicio, Date fechaCorte,
 			CargoEstatus estatus) {
 
-		List<Cargo> cargos = template.find(
-				Query.query(Criteria.where("FechaVencimiento")
-						.gte(fechaInicio)
-						.lte(fechaCorte)
-						.and("estatus")
-						.is(estatus)), Cargo.class);
-		return cargos;
+		return cargoRepository.findByFechaVencimientoBetweenAndEstatus(fechaInicio, fechaCorte, estatus);
 	}
 
 	@Override

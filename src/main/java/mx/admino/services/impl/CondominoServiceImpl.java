@@ -36,7 +36,7 @@ public class CondominoServiceImpl implements CasasService {
 	}
 
 	@Override
-	public Casa findById(String id) {
+	public Casa findById(Long id) {
 		return condominoRepository.findById(id).orElseThrow(() -> new CondominoNotFoundException());
 	}
 

@@ -18,7 +18,7 @@ public interface CargoService {
 
 	Cargo save(@Valid Cargo cargo);
 
-	Cargo findById(String id);
+	Cargo findById(Long id);
 
 	List<Cargo> saveAll(List<Cargo> cargos);
 

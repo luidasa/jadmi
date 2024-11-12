@@ -52,7 +52,7 @@ public class CondominioServiceImpl implements CondominioService {
 	}
 
 	@Override
-	public Condominio findById(String condominioId) {
+	public Condominio findById(Long condominioId) {
 		return condominioRepository.findById(condominioId).orElseThrow(() -> new CondominioNotFound());
 	}
 }

@@ -33,7 +33,7 @@ public class CasasController {
 
 	@GetMapping("/condominios/{id}/casas")
 	public String index(
-			@PathVariable String id,
+			@PathVariable Long id,
 			@RequestParam(required = false, defaultValue =  "1") Integer page,
 			@RequestParam(required = false, defaultValue =  "10")Integer size,
 			Model model) {
@@ -51,7 +51,7 @@ public class CasasController {
 	}
 
 	@GetMapping("/condominios/{cid}/casas/generar")
-	public String getGenerar(@PathVariable String cid,
+	public String getGenerar(@PathVariable Long cid,
 							 RedirectAttributes flash) {
 
 		Condominio condominio = condominioService.findById(cid);

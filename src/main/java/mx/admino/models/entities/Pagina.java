@@ -1,17 +1,19 @@
-package mx.admino.models;
+package mx.admino.models.entities;
 
 import java.io.Serializable;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
 
-@Document(collection="paginas")
+
+@Entity
+@Table(name="paginas")
 public class Pagina implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
 	private String slug;
 	
@@ -23,11 +25,11 @@ public class Pagina implements Serializable {
 	
 	private String image;
 	
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

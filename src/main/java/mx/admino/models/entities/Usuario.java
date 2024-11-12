@@ -4,17 +4,14 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
@@ -28,10 +25,10 @@ public class Usuario implements Serializable, UserDetails {
 	}
 	
 	public Usuario(
-			@NotNull @NotEmpty @NotBlank @Size(min = 5) String username,
-			@NotNull @NotEmpty @NotBlank @Size(min = 5) String password, 
-			@NotNull @NotEmpty @NotBlank @Size(min = 10) String name,
-			@NotNull @NotEmpty @NotBlank @Size(min = 10, max = 10) String phone, 
+			@NotBlank @Size(min = 5) String username,
+			@NotBlank @Size(min = 5) String password,
+			@NotBlank @Size(min = 10) String name,
+			@NotBlank @Size(min = 10, max = 10) String phone,
 			String email, 
 			Boolean enabled) {
 		super();
@@ -44,7 +41,7 @@ public class Usuario implements Serializable, UserDetails {
 	}
 
 	@Id
-	private String id;
+	private Long id;
 	
 	@NotBlank
 	@Size(min = 5)
@@ -73,11 +70,11 @@ public class Usuario implements Serializable, UserDetails {
 
 	private List<Condominio> condominios;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

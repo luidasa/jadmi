@@ -37,8 +37,8 @@ public class EditarCasaController {
 
     @GetMapping("/condominios/{cid}/casas/{id}")
     public String getEdit(
-            @PathVariable String cid,
-            @PathVariable String id,
+            @PathVariable Long cid,
+            @PathVariable Long id,
             RedirectAttributes flash,
             Model model) {
 
@@ -59,8 +59,8 @@ public class EditarCasaController {
 
     @PostMapping("/condominios/{cid}/casas/{id}")
     public String postEdit(
-            @PathVariable String cid,
-            @PathVariable String id,
+            @PathVariable Long cid,
+            @PathVariable Long id,
             @ModelAttribute @Valid Casa casa,
             BindingResult binding,
             RedirectAttributes flash,

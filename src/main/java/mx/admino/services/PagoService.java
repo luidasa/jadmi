@@ -16,7 +16,7 @@ import mx.admino.models.entities.Pago;
 
 public interface PagoService {
 
-	Pago findById(String id) throws NotFoundException;
+	Pago findById(Long id) throws NotFoundException;
 
 	Page<Pago> findAll(Pageable pageable);
 
