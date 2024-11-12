@@ -1,6 +1,6 @@
 package mx.admino.services;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import mx.admino.models.entities.Condominio;
 import mx.admino.models.entities.Figura;

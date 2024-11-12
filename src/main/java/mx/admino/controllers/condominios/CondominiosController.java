@@ -1,6 +1,6 @@
 package mx.admino.controllers.condominios;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import mx.admino.factories.BreadcrumFactory;
 import org.springframework.beans.factory.annotation.Autowired;

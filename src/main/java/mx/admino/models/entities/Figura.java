@@ -3,7 +3,7 @@ package mx.admino.models.entities;
 import org.springframework.data.annotation.Id;
 
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public class Figura {
 

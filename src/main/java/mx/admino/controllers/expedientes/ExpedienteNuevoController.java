@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.util.Arrays;
@@ -55,7 +55,7 @@ public class ExpedienteNuevoController {
         if (bindingResult.hasErrors()) {
             bindingResult.getFieldErrors().stream().forEach(e -> System.out.println(e.getDefaultMessage()));
             redirectAttributes.addFlashAttribute("alert_danger", "Error la información que proporcionaste es incorrecta. Verificala y vuelve a intentar");
-            return String.format("redirect:/condominios/%s/casas/%s/archivos", cid, uid);
+            return "redirect:/condominios/%s/casas/%s/archivos".formatted(cid, uid);
         }
 
         try {
@@ -69,7 +69,7 @@ public class ExpedienteNuevoController {
 
         } catch(Exception e) {
             redirectAttributes.addFlashAttribute("alert_danger", "Ocurrio un error al guardar el archivo. Por favor intenta mas tarde");
-            return String.format("redirect:/condominios/%s/casas/%s/archivos", cid, uid);
+            return "redirect:/condominios/%s/casas/%s/archivos".formatted(cid, uid);
         }
         narchivo.setNombreOriginal(documento.getOriginalFilename());
         narchivo.setContentType(documento.getContentType());
@@ -78,6 +78,6 @@ public class ExpedienteNuevoController {
         narchivo.setRuta(newFilename);
         Archivo nuevoArchivo = expedientesService.insert(narchivo);
         redirectAttributes.addFlashAttribute("alert_success", "Archivo guardado en el expediente de la casa");
-        return String.format("redirect:/condominios/%s/casas/%s/archivos", cid, uid);
+        return "redirect:/condominios/%s/casas/%s/archivos".formatted(cid, uid);
     }
 }

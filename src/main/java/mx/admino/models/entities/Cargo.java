@@ -3,7 +3,7 @@ package mx.admino.models.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import mx.admino.models.CargoConcepto;
 import org.springframework.data.annotation.Id;

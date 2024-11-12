@@ -1,6 +1,6 @@
 package mx.admino.services.impl;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import mx.admino.exceptions.CondominioNotFound;
 import mx.admino.exceptions.UsuarioNotFound;

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es-MX" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admino - Administración de condominios</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+
+<body>
+	<main>
+		<nav th:replace="layouts/master::navbar">
+		</nav>
+
+		<div class="container mt-2">
+			<header>
+				<h1 class="text-muted fs-2"><span th:text="${condominio.nombre}"></span> <span th:text="${casa.interior}"></span></h1>
+				<nav th:replace="layouts/master::breadcrum"></nav>
+				<div th:replace="layouts/master::alerts"></div>				
+			</header>
+
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_casa('Generales')"></ul>
+
+			<form th:action="@{/condominios/{cid}/casas/{id}(cid=${condominio.id}, id=${casa.id == null ? 'nuevo' : casa.id})}" method="post" th:object="${casa}">
+			<div class="card">
+				<div class="card-header bg-primary bg-gradient text-white">
+					Información del casa <span th:text="${casa.id}"></span>
+				</div>
+				<div class="card-body">
+					<div class="row">
+					<div class="col-md-4">
+						<div class="mb-3">
+						    <label for="interior" class="form-label">Interior</label>
+						    <input type="text" class="form-control" id="interior" aria-describedby="interiorHelp" 
+						    	th:field="${casa.interior}"
+						    	th:classappend="${#fields.hasErrors('interior')} ? 'is-invalid' : ''">
+						    <div id="interiorHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('interior')}" th:errors="*{interior}">Error</div>
+						  </div>
+					</div>
+					<div class="col-md-8">
+					  <div class="mb-3">
+					    <label for="nombre" class="form-label">Dueño</label>
+					    <input type="text" class="form-control" id="nombre" aria-describedby="nombreHelp" 
+					    	th:field="${casa.nombre}"
+					    	th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''">
+					    <div id="nombreHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre</div>
+					  </div>
+					</div>
+					</div>
+					  <div class="row">
+					  <div class="mb-3 col">
+					    <label for="telefono" class="form-label">Telefono</label>
+					    <input type="text" class="form-control" maxlength="10" minlength="10" id="telefono" aria-describedby="telefonoHelp" 
+					    	th:field="${casa.telefono}"
+					    	th:classappend="${#fields.hasErrors('telefono')} ? 'is-invalid' : ''">
+					    <div id="telefonoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Telefono</div>
+					  </div>
+					  <div class="mb-3 col">
+					    <label for="correo" class="form-label">Correo</label>
+					    <input type="text" class="form-control" id="correo" aria-describedby="correoHelp" 
+					    	th:field="${casa.correo}"
+					    	th:classappend="${#fields.hasErrors('correo')} ? 'is-invalid' : ''">
+					    <div id="correoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Correo</div>
+					  </div>
+					  <div class="mb-3 col">
+					    <label for="saldo" class="form-label">Saldo</label>
+					    <input type="text" class="form-control" id="saldo" aria-describedby="saldoHelp"
+					    	th:field="${casa.saldo}"
+					    	th:classappend="${#fields.hasErrors('saldo')} ? 'is-invalid' : ''">
+					    <div id="saldoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('saldo')}" th:errors="*{saldo}">Correo</div>
+					  </div>
+					</div>
+					<div class="row">
+					  <div class="form-group col">
+					    <label for="estaDesocupada" class="form-label">Esta desocupada</label>
+					    <input type="checkbox" id="estaDesocupada" area-describedby="estaDesocupadaHelp" 
+					    	th:field="${casa.estaDesocupada}"
+							th:classappend="${#fields.hasErrors('estaDesocupada')} ? 'is-invalid' : ''"/>
+					    <div id="estaDesocupadaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('estaDesocupada')}" th:errors="*{estaDesocupada}">Nombre</div>
+					  </div>
+					  <div class="form-group col">
+					    <label for="estaRentada" class="form-label">Esta rentada</label>
+					    <input type="checkbox" id="estaRentada" area-describedby="estaRentadaHelp" 
+					    	th:field="${casa.estaRentada}"
+							th:classappend="${#fields.hasErrors('estaRentada')} ? 'is-invalid' : ''"/>
+					    <div id="estaRentadaHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('estaRentada')}" th:errors="*{estaRentada}">Nombre</div>
+					  </div>
+					</div>
+				</div>
+				<div class="card-footer text-end">
+					<button class="btn btn-primary">Guardar</button>
+				</div>
+			</div>
+			</form>
+		</div>
+		<footer th:include="layouts/master::footer"></footer>
+	</main>
+
+	<div th:replace="layouts/master::scripts"></div>
+</body>
+
+</html>

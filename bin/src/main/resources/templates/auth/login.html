@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es-MX" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admino - Administración de condominios</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-md-6 offset-md-3">
+				<div th:replace="layouts/master::alerts"></div>
+			</div>
+			<div th:if="${param.error}" class="alert alert-error col-md-6 offset-md-3" th:text="${param.error}" >
+				Usuario y contraseña incorrectos
+			</div>
+			<div th:if="${param.logout}" class="alert alert-success col-md-6 offset-md-3">
+				Has cerrado la sesión
+			</div>
+			<div th:if="${param.info}" class="alert alert-info col-md-6 offset-md-3" th:text="${param.info}">
+				Usuario y contraseña incorrectos
+			</div>
+			<div th:if="${param.success}" class="alert alert-info col-md-6 offset-md-3" th:text="${param.success}">
+				Usuario y contraseña incorrectos
+			</div>
+
+			<div class="col-md-4 offset-md-4">
+				<form class="form-signin" name="f" th:action="@{/login}" method="post" autocomplete="off">
+
+
+					<div class="text-center mb-4">
+						<img class="mb-4" src="/img/brand/jadmino.png" alt="" width="72"
+							height="72">
+						<h1 class="h3 mb-3 font-weight-normal">Administrador de Condominios</h1>
+					</div>
+
+					<div class="form-group mb-2">
+						<label for="username">Usuario</label>
+						<input type="text" name="username" id="username" class="form-control" placeholder="Nombre de usuario" required=""
+							autofocus autocomplete="off">
+					</div>
+
+					<div class="form-group mb-2">
+						<label for="password">Contraseña</label>
+						<input type="password" name="password" id="password" class="form-control" placeholder="Escriba su contraseña" required="" autocomplete="off">
+					</div>
+
+					<div class="checkbox mb-3">
+						<label>
+							<input type="checkbox" value="remember-me"> Recuerdame en este equipo
+						</label>
+					</div>
+					<span>Olvidaste tu contraseña <a th:href="@{/recover}">recuperala.</a></span>
+					<hr>
+					<div class="d-flex justify-content-between">
+						<span>No tienes cuenta <a th:href="@{/signup}">registrate.</a></span>
+						<button class="btn btn-lg btn-primary" type="submit">Iniciar</button>
+					</div>
+					
+					<p class="mt-5 mb-3 text-muted text-center">© 2017-2022</p>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es-MX" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admino - Administración de condominios</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+
+<body>
+	<main>
+		<nav th:replace="layouts/master::navbar">
+		</nav>
+
+		<div class="container mt-2">
+			<header>
+				<h1 class="text-muted fs-2">Condominios</h1>
+				<nav th:replace="layouts/master::breadcrum"></nav>
+				<div th:replace="layouts/master::alerts"></div>
+			</header>
+
+			<div class="card">
+				<div class="card-header bg-primary bg-gradient text-white">
+					Directorio de condominios
+				</div>
+				<div class="card-body table-responsive p-0">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Nombre</th>
+								<th scope="col">Dirección</th>
+								<th scope="col">Telefono</th>
+								<th scope="col">Ingresos</th>
+								<th scope="col">Cargos</th>
+								<th scope="col">Saldo</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="condominio: ${condominios}">
+								<th><a th:href="${'/condominios/' + condominio.id}" th:text="${condominio.nombre}"></a></th>
+								<td th:text="${condominio.domicilio}">Mark</td>
+								<td th:text="${condominio.telefono}">Otto</td>
+								<td>@mdo</td>
+								<td>@mdo</td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(condominio.saldo, 1, 'COMMA', 2, 'POINT')}">@mdo</td>
+							</tr>
+							<tr th:if="${condominios.totalPages == 0}"><td colspan="6" class="text-center">No tiene casas en ningun condominios.</td></tr>
+						</tbody>
+					</table>
+					<nav class="nav justify-content-center" aria-label="Page navigation" th:if="${condominios.totalPages > 0}">
+						<ul class="pagination">
+							<li class="page-item" th:classappend="${condominios.isFirst ? 'disabled': ''}">
+								<span class="page-link">
+									<span aria-hidden="true">&laquo;</span>
+								</span>
+								<a class="page-link" th:href="@{/condominios(page=1, size=10)}" aria-label="Anterior"
+								   th:if="${!condominios.isFirst}">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li class="page-item" th:each="i : ${#numbers.sequence( 1, condominios.totalPages)}">
+								<a class="page-link"
+								   th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"
+								   th:href="@{/condominios(page=${i}, size=10)}"
+								   th:text="${i}">1
+								</a>
+							</li>
+							<li class="page-item" th:classappend="${condominios.isLast ? 'disabled' : ''}">
+								<a class="page-link"
+								   aria-label="Siguiente">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+				<div class="card-footer text-end">
+					<a th:href="@{/condominios/nuevo}" class="btn btn-primary">Nuevo</a>
+				</div>
+			</div>
+		</div>
+		<footer th:include="layouts/master::footer"></footer>
+	</main>
+
+	<div th:replace="layouts/master::scripts"></div>
+
+</body>
+
+</html>

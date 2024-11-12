@@ -3,7 +3,7 @@ package mx.admino.services.impl;
 import java.util.Date;
 import java.util.List;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import mx.admino.models.entities.Casa;
 import mx.admino.models.entities.Condominio;

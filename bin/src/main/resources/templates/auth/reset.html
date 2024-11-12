@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es-MX" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admino - Administración de condominios</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container mt-5">
+		<div class="row">
+			<div th:if="${info}" class="col-md-6 offset-md-3 alert alert-info" th:text="${info}">
+				Invalid username and password.
+			</div>
+
+			<div class="col-md-4 offset-md-4">
+				<form class="form-signin" name="f" th:action="@{${'/reset/' + code} }" method="post">
+					<div class="text-center mb-4">
+						<img class="mb-4" src="/img/brand/jadmino.png" alt="" width="72"
+							height="72">
+						<h1 class="h3 mb-3 font-weight-normal">Administrador de Condominios</h1>
+					</div>
+
+					<div class="form-group mb-2">
+						<label for="password">Contraseña</label>
+						<input type="password" name="password" id="password" class="form-control" placeholder="Escriba una contraseña" required>
+					</div>
+					<div class="form-group mb-2">
+						<label for="confirmation">Confirmación</label>
+						<input type="password" name="confirmation" id="confirmation" class="form-control" placeholder="Confirma tu contraseña" required>
+					</div>
+
+					<div class="d-flex justify-content-between">
+						<span>No tienes cuenta <a th:href="@{/signup}">registrate</a></span>
+					</div>
+					<hr>
+					<div class="d-flex justify-content-between">
+						<span>Inicia sesión <a th:href="@{/login}">aqui</a></span>
+					</div>
+					<div class="d-flex justify-content-end">
+						<button class="btn btn-lg btn-primary" type="submit">Recuperar</button>
+					</div>
+					
+					<p class="mt-5 mb-3 text-muted text-center">© 2017-2022</p>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

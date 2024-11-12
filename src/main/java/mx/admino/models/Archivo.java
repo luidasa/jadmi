@@ -3,13 +3,16 @@ package mx.admino.models;
 import mx.admino.models.entities.Casa;
 import mx.admino.models.entities.Condominio;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@Entity
-@Table(name = "archivos")
+@Document(collection = "archivos")
 public class Archivo {
 
     public Archivo() {
@@ -23,8 +26,10 @@ public class Archivo {
 
     private String contentType;
 
+    @DBRef
     private Casa casa;
 
+    @DBRef
     private Condominio condominio;
 
     private String ruta;

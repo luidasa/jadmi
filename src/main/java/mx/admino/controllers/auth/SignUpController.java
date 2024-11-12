@@ -1,7 +1,7 @@
 package mx.admino.controllers.auth;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 import mx.admino.components.VerifyReCAPTCHA;
 import mx.admino.events.OnUserRegisteredEvent;

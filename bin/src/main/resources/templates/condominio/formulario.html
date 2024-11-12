@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es-MX" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admino - Administración de condominios</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+
+<body>
+	<main>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
+		</nav>
+
+		<div class="container mt-2">
+			<header>
+				<h1 class="text-muted fs-2">Condominio</h1>
+				<nav th:replace="layouts/master::breadcrum"></nav>
+				<div th:replace="layouts/master::alerts"></div>				
+			</header>
+
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_condominio('Generales')"></ul>
+			<form th:action="@{/condominios/{id}(id=${condominio.id != null ? condominio.id: 'nuevo'})}" method="post" th:object="${condominio}">
+			<div class="card">
+				<div class="card-header bg-primary bg-gradient text-white">
+					Información del condominio
+				</div>
+				<div class="card-body">
+				  <div class="mb-3">
+				    <label for="nombre" class="form-label">Nombre</label>
+				    <input type="hidden" th:field="${condominio.id}">
+				    <input type="text" class="form-control" id="nombre" aria-describedby="nombreHelp"
+						   placeholder="Nombre del condominio o asociación"
+						   th:field="${condominio.nombre}"
+						   th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''"/>
+				    <div id="nombreHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre</div>
+				  </div>
+				  <div class="mb-3">
+				    <label for="domicilio" class="form-label">Domicilio</label>
+				    <textarea class="form-control" id="domicilio" area-describedby="domicilioHelp"
+							  placeholder="Dirección del condominio"
+							  th:field="${condominio.domicilio}"
+							  th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''"></textarea>
+				    <div id="domicilioHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('domicilio')}" th:errors="*{domicilio}">Nombre</div>
+				  </div>
+				  <div class="row">
+					  <div class="mb-3 col">
+					    <label for="telefono" class="form-label">Telefono</label>
+					    <input type="text" class="form-control" maxlength="10" minlength="10" id="telefono" aria-describedby="telefonoHelp"
+							   placeholder="Teléfono de la asociación"
+							   th:field="${condominio.telefono}"
+							   th:classappend="${#fields.hasErrors('telefono')} ? 'is-invalid' : ''">
+					    <div id="telefonoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Telefono</div>
+					  </div>
+					  <div class="mb-3 col">
+					    <label for="correo" class="form-label">Correo</label>
+					    <input type="text" class="form-control" id="correo" aria-describedby="correoHelp"
+							   placeholder="Correo de la asociación"
+							   th:field="${condominio.correo}"
+							   th:classappend="${#fields.hasErrors('correo')} ? 'is-invalid' : ''">
+					    <div id="correoHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Correo</div>
+					  </div>
+					  <div class="mb-3 col">
+						  <label for="unidades" class="form-label">Unidades</label>
+						  <input type="number" min="2" step="1" class="form-control" id="unidades" aria-describedby="unidadesHelp"
+								 placeholder="Numero de casas o departamentos"
+								 th:field="${condominio.unidades}"
+								 th:classappend="${condominio.id != null ? 'readonly': #fields.hasErrors('unidades') ? 'is-invalid' : ''}">
+						  <div id="unidadesHelp" class="form-text invalid-feedback" th:if="${#fields.hasErrors('unidades')}" th:errors="*{correo}">Correo</div>
+					  </div>
+					  <div class="mb-3 col">
+					    <label for="saldo" class="form-label">Saldo</label>
+					    <input type="text" class="form-control readonly" id="saldo" readonly th:field="${condominio.saldo}">
+					  </div>
+				  </div>
+				</div>
+				<div class="card-footer text-end">
+					<button class="btn btn-primary">Guardar</button>
+				</div>
+			</div>
+			</form>
+		</div>
+		<footer th:include="layouts/master::footer"></footer>
+	</main>
+
+	<div th:replace="layouts/master::scripts"></div>
+</body>
+
+</html>

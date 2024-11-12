@@ -3,7 +3,7 @@ package mx.admino.controllers.cargos;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import mx.admino.models.entities.Casa;
 import mx.admino.models.entities.Condominio;

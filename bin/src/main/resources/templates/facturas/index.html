@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es-MX" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admino - Administración de condominios</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+
+<body>
+	<main>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="layouts/master::navbar">
+		</nav>
+
+		<div class="container mt-2">
+			<header>
+				<h1 class="text-muted fs-2"><span th:text="${condominio.nombre}"></span> <span th:text="${casa.interior}"> - Facturas</span></h1>
+				<nav th:replace="layouts/master::breadcrum"></nav>
+				<div th:replace="layouts/master::alerts"></div>				
+			</header>
+			<ul class="nav mb-2" th:replace="layouts/master::navbar_casa('Facturas')"></ul>
+			<div class="card">
+				<div class="card-header bg-primary bg-gradient text-white">
+					Estados de cuenta
+				</div>
+				<div class="card-body table-responsive p-0">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col">Fecha de corte</th>
+								<th scope="col">Fecha de vencimiento</th>
+								<th scope="col">Condominio</th>
+								<th scope="col">Dueño</th>
+								<th scope="col">Saldo inicial</th>
+								<th scope="col">Pagos</th>
+								<th scope="col">Cargos</th>
+								<th scope="col">Saldo</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="factura: ${facturas}" th:if="${facturas.getTotalElements() > 0}")>
+								<td>
+									<a th:href="@{/condominios/{cid}/casas/{uid}/facturas/{id}(cid=${condominio.id}, uid=${casa.id}, id=${factura.id})}" th:text="${#dates.format(factura.fechaCorte, 'dd/MM/yyyy')}"></a>
+								</td>
+								<td th:text="${#dates.format(factura.fechaVencimiento, 'dd/MM/yyyy')}"></td>
+								<td th:text="${factura.casa.interior}"></td>
+								<td th:text="${factura.casa.nombre}"></td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(factura.saldoAnterior, 1, 'COMMA', 2, 'POINT')}"></td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(factura.importePagos, 1, 'COMMA', 2, 'POINT')}"></td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(factura.importeCargos, 1, 'COMMA', 2, 'POINT')}"></td>
+								<td class="text-end" th:text="${#numbers.formatDecimal(factura.saldo, 1, 'COMMA', 2, 'POINT')}"></td>
+							</tr>
+							<tr>
+								<td colspan="8" th:if="${facturas.getTotalElements() == 0}">No existen estados de corte</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th scope="col">Fecha de corte</th>
+								<th scope="col">Fecha de vencimiento</th>
+								<th scope="col">Condominio</th>
+								<th scope="col">Dueño</th>
+								<th scope="col">Saldo inicial</th>
+								<th scope="col">Pagos</th>
+								<th scope="col">Cargos</th>
+								<th scope="col">Saldo</th>
+							</tr>
+						</tfoot>
+					</table>
+					<nav aria-label="Page navigation" th:if="${facturas.getTotalElements() > 0}">
+						<ul class="pagination justify-content-center">
+							<li class="page-item">
+								<a class="page-link" th:href="@{/condominios/{cid}/casas/{uid}/facturas(page=1)}" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li class="page-item" th:each="i : ${#numbers.sequence( 1, facturas.getTotalPages)}">
+								<a class="page-link"
+								   th:classappend="${#request.getParameter('page') == i ? 'active' : ''}"
+								   th:href="@{/condominios/{cid}/casas/{uid}/facturas(cid=${condominio.id}, uid=${casa.id}, page=${i}, size=10)}"
+								   th:text="${i}">1</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" th:href="@{/condominios/{cid}/casas/{uid}/facturas(cid=${condominio.id}, uid=${casa.id}, page=${facturas.totalPages})}" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+
+		<footer th:include="layouts/master::footer"></footer>
+		
+	</main>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+		integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+		integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
