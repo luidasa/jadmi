@@ -3,6 +3,8 @@ package mx.admino.models.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
@@ -10,12 +12,12 @@ import javax.validation.constraints.Past;
 
 import mx.admino.models.PagoMetodo;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import mx.admino.models.PagoEstatus;
 
-@Document(collection ="pagos")
+@Entity
+@Table(name ="pagos")
 public class Pago implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,7 +30,7 @@ public class Pago implements Serializable {
 	private String id;
 
 	private Condominio condominio;
-	
+
 	private Casa casa;
 
 	private PagoMetodo metodo;

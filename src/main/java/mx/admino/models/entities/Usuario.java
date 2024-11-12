@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -11,13 +13,12 @@ import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Document(collection = "usuarios")
+@Entity
+@Table(name = "usuarios")
 public class Usuario implements Serializable, UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -45,34 +46,23 @@ public class Usuario implements Serializable, UserDetails {
 	@Id
 	private String id;
 	
-	@NotNull
-	@NotEmpty
 	@NotBlank
 	@Size(min = 5)
-	@Indexed(unique = true)
 	private String username;
 	
-	@NotNull
-	@NotEmpty
 	@NotBlank
 	@Size(min = 5)
 	private String password;
 
 	@Transient
-	@NotNull
-	@NotEmpty
 	@NotBlank
 	@Size(min = 5)
 	private String confirmation;
 
-	@NotNull
-	@NotEmpty
 	@NotBlank
 	@Size(min = 10)
 	private String name;
 	
-	@NotNull
-	@NotEmpty
 	@NotBlank
 	@Size(min = 10, max = 10)
 	private String phone;

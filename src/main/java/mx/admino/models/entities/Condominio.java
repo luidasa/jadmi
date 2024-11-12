@@ -2,34 +2,29 @@ package mx.admino.models.entities;
 
 import java.io.Serializable;
 
-import javax.validation.Valid;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "condominio")
+@Entity
+@Table(name = "condominios")
 public class Condominio implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
-	@NotNull
-	@NotEmpty
 	@NotBlank
 	@Size(min = 5)
-	@Indexed(unique = true)
 	private String nombre;
 
-	@DBRef
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Usuario administrador;
 
 	@NotNull
@@ -61,12 +56,12 @@ public class Condominio implements Serializable {
 		this.nombre = nombre;
 	}
 
-    public String getId() {
+    public Long getId() {
 
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 
 		this.id = id;
 	}

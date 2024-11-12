@@ -1,14 +1,14 @@
 package mx.admino.models.entities;
 
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Document(collection = "presupuestos")
+@Entity
+@Table(name = "presupuestos")
 public class Presupuesto {
 
     public Presupuesto() {

@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import mx.admino.models.entities.Condominio;
 
 @Repository
-public interface CondominioRepository extends MongoRepository<Condominio, String> {
+public interface CondominioRepository extends JpaRepository<Condominio, Long> {
 
 	Condominio findFirstByOrderByNombreAsc();
 

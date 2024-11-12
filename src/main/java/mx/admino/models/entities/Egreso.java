@@ -3,14 +3,16 @@ package mx.admino.models.entities;
 import mx.admino.models.EgresoEstatus;
 import mx.admino.models.PagoMetodo;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@Document(collection = "egresos")
+@Entity
+@Table(name = "egresos")
 public class Egreso {
 
     @Id

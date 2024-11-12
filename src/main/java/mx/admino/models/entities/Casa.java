@@ -2,13 +2,14 @@ package mx.admino.models.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.*;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="casas")
+@Entity
+@Table(name="casas")
 public class Casa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
