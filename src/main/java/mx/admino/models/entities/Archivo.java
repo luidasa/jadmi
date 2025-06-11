@@ -21,8 +21,10 @@ public class Archivo {
 
     private String contentType;
 
+    @ManyToOne
     private Casa casa;
 
+    @ManyToOne
     private Condominio condominio;
 
     private String ruta;

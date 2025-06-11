@@ -20,12 +20,15 @@ public class Concepto {
 
     private BigDecimal gastosPeriodicos;
 
-    public Concepto(Tipos item) {
-
-        this.tipo = item;
+    public Concepto() {
         this.gastosFijos = new BigDecimal("0.0");
         this.gastosPeriodicos = new BigDecimal("0.0");
         this.gastosVariables = new BigDecimal("0.0");
+    }
+
+    public Concepto(Tipos item) {
+        this();
+        this.tipo = item;
     }
 
     public Long getId() {

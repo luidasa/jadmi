@@ -53,8 +53,10 @@ public class Casa implements Serializable {
 
 	private String nombre;
 
+	@ManyToOne
 	private Usuario duenio;
 
+	@ManyToOne
 	private Condominio condominio;
 
 	public Long getId() {

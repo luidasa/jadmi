@@ -46,6 +46,7 @@ public class Cargo implements Serializable {
 	/**
 	 * Condomino que debe de aplicar el cargo
 	 */
+	@ManyToOne
 	private Casa casa;
 	
 	/**

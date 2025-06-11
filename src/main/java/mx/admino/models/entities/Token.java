@@ -8,6 +8,10 @@ import java.util.UUID;
 
 public class Token {
 
+    public Token() {
+
+    }
+
     public Token(Usuario usuario) {
 
         this.usuario = usuario;

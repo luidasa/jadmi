@@ -15,6 +15,8 @@ public class MovimientoFactura implements Comparable<MovimientoFactura> {
 	private float importe;
 
 	private float saldo;
+
+	public MovimientoFactura() {}
 	
 	public MovimientoFactura(Date fecha, String descripcion, Float importe) {
 		this.fecha = fecha;
